@@ -4,6 +4,8 @@ services:
     image: postgres:latest
     container_name: db
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -11,11 +13,11 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - backend
-  app:
-    image: 'docker-spring-boot-postgres:latest'
+  back:
     container_name: spring-backend
     build:
-      context: .
+      context: spring-boot-VMM
+      dockerfile: Dockerfile
     restart: always
     depends_on:
       - db
@@ -30,6 +32,21 @@ services:
     ports:
       -"8080:8080"
   front:
+    container_name: angular-frontend
+    build:
+      context: angular-VMM
+      dockerfile: Dockerfile
+      args:
+        API_BASE_URL: http://127.0.0.1:8080/
+      ports:
+        - "8081:80" # Map the exposed port 80 on the container to port 8081 on the host machine
+    restart: always
+    depends_on:
+      - back
 
+
+networks:
+  backend: {}
+  frontend: {}
 
 
