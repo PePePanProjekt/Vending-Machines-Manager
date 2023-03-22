@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   db:
-    image: postgres:latest
+    image: docker.io/library/postgres:latest
     container_name: db
     restart: always
     ports:
@@ -30,16 +30,18 @@ services:
       - backend
       - frontend
     ports:
-      -"8080:8080"
+      - "8080:8080"
   front:
     container_name: angular-frontend
     build:
       context: angular-VMM
       dockerfile: Dockerfile
       args:
-        API_BASE_URL: http://127.0.0.1:8080/
+        API_BASE_URL: http://127.0.0.1:8081/
       ports:
-        - "8081:80" # Map the exposed port 80 on the container to port 8081 on the host machine
+        - "8081:8081"
+    networks:
+      - frontend
     restart: always
     depends_on:
       - back
