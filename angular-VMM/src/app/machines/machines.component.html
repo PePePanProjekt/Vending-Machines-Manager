@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-sm">
+
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/machines">Vending Machines Management</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" routerLink="/machines">Machines</a>
+            <a class="nav-link disabled" >Financial raports</a>
+            <a class="nav-link disabled" >Warehouse</a>
+            <a class="nav-link disabled">Employees</a>
+            <a class="nav-link" routerLink="">Logout</a>
+          </div>
+        </div>
+    </div>
+</nav>
+
+
+  <a routerLink="add">
+  <button class="btn btn-success">Add new machine</button>
+  </a>
+
+  <div class="container" style="max-width: 750px;">
+  <table class="table table-striped text-center">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">location</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Krasińskiego 8</td>
+        <td>Candy</td>
+        <td>all good</td>
+        <td>
+            <button type="button" class="btn btn-info mx-2 ">More info</button>
+            <button type="button" class="btn btn-success mx-2">Refill</button>
+            <button type="button" class="btn btn-warning mx-2">Update</button>
+            <button type="button" class="btn btn-danger mx-2">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Żwirki i Wigury 17</td>
+        <td>Drinks</td>
+        <td style="background-color: yellow;">please refill</td>
+        <td>
+            <button type="button" class="btn btn-info mx-2 ">More info</button>
+            <button type="button" class="btn btn-success mx-2">Refill</button>
+            <button type="button" class="btn btn-warning mx-2">Update</button>
+            <button type="button" class="btn btn-danger mx-2">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Krasińskiego 8</td>
+        <td>Candy</td>
+        <td style="background-color: red;">empty</td>
+        <td>
+            <button type="button" class="btn btn-info mx-2 ">More info</button>
+            <button type="button" class="btn btn-success mx-2">Refill</button>
+            <button type="button" class="btn btn-warning mx-2">Update</button>
+            <button type="button" class="btn btn-danger mx-2">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
