@@ -1,63 +1,29 @@
 package pp.project.vmm.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NonNull;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name="orderData")
+@Data
 public class Order {
 
     // Fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="id")
-    private int id;
+    private UUID id;
 
     @Temporal(TemporalType.DATE)
     @Column(name="date")
+    @NonNull
     private Date date;
 
     @OneToMany(mappedBy="order")
     private List<Holds> holds;
-
-    // Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public List<Holds> getHolds() {
-        return holds;
-    }
-
-    public void setHolds(List<Holds> holds) {
-        this.holds = holds;
-    }
-
-    // Constructors
-    public Order(Date date) {
-        this.date = date;
-    }
-
-    // toString
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", date=" + date +
-                '}';
-    }
 }

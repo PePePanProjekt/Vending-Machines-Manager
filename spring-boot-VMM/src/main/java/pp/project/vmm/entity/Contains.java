@@ -1,102 +1,41 @@
 package pp.project.vmm.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NonNull;
+
+import java.util.UUID;
 
 @Entity
 @Table(name="contains")
+@Data
 public class Contains {
 
     // Fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="id")
-    private int id;
+    private UUID id;
 
     @Column(name="itemPrice")
+    @NonNull
     private float itemPrice;
 
     @Column(name="itemAmount")
+    @NonNull
     private int itemAmount;
 
     @Column(name="dispenserNumber")
+    @NonNull
     private int dispenserNumber;
 
     @ManyToOne
     @JoinColumn(name="vendingMachineId", nullable = false)
+    @NonNull
     private VendingMachine vendingMachine;
 
     @ManyToOne
     @JoinColumn(name="itemId", nullable = false)
+    @NonNull
     private Item item;
-
-    // Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public float getItemPrice() {
-        return itemPrice;
-    }
-
-    public void setItemPrice(float itemPrice) {
-        this.itemPrice = itemPrice;
-    }
-
-    public int getItemAmount() {
-        return itemAmount;
-    }
-
-    public void setItemAmount(int itemAmount) {
-        this.itemAmount = itemAmount;
-    }
-
-    public int getDispenserNumber() {
-        return dispenserNumber;
-    }
-
-    public void setDispenserNumber(int dispenserNumber) {
-        this.dispenserNumber = dispenserNumber;
-    }
-
-    public VendingMachine getVendingMachine() {
-        return vendingMachine;
-    }
-
-    public void setVendingMachine(VendingMachine vendingMachine) {
-        this.vendingMachine = vendingMachine;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    // Constructors
-    public Contains(float itemPrice, int itemAmount, int dispenserNumber, VendingMachine vendingMachine, Item item) {
-        this.itemPrice = itemPrice;
-        this.itemAmount = itemAmount;
-        this.dispenserNumber = dispenserNumber;
-        this.vendingMachine = vendingMachine;
-        this.item = item;
-    }
-
-    // toString
-    @Override
-    public String toString() {
-        return "Contains{" +
-                "id=" + id +
-                ", itemPrice=" + itemPrice +
-                ", itemAmount=" + itemAmount +
-                ", dispenserNumber=" + dispenserNumber +
-                ", vendingMachine=" + vendingMachine +
-                ", item=" + item +
-                '}';
-    }
 }
