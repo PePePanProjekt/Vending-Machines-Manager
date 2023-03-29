@@ -1,7 +1,8 @@
-package pp.project.vmm.entity;
+package pp.project.vmm.endpoint.system.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name="batch")
+@NoArgsConstructor
 @Data
 public class Batch {
 

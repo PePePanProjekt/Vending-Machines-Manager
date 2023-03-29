@@ -1,13 +1,15 @@
-package pp.project.vmm.entity;
+package pp.project.vmm.endpoint.system.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.UUID;
 
 @Entity
 @Table(name="contains")
+@NoArgsConstructor
 @Data
 public class Contains {
 
@@ -17,25 +19,25 @@ public class Contains {
     @Column(name="id")
     private UUID id;
 
-    @Column(name="itemPrice")
+    @Column(name="item_price")
     @NonNull
-    private float itemPrice;
+    private Float itemPrice;
 
-    @Column(name="itemAmount")
+    @Column(name="item_amount")
     @NonNull
-    private int itemAmount;
+    private Integer itemAmount;
 
-    @Column(name="dispenserNumber")
+    @Column(name="dispenser_number")
     @NonNull
-    private int dispenserNumber;
+    private Integer dispenserNumber;
 
     @ManyToOne
-    @JoinColumn(name="vendingMachineId", nullable = false)
+    @JoinColumn(name="vending_machine_id", nullable = false)
     @NonNull
     private VendingMachine vendingMachine;
 
     @ManyToOne
-    @JoinColumn(name="itemId", nullable = false)
+    @JoinColumn(name="item_id", nullable = false)
     @NonNull
     private Item item;
 }

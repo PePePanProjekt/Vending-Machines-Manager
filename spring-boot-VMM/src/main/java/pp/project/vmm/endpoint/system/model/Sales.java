@@ -1,7 +1,8 @@
-package pp.project.vmm.entity;
+package pp.project.vmm.endpoint.system.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name="sales")
+@NoArgsConstructor
 @Data
 public class Sales {
 
@@ -19,19 +21,19 @@ public class Sales {
     private UUID id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="saleTime")
+    @Column(name="sale_time")
     @NonNull
     private Date saleTime;
 
     @Column(name="price")
     @NonNull
-    private float price;
+    private Float price;
 
     @ManyToOne
-    @JoinColumn(name="vendingMachineId", nullable = false)
+    @JoinColumn(name="vending_machine_id", nullable = false)
     private VendingMachine vendingMachine;
 
     @ManyToOne
-    @JoinColumn(name="itemID", nullable = false)
+    @JoinColumn(name="item_id", nullable = false)
     private Item item;
 }

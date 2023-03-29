@@ -1,14 +1,16 @@
-package pp.project.vmm.entity;
+package pp.project.vmm.endpoint.system.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="vendingMachine")
+@Table(name="vending_machine")
+@NoArgsConstructor
 @Data
 public class VendingMachine {
 
@@ -26,13 +28,13 @@ public class VendingMachine {
     @NonNull
     private String name;
 
-    @Column(name="dispenserAmount")
+    @Column(name="dispenser_amount")
     @NonNull
-    private int dispenserAmount;
+    private Integer dispenserAmount;
 
-    @Column(name="dispenserDepth")
+    @Column(name="dispenser_depth")
     @NonNull
-    private int dispenserDepth;
+    private Integer dispenserDepth;
 
     @OneToMany(mappedBy="vendingMachine")
     private List<Sales> profits;
