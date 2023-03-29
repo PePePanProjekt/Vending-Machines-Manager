@@ -1,52 +1,34 @@
-<nav class="navbar navbar-expand-sm">
-
-    <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/machines">Vending Machines Management</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" routerLink="/machines">Machines</a>
-            <a class="nav-link disabled" >Financial raports</a>
-            <a class="nav-link disabled" >Warehouse</a>
-            <a class="nav-link disabled">Employees</a>
-            <a class="nav-link" routerLink="">Logout</a>
-          </div>
-        </div>
-    </div>
-</nav>
+<app-navbar-owner/>
 
 
 <div class="container my-5" style="max-width: 700px;">
     <h2 style="align-self: center;">New vending machine</h2>
     <form>
-        <div class="row ">
-            <div class="col ">
-                <div class="row m-3">
-                    <div class="col">
-                        <label>Location</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="row m-3">
-                    <div class="col">
-                        <label>Name</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="row m-3">
-                    <div class="col">
-                        <label>Dispenser amount</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
+        
+        <div class="row m-3">
+            <div class="col">
+                <label>Location</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label>Name</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label>Dispenser amount</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control">
+            </div>
+            </div>
                 <div class="row m-3">
                     <div class="col">
                         <label>Dispenser depth</label>
@@ -56,22 +38,17 @@
                     </div>
                 </div>
                 <div class="row m-3">
-                    <div class="col">
-                        <label>Items</label>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control">
-                    </div>
+                <div class="col">
+                     <label>Items</label>
                 </div>
-                
-                
+                <div class="col">
+                    <input type="text" class="form-control">
+                </div>
             </div>
             <div class="col">
-                <label>Items:</label>
-                <textarea class="form-control" rows="10" style="cursor: inherit;" readonly></textarea>
+                <label>Added items:</label>
+                <textarea class="form-control" rows="5" style="cursor: inherit;" readonly></textarea>
             </div>
-        </div>
-        
         <button type="submit" class="btn btn-disabled">Submit</button>
       </form>
       <a type="submit" class="btn btn-primary" routerLink="/machines">Submit</a>
