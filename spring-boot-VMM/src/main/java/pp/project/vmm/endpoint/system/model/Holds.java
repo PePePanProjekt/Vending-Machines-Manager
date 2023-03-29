@@ -1,14 +1,16 @@
-package pp.project.vmm.entity;
+package pp.project.vmm.endpoint.system.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.UUID;
 
 @Entity
-@Table(name="holds")
 @Data
+@NoArgsConstructor
+@Table(name="holds")
 public class Holds {
 
     // Fields
@@ -17,21 +19,21 @@ public class Holds {
     @Column(name="id")
     private UUID id;
 
-    @Column(name="itemPrice")
+    @Column(name="item_price")
     @NonNull
-    private float itemPrice;
+    private Float itemPrice;
 
-    @Column(name="itemAmount")
+    @Column(name="item_amount")
     @NonNull
-    private int itemAmount;
+    private Integer itemAmount;
 
     @ManyToOne
-    @JoinColumn(name="batchId", nullable = false)
+    @JoinColumn(name="batch_id", nullable = false)
     @NonNull
     private Batch batch;
 
     @ManyToOne
-    @JoinColumn(name="itemId", nullable = false)
+    @JoinColumn(name="item_id", nullable = false)
     @NonNull
     private Item item;
 }
