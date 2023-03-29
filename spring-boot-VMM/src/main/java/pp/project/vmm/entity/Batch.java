@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="orderData")
+@Table(name="batch")
 @Data
-public class Order {
+public class Batch {
 
     // Fields
     @Id
@@ -19,11 +19,11 @@ public class Order {
     @Column(name="id")
     private UUID id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="date")
     @NonNull
     private Date date;
 
-    @OneToMany(mappedBy="order")
+    @OneToMany(mappedBy="batch")
     private List<Holds> holds;
 }

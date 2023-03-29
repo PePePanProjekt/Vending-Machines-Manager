@@ -3,7 +3,6 @@ package pp.project.vmm.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
-import org.hibernate.annotations.Type;
 
 import java.util.UUID;
 
@@ -27,9 +26,9 @@ public class Holds {
     private int itemAmount;
 
     @ManyToOne
-    @JoinColumn(name="orderId", nullable = false)
+    @JoinColumn(name="batchId", nullable = false)
     @NonNull
-    private Order order;
+    private Batch batch;
 
     @ManyToOne
     @JoinColumn(name="itemId", nullable = false)

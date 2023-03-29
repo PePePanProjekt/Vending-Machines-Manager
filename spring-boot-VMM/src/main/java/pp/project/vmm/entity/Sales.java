@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name="profits")
+@Table(name="sales")
 @Data
-public class Profits {
+public class Sales {
 
     // Fields
     @Id
@@ -18,10 +18,10 @@ public class Profits {
     @Column(name="id")
     private UUID id;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name="day")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="saleTime")
     @NonNull
-    private Date day;
+    private Date saleTime;
 
     @Column(name="price")
     @NonNull
@@ -29,11 +29,9 @@ public class Profits {
 
     @ManyToOne
     @JoinColumn(name="vendingMachineId", nullable = false)
-    @NonNull
     private VendingMachine vendingMachine;
 
     @ManyToOne
     @JoinColumn(name="itemID", nullable = false)
-    @NonNull
     private Item item;
 }

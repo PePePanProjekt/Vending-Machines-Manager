@@ -28,7 +28,7 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     @NonNull
-    private List<Profits> profits;
+    private List<Sales> profits;
 
     @OneToMany(mappedBy="item")
     private List<Contains> contains;
