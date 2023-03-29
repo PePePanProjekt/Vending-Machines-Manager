@@ -1,0 +1,9 @@
+body {
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  footer {
+    margin-top: auto;
+  }

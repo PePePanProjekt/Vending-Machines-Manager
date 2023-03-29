@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { GuestComponent } from './guest/guest.component';
 import { MachinesComponent } from './machines/machines.component';
 import { AddMachineComponent } from './add-machine/add-machine.component';
+import { NavbarGuestComponent } from './navbar-guest/navbar-guest.component';
+import { NavbarOwnerComponent } from './navbar-owner/navbar-owner.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { AddMachineComponent } from './add-machine/add-machine.component';
     LoginComponent,
     GuestComponent,
     MachinesComponent,
-    AddMachineComponent
+    AddMachineComponent,
+    NavbarGuestComponent,
+    NavbarOwnerComponent
   ],
   imports: [
     BrowserModule,
