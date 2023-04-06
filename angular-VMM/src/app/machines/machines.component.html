@@ -1,0 +1,37 @@
+<app-navbar-owner/>
+
+
+  
+
+  <div class="container" style="max-width: 750px;">
+  <table class="table table-striped text-center">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">location</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let machine of machines">
+          <td>{{machine.id}}</td>
+          <td>{{machine.location}}</td>
+          <td>{{machine.name}}</td>
+          <td>to do</td>
+          <td class="">
+              <button class="btn btn-info m-1">Info</button>
+              <button class="btn btn-success m-1">Refill</button>
+              <button class="btn btn-warning m-1">Update</button>
+              <button class="btn btn-danger m-1">Delete</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a routerLink="add">
+    <button class="btn btn-success">Add new machine</button>
+    </a>
+</div>
+

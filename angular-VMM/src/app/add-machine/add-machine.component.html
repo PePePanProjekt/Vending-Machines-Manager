@@ -1,0 +1,56 @@
+<app-navbar-owner/>
+
+
+<div class="container my-5" style="max-width: 700px;">
+    <h2 style="align-self: center;">New vending machine</h2>
+    <form>
+        
+        <div class="row m-3">
+            <div class="col">
+                <label>Location</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label>Name</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label>Dispenser amount</label>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control">
+            </div>
+            </div>
+                <div class="row m-3">
+                    <div class="col">
+                        <label>Dispenser depth</label>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row m-3">
+                <div class="col">
+                     <label>Items</label>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                <label>Added items:</label>
+                <textarea class="form-control" rows="5" style="cursor: inherit;" readonly></textarea>
+            </div>
+        <button type="submit" class="btn btn-disabled">Submit</button>
+      </form>
+      <a type="submit" class="btn btn-primary" routerLink="/machines">Submit</a>
+
+</div>
