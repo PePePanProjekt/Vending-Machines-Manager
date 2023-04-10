@@ -6,19 +6,18 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-/**
- * DTO used to get basic vending machine information
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VendingMachineSimpleDTO {
+public class VendingMachineSlotDTO {
 
-    private UUID id;
+    private int slotNumber;
 
-    private String location;
+    private UUID itemId;
 
-    private String name;
+    private String itemName;
 
-    private int status;
+    private float itemPrice;
+
+    private int itemAmount;
 }

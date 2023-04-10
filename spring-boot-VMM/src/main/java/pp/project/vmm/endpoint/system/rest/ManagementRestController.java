@@ -1,10 +1,11 @@
 package pp.project.vmm.endpoint.system.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pp.project.vmm.endpoint.system.service.ItemService;
 import pp.project.vmm.endpoint.system.service.MachineService;
-import pp.project.vmm.endpoint.system.service.dto.VendingMachineDetailsDTO;
-import pp.project.vmm.endpoint.system.service.dto.VendingMachineSimpleDTO;
+import pp.project.vmm.endpoint.system.service.dto.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,62 +14,92 @@ import java.util.UUID;
 @RequestMapping("/management-api")
 public class ManagementRestController {
 
-    private MachineService machineService;
+    private final MachineService machineService;
+
+    private final ItemService itemService;
 
     @Autowired
-    public ManagementRestController(MachineService machineService) {
+    public ManagementRestController(MachineService machineService, ItemService itemService) {
         this.machineService = machineService;
+        this.itemService = itemService;
     }
 
+    // Machine CRUD endpoints
     @GetMapping("/machines")
     public List<VendingMachineSimpleDTO> getMachines() {
         return machineService.getMachinesInfoSimple();
     }
 
     @GetMapping("/machines/{machineId}")
-    public VendingMachineDetailsDTO getMachineById(@PathVariable UUID machineId) {
+    public VendingMachineFullInfoDTO getMachineById(@PathVariable UUID machineId) {
 
-        VendingMachineDetailsDTO detailsDTO = machineService.findMachineDetailsById(machineId);
-        if(detailsDTO == null) {
+        VendingMachineFullInfoDTO infoDTO = machineService.getMachineInfoById(machineId);
+        if(infoDTO == null) {
             throw new RuntimeException("Vending machine of given id " + machineId + " does not exist");
         }
 
-        return detailsDTO;
+        return infoDTO;
     }
 
     @PostMapping("/machines")
-    public String createMachine(@RequestBody VendingMachineDetailsDTO detailsDTO) {
+    public ResponseEntity<String> createMachine(@RequestBody VendingMachineDetailsDTO detailsDTO) {
 
-        Boolean status = machineService.addMachine(detailsDTO);
-        if(status) {
-            return "Successfully created new vending machine";
-        } else {
-            return "Could not create new vending machine";
-        }
+        ResponseEntity<String> response = machineService.addMachine(detailsDTO);
+        return response;
     }
 
     @PutMapping("/machines")
-    public String updateMachine(@RequestBody VendingMachineDetailsDTO detailsDTO) {
+    public ResponseEntity<String> updateMachine(@RequestBody VendingMachineDetailsDTO detailsDTO) {
 
-        Boolean status = machineService.updateMachine(detailsDTO);
+        ResponseEntity<String> response = machineService.updateMachine(detailsDTO);
+        return response;
+    }
 
-        if(status) {
-            return "Successfully updated vending machine information";
-        } else {
-            return "Could not update vending machine information";
-        }
+    @PutMapping("/machines/{machineId}")
+    public ResponseEntity<String> refillMachine(@PathVariable UUID machineId, @RequestBody List<VendingMachineSlotDTO> slotDTOList) {
+
+        ResponseEntity<String> response = machineService.refillMachine(machineId, slotDTOList);
+        return response;
     }
 
     @DeleteMapping("/machines/{machineId}")
-    public String deleteMachine(@PathVariable UUID machineId) {
+    public ResponseEntity<String> deleteMachine(@PathVariable UUID machineId) {
 
-        Boolean status = machineService.deleteMachineById(machineId);
+        ResponseEntity<String> response = machineService.deleteMachineById(machineId);
+        return response;
+    }
 
-        if(status) {
-            return "Successfully deleted vending machine";
-        } else {
-            return "Could not delete vending machine";
-        }
+
+    // Item CRUD endpoints
+    @GetMapping("/items")
+    public List<ItemDetailsDTO> getItems() {
+        return itemService.getItems();
+    }
+
+    @GetMapping("/items/{itemId}")
+    public ItemDetailsDTO getItemById(@PathVariable UUID itemId) {
+        return itemService.getItemById(itemId);
+    }
+
+    @PostMapping("/items")
+    public ResponseEntity<String> createItem(@RequestBody ItemSimpleDTO simpleDTO) {
+
+        ResponseEntity<String> response = itemService.addItem(simpleDTO);
+        return response;
+    }
+
+    @PutMapping("/items")
+    public ResponseEntity<String> updateItem(@RequestBody ItemSimpleDTO simpleDTO) {
+
+        ResponseEntity<String> response = itemService.updateItem(simpleDTO);
+        return response;
+    }
+
+    @DeleteMapping("/items/{itemId}")
+    public ResponseEntity<String> deleteItem(@PathVariable UUID itemId) {
+
+        ResponseEntity<String> response = itemService.deleteItemById(itemId);
+        return response;
     }
 
 }

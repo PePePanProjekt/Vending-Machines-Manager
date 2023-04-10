@@ -31,7 +31,6 @@ public class Item {
     private Integer amountAvailable;
 
     @OneToMany(mappedBy = "item")
-    @NonNull
     private List<Sales> profits;
 
     @OneToMany(mappedBy="item")
