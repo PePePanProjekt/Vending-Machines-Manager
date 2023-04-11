@@ -1,30 +1,56 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { GuestComponent } from './guest/guest.component';
-import { MachinesComponent } from './machines/machines.component';
-import { AddMachineComponent } from './add-machine/add-machine.component';
-import { NavbarGuestComponent } from './navbar-guest/navbar-guest.component';
-import { NavbarOwnerComponent } from './navbar-owner/navbar-owner.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {PersonComponent} from './person/person.component';
+import {LoginComponent} from './login/login.component';
+import {FormsModule} from '@angular/forms';
+import {AuthInterceptor} from './auth/auth.interceptor';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatTableModule} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import {PersonEditComponent} from './person/edit/person-edit.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    GuestComponent,
-    MachinesComponent,
-    AddMachineComponent,
-    NavbarGuestComponent,
-    NavbarOwnerComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        PersonComponent,
+        PersonEditComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatSidenavModule,
+        MatTableModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSnackBarModule,
+        LayoutModule,
+        MatIconModule,
+        MatListModule
+    ],
+    providers: [
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

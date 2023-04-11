@@ -1,24 +1,27 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LoginComponent} from './login.component';
+import {PersonEditComponent} from './person-edit.component';
 import {HttpClientModule} from '@angular/common/http';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {AppRoutingModule} from '../../app-routing.module';
 import {FormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('LoginComponent', () => {
-    let component: LoginComponent;
-    let fixture: ComponentFixture<LoginComponent>;
+describe('PersonEditComponent', () => {
+    let component: PersonEditComponent;
+    let fixture: ComponentFixture<PersonEditComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [LoginComponent],
+            declarations: [PersonEditComponent],
             imports: [
                 HttpClientModule,
-                FormsModule,
+                AppRoutingModule,
                 MatSnackBarModule,
+                FormsModule,
                 MatFormFieldModule,
                 MatInputModule,
                 BrowserAnimationsModule
@@ -26,7 +29,7 @@ describe('LoginComponent', () => {
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(LoginComponent);
+        fixture = TestBed.createComponent(PersonEditComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
@@ -34,8 +37,4 @@ describe('LoginComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-
-    it('message should be empty', () => {
-        expect(component.message).toBeFalsy();
-    })
 });

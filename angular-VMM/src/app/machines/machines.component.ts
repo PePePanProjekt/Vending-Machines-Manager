@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Machine } from '../machine';
+import { Machine } from './machine';
 
 @Component({
   selector: 'app-machines',
