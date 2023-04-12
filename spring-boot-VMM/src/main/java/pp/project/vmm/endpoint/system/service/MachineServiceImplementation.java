@@ -18,7 +18,6 @@ import pp.project.vmm.endpoint.system.service.dto.VendingMachineSlotDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class MachineServiceImplementation implements MachineService {
@@ -96,8 +95,7 @@ public class MachineServiceImplementation implements MachineService {
             slotDTOList.add(slotDTO);
         }
 
-        VendingMachineFullInfoDTO fullInfoDTO = new VendingMachineFullInfoDTO(detailsDTO, slotDTOList);
-        return fullInfoDTO;
+        return new VendingMachineFullInfoDTO(detailsDTO, slotDTOList);
     }
 
     @Override

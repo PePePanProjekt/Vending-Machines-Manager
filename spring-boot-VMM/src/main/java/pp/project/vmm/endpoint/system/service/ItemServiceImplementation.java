@@ -49,13 +49,12 @@ public class ItemServiceImplementation implements ItemService{
         }
 
         Item item = itemRepository.findById(id).get();
-        ItemDetailsDTO detailsDTO = new ItemDetailsDTO(
+
+        return new ItemDetailsDTO(
                 item.getId(),
                 item.getName(),
                 item.getAmountAvailable()
         );
-
-        return detailsDTO;
     }
 
     @Override
