@@ -4,7 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {PersonComponent} from './person/person.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './auth/auth.interceptor';
@@ -20,14 +19,21 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import {PersonEditComponent} from './person/edit/person-edit.component';
+import { NavbarGuestComponent } from './navbar/navbar-guest/navbar-guest.component';
+import { NavbarOwnerComponent } from './navbar/navbar-owner/navbar-owner.component';
+import { GuestComponent } from './guest/guest.component';
+import { MachinesComponent } from './machines/machines.component';
+import { AddMachineComponent } from './machines/add-machine/add-machine.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
-        PersonComponent,
-        PersonEditComponent
+        GuestComponent,
+        MachinesComponent,
+        AddMachineComponent,
+        NavbarGuestComponent,
+        NavbarOwnerComponent
     ],
     imports: [
         BrowserModule,
@@ -45,7 +51,7 @@ import {PersonEditComponent} from './person/edit/person-edit.component';
         MatSnackBarModule,
         LayoutModule,
         MatIconModule,
-        MatListModule
+        MatListModule,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

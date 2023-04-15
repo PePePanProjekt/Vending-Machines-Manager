@@ -1,7 +1,6 @@
 package pp.project.vmm.security.person;
 
 import jakarta.annotation.security.RolesAllowed;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +15,14 @@ import java.util.List;
 
 @RolesAllowed(Roles.USER)
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/persons")
 public class PersonController {
 
     private final PersonService personService;
+
+    public PersonController(PersonService personService) {
+        this.personService = personService;
+    }
 
     @GetMapping
     public List<Person> getAll() {

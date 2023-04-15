@@ -1,16 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PersonComponent} from './person/person.component';
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './auth/auth-guard.service';
-import {PersonEditComponent} from './person/edit/person-edit.component';
+import { GuestComponent } from './guest/guest.component';
+import { MachinesComponent } from './machines/machines.component';
+import { AddMachineComponent } from './machines/add-machine/add-machine.component';
 
 const routes: Routes = [
-    {path: '', redirectTo: 'persons', pathMatch: 'full'},
-    {path: 'persons', component: PersonComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
-    {path: 'persons/:id', component: PersonEditComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'', component:GuestComponent},
     {path: 'login', component: LoginComponent},
-    {path: '**', redirectTo: 'persons'}
+    {path:'machines', component:MachinesComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'machines/add', component:AddMachineComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

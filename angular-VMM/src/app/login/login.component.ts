@@ -30,7 +30,7 @@ export class LoginComponent {
                     // @ts-ignore
                     sessionStorage.setItem("app.roles",  decodedToken.scope);
 
-                    this.router.navigateByUrl("/persons");
+                    this.router.navigateByUrl("/machines");
                 },
                 error: (error) => this.snackBar.open(`Login failed: ${error.status}`, "OK")
             });
