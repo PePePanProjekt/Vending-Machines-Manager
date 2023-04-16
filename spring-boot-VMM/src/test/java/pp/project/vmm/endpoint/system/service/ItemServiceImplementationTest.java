@@ -45,17 +45,20 @@ class ItemServiceImplementationTest {
     }
 
     @Test
-    void getItemsTest() {
-
+    void shouldGetItemsTest() {
+        // When
         List<ItemDetailsDTO> itemDetailsDTO = itemService.getItems();
 
+        // Then
         assertThat(itemDetailsDTO, Matchers.hasSize(3));
     }
 
     @Test
-    void getItemsTest2() {
-
+    void shouldGetItemsTest2() {
+        // When
         List<ItemDetailsDTO> itemDetailsDTO = itemService.getItems();
+
+        // Then
         String nameItem = String.valueOf(itemDetailsDTO.get(0).getName());
         assertEquals(nameItem, "name1");
     }
@@ -77,22 +80,27 @@ class ItemServiceImplementationTest {
 
 
     @Test
-    void getItemByIdTest() {
+    void shouldGetItemByIdTest() {
+        // When
         ItemDetailsDTO itemDetailsDTO = itemService.getItemById(id);
-        String nameItem = itemDetailsDTO.getName();
 
+        // Then
+        String nameItem = itemDetailsDTO.getName();
         assertEquals(nameItem, "name1");
     }
 
     @Test
     void shouldUpdateItem() {
+        // Given
         ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "name1");
         Item item = new Item("item1", 10);
         given(itemRepository.existsById(simpleDTO.getId())).willReturn(true);
         given(itemRepository.findById(simpleDTO.getId())).willReturn(Optional.of(item));
 
+        // When
         ResponseEntity<String> resEntity =  itemService.updateItem(simpleDTO);
 
+        // Then
         verify(itemRepository, times(1)).existsById(simpleDTO.getId());
         verify(itemRepository, times(1)).findById(simpleDTO.getId());
 
@@ -103,13 +111,15 @@ class ItemServiceImplementationTest {
 
     @Test
     public void shouldNotUpdateItem() {
-
+        // Given
         ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "item1");
 
         given(itemRepository.existsById(simpleDTO.getId())).willReturn(false);
 
+        // When
         ResponseEntity<String> resEntity = itemService.updateItem(simpleDTO);
 
+        // Then
         verify(itemRepository, times(1)).existsById(simpleDTO.getId());
         verify(itemRepository, never()).findById(simpleDTO.getId());
         verify(itemRepository, never()).save(any());
@@ -119,11 +129,78 @@ class ItemServiceImplementationTest {
         assertEquals("Item of given id does not exist", resEntity.getBody());
     }
 
+    /**
+    public void shouldAddItem() {
+        ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "item1");
+        Item item = new Item();
+        item.setId(id);
+        item.setName("item1");
+        item.setAmountAvailable(0);
+
+        //given(item.getId()).willReturn(UUID.randomUUID());
+
+        given(itemRepository.save(any(Item.class))).willReturn(item);
+
+        ResponseEntity<String> resEntity = itemService.addItem(simpleDTO);
+
+        verify(itemRepository, times(1)).save(item);
+
+        assertNotNull(resEntity);
+        assertEquals(HttpStatus.OK, resEntity.getStatusCode());
+        assertEquals("Successfully created new item", resEntity.getBody());
+    }
+    */
     @Test
-    void addItem() {
+    public void shouldNotAddItem() {
+        // Given
+        ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "item1");
+        Item item1 = new Item();
+        item1.setId(null);
+        item1.setName("Item1");
+        given(itemRepository.save(any(Item.class))).willReturn(item1);
+
+        // When
+        ResponseEntity<String> resEntity = itemService.addItem(simpleDTO);
+
+        // Then
+        verify(itemRepository, times(1)).save(any(Item.class));
+
+        assertNotNull(resEntity);
+        assertEquals(HttpStatus.BAD_REQUEST, resEntity.getStatusCode());
+        assertEquals("Could not create new item", resEntity.getBody());
     }
 
     @Test
-    void deleteItemById() {
+    public void shouldDeleteItemById() {
+        // Given
+        Item item = new Item();
+        item.setId(id);
+        item.setName("Item1");
+
+        when(itemRepository.existsById(id)).thenReturn(true);
+
+        // When
+        ResponseEntity<String> result = itemService.deleteItemById(id);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals("Successfully deleted item", result.getBody());
+        verify(itemRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void shouldNotDeleteItemById() {
+        // Given
+        given(itemRepository.existsById(id)).willReturn(false);
+
+        // When
+        ResponseEntity<String> result = itemService.deleteItemById(id);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        assertEquals("Item of given id does not exist", result.getBody());
+        verify(itemRepository, times(0)).deleteById(id);
     }
 }
