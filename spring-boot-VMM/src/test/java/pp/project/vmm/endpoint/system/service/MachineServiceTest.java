@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pp.project.vmm.endpoint.system.model.Contains;
 import pp.project.vmm.endpoint.system.model.Item;
@@ -11,6 +13,7 @@ import pp.project.vmm.endpoint.system.model.VendingMachine;
 import pp.project.vmm.endpoint.system.repository.ContainsRepository;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
 import pp.project.vmm.endpoint.system.repository.VendingMachineRepository;
+import pp.project.vmm.endpoint.system.service.dto.VendingMachineDetailsDTO;
 import pp.project.vmm.endpoint.system.service.dto.VendingMachineFullInfoDTO;
 import pp.project.vmm.endpoint.system.service.dto.VendingMachineSimpleDTO;
 import pp.project.vmm.endpoint.system.service.dto.VendingMachineSlotDTO;
@@ -20,7 +23,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(SpringExtension.class)
@@ -179,7 +184,54 @@ class MachineServiceImplementationTest {
 
 
     @Test
-    void addMachine() {
+    public void shouldAddMachine() {
+        // Given
+        VendingMachineDetailsDTO detailsDTO = new VendingMachineDetailsDTO();
+        detailsDTO.setId(id);
+        detailsDTO.setLocation("Location1");
+        detailsDTO.setName("Machine1");
+        detailsDTO.setDispenserAmount(5);
+        detailsDTO.setDispenserDepth(10);
+
+        VendingMachine vendingMachine = new VendingMachine();
+        vendingMachine.setId(id2);
+        vendingMachine.setLocation("Location1");
+        vendingMachine.setName("Machine1");
+        vendingMachine.setDispenserAmount(5);
+        vendingMachine.setDispenserDepth(10);
+
+        given(vendingMachineRepository.save(any(VendingMachine.class))).willReturn(vendingMachine);
+
+        // When
+        ResponseEntity<String> result = vendingMachineService.addMachine(detailsDTO);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals("Successfully created vending machine", result.getBody());
+    }
+
+    @Test
+    public void shouldNotAddMachineWith() {
+        // Given
+        VendingMachineDetailsDTO detailsDTO = new VendingMachineDetailsDTO();
+        detailsDTO.setId(id);
+        detailsDTO.setLocation("Location1");
+        detailsDTO.setName("Machine1");
+        detailsDTO.setDispenserAmount(5);
+        detailsDTO.setDispenserDepth(10);
+        VendingMachine dbVendingMachine = new VendingMachine();
+        dbVendingMachine.setId(null);
+
+        given(vendingMachineRepository.save(any(VendingMachine.class))).willReturn(dbVendingMachine);
+
+        // When
+        ResponseEntity<String> result = vendingMachineService.addMachine(detailsDTO);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        assertEquals("Could not create vending machine", result.getBody());
     }
 
     @Test
