@@ -3,6 +3,7 @@ package pp.project.vmm.security.person;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 

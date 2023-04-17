@@ -1,4 +1,4 @@
-package ch.martinelli.demo.backend.startup;
+package pp.project.vmm.security.startup;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
