@@ -27,6 +27,8 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 class MachineServiceImplementationTest {
@@ -235,7 +237,55 @@ class MachineServiceImplementationTest {
     }
 
     @Test
-    void updateMachine() {
+    public void shouldUpdateMachine() {
+        // Given
+        VendingMachineDetailsDTO detailsDTO = new VendingMachineDetailsDTO();
+        detailsDTO.setId(id);
+        detailsDTO.setLocation("Location1");
+        detailsDTO.setName("VendingMachine1");
+        detailsDTO.setDispenserAmount(5);
+        detailsDTO.setDispenserDepth(10);
+
+        VendingMachine vendingMachine = new VendingMachine();
+        vendingMachine.setId(id);
+        vendingMachine.setLocation(detailsDTO.getLocation());
+        vendingMachine.setName(detailsDTO.getName());
+        vendingMachine.setDispenserAmount(detailsDTO.getDispenserAmount());
+        vendingMachine.setDispenserDepth(detailsDTO.getDispenserDepth());
+
+        given(vendingMachineRepository.findById(id)).willReturn(Optional.of(vendingMachine));
+        given(vendingMachineRepository.save(vendingMachine)).willReturn(vendingMachine);
+
+        // When
+        ResponseEntity<String> result = vendingMachineService.updateMachine(detailsDTO);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals("Successfully updated vending machine", result.getBody());
+        verify(vendingMachineRepository, times(1)).save(vendingMachine);
+    }
+
+    @Test
+    public void shouldNotUpdateMachine() {
+        // Given
+        VendingMachineDetailsDTO detailsDTO = new VendingMachineDetailsDTO();
+        detailsDTO.setId(id);
+        detailsDTO.setLocation("Location1");
+        detailsDTO.setName("VendingMachine1");
+        detailsDTO.setDispenserAmount(5);
+        detailsDTO.setDispenserDepth(10);
+
+        given(vendingMachineRepository.findById(id)).willReturn(Optional.empty());
+
+        // When
+        ResponseEntity<String> result = vendingMachineService.updateMachine(detailsDTO);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        assertEquals("Vending machine of given id does not exist", result.getBody());
+        verify(vendingMachineRepository, times(0)).save(any(VendingMachine.class));
     }
 
     @Test
