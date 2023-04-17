@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity
+@Data
 public class Person {
 
     @Id
@@ -15,19 +16,4 @@ public class Person {
 
     private String name;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -52,3 +52,6 @@ networks:
   frontend: {}
 
 
+volumes: 
+  db: 
+    driver: local
