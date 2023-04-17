@@ -129,27 +129,26 @@ class ItemServiceImplementationTest {
         assertEquals("Item of given id does not exist", resEntity.getBody());
     }
 
-    /**
+    @Test
     public void shouldAddItem() {
+        // Given
         ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "item1");
         Item item = new Item();
         item.setId(id);
         item.setName("item1");
         item.setAmountAvailable(0);
 
-        //given(item.getId()).willReturn(UUID.randomUUID());
-
         given(itemRepository.save(any(Item.class))).willReturn(item);
 
+        // When
         ResponseEntity<String> resEntity = itemService.addItem(simpleDTO);
 
-        verify(itemRepository, times(1)).save(item);
-
+        // Then
         assertNotNull(resEntity);
         assertEquals(HttpStatus.OK, resEntity.getStatusCode());
         assertEquals("Successfully created new item", resEntity.getBody());
     }
-    */
+
     @Test
     public void shouldNotAddItem() {
         // Given
