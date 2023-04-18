@@ -293,8 +293,52 @@ class MachineServiceImplementationTest {
     }
 
     @Test
-    void deleteMachine() {
+    public void shouldDeleteMachine() {
+        // Given
+        VendingMachineDetailsDTO detailsDTO = new VendingMachineDetailsDTO();
+        detailsDTO.setId(id);
+        detailsDTO.setLocation("Location1");
+        detailsDTO.setName("VendingMachine1");
+        detailsDTO.setDispenserAmount(5);
+        detailsDTO.setDispenserDepth(10);
+        VendingMachine vendingMachine = new VendingMachine();
+        vendingMachine.setId(id);
+        vendingMachine.setLocation(detailsDTO.getLocation());
+        vendingMachine.setName(detailsDTO.getName());
+        vendingMachine.setDispenserAmount(detailsDTO.getDispenserAmount());
+        vendingMachine.setDispenserDepth(detailsDTO.getDispenserDepth());
+
+        given(vendingMachineRepository.findById(detailsDTO.getId())).willReturn(Optional.of(vendingMachine));
+
+        // When
+        ResponseEntity<String> response = vendingMachineService.deleteMachine(detailsDTO);
+
+        // Then
+        verify(vendingMachineRepository).findById(detailsDTO.getId());
+        verify(vendingMachineRepository).deleteById(detailsDTO.getId());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Successfully deleted vending machine", response.getBody());
     }
+
+    @Test
+    public void shouldNotDeleteMachine() {
+        // Given
+        VendingMachineDetailsDTO detailsDTO = new VendingMachineDetailsDTO();
+        detailsDTO.setLocation("Location1");
+        detailsDTO.setName("VendingMachine1");
+        detailsDTO.setDispenserAmount(5);
+        detailsDTO.setDispenserDepth(10);
+        given(vendingMachineRepository.findById(any())).willReturn(Optional.empty());
+
+        // When
+        ResponseEntity<String> response = vendingMachineService.deleteMachine(detailsDTO);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("Vending machine of given id does not exist", response.getBody());
+    }
+
 
     @Test
     void deleteMachineById() {
