@@ -18,10 +18,7 @@ import pp.project.vmm.endpoint.system.service.dto.VendingMachineFullInfoDTO;
 import pp.project.vmm.endpoint.system.service.dto.VendingMachineSimpleDTO;
 import pp.project.vmm.endpoint.system.service.dto.VendingMachineSlotDTO;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -289,7 +286,48 @@ class MachineServiceImplementationTest {
     }
 
     @Test
-    void refillMachine() {
+    public void shouldRefillMachine() {
+        // Given
+        VendingMachine vendingMachine = new VendingMachine();
+        vendingMachine.setId(id);
+        vendingMachine.setDispenserDepth(20);
+        Contains contains1 = new Contains();
+        contains1.setDispenserNumber(1);
+        contains1.setItemPrice(1.5f);
+        contains1.setItemAmount(20);
+
+        Contains contains2 = new Contains();
+        contains2.setDispenserNumber(2);
+        contains2.setItemPrice(2.0f);
+        contains2.setItemAmount(10);
+
+        vendingMachine.setContains(Arrays.asList(contains1, contains2));
+
+        Item item = new Item();
+
+        given(vendingMachineRepository.existsById(vendingMachine.getId())).willReturn(true);
+        given(itemRepository.existsById(item.getId())).willReturn(true);
+        given(vendingMachineRepository.findById(vendingMachine.getId())).willReturn(Optional.of(vendingMachine));
+        given(itemRepository.findById(item.getId())).willReturn(Optional.of(item));
+
+        List<VendingMachineSlotDTO> slotDTOList = new ArrayList<>();
+        VendingMachineSlotDTO slotDTO = new VendingMachineSlotDTO();
+        slotDTO.setSlotNumber(1);
+        slotDTO.setItemAmount(5);
+        slotDTO.setItemId(item.getId());
+        slotDTO.setItemPrice(10.0f);
+        slotDTOList.add(slotDTO);
+
+        // When
+        ResponseEntity<String> responseEntity = vendingMachineService.refillMachine(vendingMachine.getId(), slotDTOList);
+
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Vending machine refilled correctly", responseEntity.getBody());
+        assertEquals(slotDTO.getSlotNumber(), contains1.getDispenserNumber());
+        assertEquals(slotDTO.getItemAmount(), contains1.getItemAmount());
+        assertEquals(slotDTO.getItemPrice(), contains1.getItemPrice());
+        assertEquals(item, contains1.getItem());
     }
 
     @Test
@@ -341,6 +379,28 @@ class MachineServiceImplementationTest {
 
 
     @Test
-    void deleteMachineById() {
+    public void shouldDeleteMachineById() {
+        // Given
+        given(vendingMachineRepository.findById(id)).willReturn(Optional.of(new VendingMachine()));
+
+        // When
+        ResponseEntity<String> response = vendingMachineService.deleteMachineById(id);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Successfully deleted vending machine", response.getBody());
+    }
+
+    @Test
+    public void shouldNotDeleteMachineById() {
+        // Given
+        given(vendingMachineRepository.findById(any())).willReturn(Optional.empty());
+
+        // When
+        ResponseEntity<String> response = vendingMachineService.deleteMachineById(id);
+
+        // Then
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("Vending machine of given id does not exist", response.getBody());
     }
 }
