@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://vmm.dena2rat.xyz:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -37,15 +37,29 @@ services:
       context: angular-VMM
       dockerfile: Dockerfile
       args:
-        API_BASE_URL: http://127.0.0.1:8081/
+        API_BASE_URL: http://127.0.0.1:443/
     ports:
-      - "8081:8081"
+      - "80:80"
+      - "443:443"
     networks:
       - frontend
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt:z
+      - ./data/certbot/www:/var/www/certbot:z
     restart: always
     depends_on:
       - back
-
+    # command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  cert:
+    image: docker.io/certbot/certbot:latest
+    container_name: cert
+    restart: always
+    networks:
+      - backend
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt:z
+      - ./data/certbot/www:/var/www/certbot:z
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
 networks:
   backend: {}
