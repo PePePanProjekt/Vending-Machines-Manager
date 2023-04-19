@@ -4,13 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name="sales")
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
 @Data
 public class Sales {
 

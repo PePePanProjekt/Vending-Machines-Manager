@@ -13,6 +13,44 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - backend
+  prometheus:
+    image: docker.io/prom/prometheus:latest
+    container_name: prometheus
+    user: "1000:1000"
+    networks: 
+      - metrics
+    volumes:
+      - ./prometheus-grafana/prometheus/prometheus.yml:/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    command:
+      - '--config.file=/prometheus/prometheus.yml'
+  grafana:
+    image: docker.io/grafana/grafana:latest
+    container_name: grafana
+    user: "root:root"
+    networks: 
+      - metrics
+    volumes:
+      - ./prometheus-grafana/grafana/grafana.ini:/grafana/grafana.ini
+      - ./prometheus-grafana/grafana/datasource.yml:/grafana/provisioning/datasources/datasource.yaml
+    ports:
+      - 3000:3000
+    links:
+      - prometheus
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    networks:
+      - metrics
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+    expose:
+      - 9100
   back:
     container_name: spring-backend
     build:
@@ -22,13 +60,14 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://vmm.dena2rat.xyz:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - backend
       - frontend
+      - metrics
     ports:
       - "8080:8080"
   front:
@@ -37,19 +76,20 @@ services:
       context: angular-VMM
       dockerfile: Dockerfile
       args:
-        API_BASE_URL: http://127.0.0.1:8081/
+        API_BASE_URL: http://127.0.0.1:443/
     ports:
-      - "8081:8081"
+      - "80:80"
+      - "443:443"
     networks:
       - frontend
     restart: always
     depends_on:
       - back
 
-
 networks:
   backend: {}
   frontend: {}
+  metrics: {}
 
 
 volumes: 
