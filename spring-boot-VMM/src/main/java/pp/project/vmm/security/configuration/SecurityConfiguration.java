@@ -1,5 +1,6 @@
 package pp.project.vmm.security.configuration;
 
+import org.springframework.web.client.ResourceAccessException;
 import pp.project.vmm.security.auth.Roles;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -49,15 +50,25 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/auth"))
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exceptions) -> exceptions
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                );
+                ).authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
+                    try{
+                        authorizationManagerRequestMatcherRegistry
+                                .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                .anyRequest()
+                                .authenticated()
+                                .and()
+                                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+                    } catch (Exception e) {
+                        throw new ResourceAccessException(e.getMessage());
+                    }
+                });
         return http.build();
     }
 
