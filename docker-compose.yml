@@ -14,9 +14,9 @@ services:
     networks:
       - backend
   prometheus:
-    image: prom/prometheus:latest
+    image: docker.io/prom/prometheus:latest
     container_name: prometheus
-    user: "root:root"
+    user: "1000:1000"
     networks: 
       - metrics
     volumes:
@@ -26,7 +26,7 @@ services:
     command:
       - '--config.file=/prometheus/prometheus.yml'
   grafana:
-    image: grafana/grafana:latest
+    image: docker.io/grafana/grafana:latest
     container_name: grafana
     user: "root:root"
     networks: 
@@ -43,7 +43,6 @@ services:
     container_name: node_exporter
     command:
       - '--path.rootfs=/host'
-    network_mode: host
     pid: host
     networks:
       - metrics
@@ -83,7 +82,6 @@ services:
       - "443:443"
     networks:
       - frontend
-    volumes:
     restart: always
     depends_on:
       - back
@@ -94,3 +92,6 @@ networks:
   metrics: {}
 
 
+volumes: 
+  db: 
+    driver: local
