@@ -1,19 +1,42 @@
 <app-navbar-guest/>
-<div class="container mt-5" style="max-width: 700px;">
+<!-- <div class="container mt-5" style="max-width: 700px;" (ngSubmit)="login()" #loginForm="ngForm">
 <form class="align-center gy-5">
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <label for="exampleInputEmail1" class="form-label" [(ngModel)]="username" required>Email address</label>
       <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input type="password" class="form-control" id="exampleInputPassword1">
     </div>
-    <!-- <div class="mb-3 form-check">
+    <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" id="exampleCheck1">
       <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div> -->
+    </div>
     <button type="submit" class="btn btn-disabled" routerLink="/machines">Log in</button>
   </form>
   <a type="submit" class="btn btn-primary" routerLink="/machines">Log in</a>
   </div>
+   -->
+
+<div class="container mt-5" style="max-width: 700px;">
+  <h1>Login</h1>
+  <p>{{message}}</p>
+  <form (ngSubmit)="login()" class="form-horizontal" #loginForm="ngForm">
+
+          <div class="mb-3">
+              <label>Username</label>
+              <input matInput id="username" type="text" name="username" class="form-control" [(ngModel)]="username" required>
+          </div>
+
+
+          <div class="mb-3">
+              <label>Password</label>
+              <input matInput id="password" type="password" name="password" class="form-control" [(ngModel)]="password" required>
+          </div>
+
+      <p>
+          <button mat-raised-button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+      </p>
+  </form>
+</div>
