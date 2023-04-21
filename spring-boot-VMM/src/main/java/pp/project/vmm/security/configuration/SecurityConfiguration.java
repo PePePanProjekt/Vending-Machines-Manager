@@ -36,6 +36,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -53,7 +55,7 @@ public class SecurityConfiguration{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors().and()
+                .cors(Customizer.withDefaults())
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/auth"))
                 .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
@@ -64,6 +66,17 @@ public class SecurityConfiguration{
                                 .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 );
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://localhost","https://vmm.dena2rat.xyz"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+        return source;
     }
 
     //todo
