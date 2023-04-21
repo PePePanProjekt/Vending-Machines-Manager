@@ -54,35 +54,45 @@ public class SecurityConfiguration{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(Customizer.withDefaults())
-                .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/auth"))
-                .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .exceptionHandling((exceptions) -> exceptions
-                                .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                )
-                        .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-                    try{
-                        authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                                .anyRequest()
-                                .authenticated()
-                                .and()
-                                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        if (true) {
+            http
+               //.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+                    .cors(Customizer.withDefaults())
+                    .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/auth"))
+                    .httpBasic(Customizer.withDefaults())
+                    .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                    .exceptionHandling((exceptions) -> exceptions
+                            .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                            .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+                    )
+                    .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
+                        try {
+                            authorizationManagerRequestMatcherRegistry
+                                    .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                    .anyRequest()
+                                    .authenticated()
+                                    .and()
+                                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                    } catch (Exception e) {
-                        throw new ResourceAccessException(e.getMessage());
-                    }
-                });
-        return http.build();
+                        } catch (Exception e) {
+                            throw new ResourceAccessException(e.getMessage());
+                        }
+
+                    });
+            return http.build();
+        }else{
+            http
+                    .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+            return http.build();
+        }
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://localhost","https://vmm.dena2rat.xyz"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://vmm.dena2rat.xyz","http://vmm.dena2rat.xyz",
+                "http://localhost:4200","https://localhost","http://localhost"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
