@@ -62,9 +62,7 @@ public class SecurityConfiguration{
                 .exceptionHandling((exceptions) -> exceptions
                                 .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                                 .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                );
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+                )
                         .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
                     try{
                         authorizationManagerRequestMatcherRegistry
