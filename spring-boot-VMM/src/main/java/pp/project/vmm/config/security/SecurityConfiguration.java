@@ -3,6 +3,7 @@ package pp.project.vmm.config.security;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.client.ResourceAccessException;
 import pp.project.vmm.security.auth.Roles;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -56,14 +57,27 @@ public class SecurityConfiguration{
         http
                 .cors(Customizer.withDefaults())
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/auth"))
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exceptions) -> exceptions
                                 .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                                 .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 );
+                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+                        .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
+                    try{
+                        authorizationManagerRequestMatcherRegistry
+                                .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                .anyRequest()
+                                .authenticated()
+                                .and()
+                                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+                    } catch (Exception e) {
+                        throw new ResourceAccessException(e.getMessage());
+                    }
+                });
         return http.build();
     }
 
