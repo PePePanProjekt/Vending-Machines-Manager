@@ -16,11 +16,11 @@ services:
   prometheus:
     image: docker.io/prom/prometheus:latest
     container_name: prometheus
-    user: "1000:1000"
+    user: "65534:65534"
     networks: 
       - metrics
     volumes:
-      - ./prometheus-grafana/prometheus/prometheus.yml:/prometheus/prometheus.yml
+      - ./prometheus-grafana/prometheus/prometheus.yml:/prometheus/prometheus.yml:Z
     ports:
       - 9090:9090
     command:
