@@ -86,8 +86,8 @@ public class SecurityConfiguration{
         configuration.setAllowedOrigins(Arrays.asList(
                 "https://vmm.dena2rat.xyz","http://vmm.dena2rat.xyz",
                 "http://localhost:4200","https://localhost","http://localhost"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization"));
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",configuration);
         return source;
