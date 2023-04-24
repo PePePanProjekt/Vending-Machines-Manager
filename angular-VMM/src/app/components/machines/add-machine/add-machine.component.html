@@ -1,0 +1,47 @@
+<app-navbar-owner/>
+
+
+<div class="container my-5" style="max-width: 700px;">
+    <h2 style="align-self: center;">New vending machine</h2>
+    <form>
+
+        <div class="row m-3">
+            <div class="col">
+                <label for="location">Location</label>
+            </div>
+            <div class="col">
+                <input id="location" #location type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label for="name">Name</label>
+            </div>
+            <div class="col">
+                <input id="name" #name type="text" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label for="dispenserAmount">Dispenser amount</label>
+            </div>
+            <div class="col">
+                <input id="dispenserAmount" #dispenserAmount type="text" class="form-control">
+            </div>
+            </div>
+                <div class="row m-3">
+                    <div class="col">
+                        <label for="dispenserDepth">Dispenser depth</label>
+                    </div>
+                    <div class="col">
+                        <input id="dispenserDepth" #dispenserDepth type="text" class="form-control">
+                    </div>
+                </div>
+
+        <button type="button" class="btn btn-primary"
+                (click)="addMachine(location.value,name.value,dispenserAmount.value,dispenserDepth.value)">
+            Submit
+        </button>
+      </form>
+
+</div>
