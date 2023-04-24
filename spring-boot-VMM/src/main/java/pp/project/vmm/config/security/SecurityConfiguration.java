@@ -1,5 +1,8 @@
-package pp.project.vmm.security.configuration;
+package pp.project.vmm.config.security;
 
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.client.ResourceAccessException;
 import pp.project.vmm.security.auth.Roles;
 import com.nimbusds.jose.jwk.JWK;
@@ -33,10 +36,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration{
 
 
     private final RSAPublicKey key;
@@ -49,27 +54,43 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/auth"))
-                .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .exceptionHandling((exceptions) -> exceptions
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                ).authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-                    try{
-                        authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                                .anyRequest()
-                                .authenticated()
-                                .and()
-                                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            http
+                    .cors(Customizer.withDefaults())
+                    .csrf((csrf) -> csrf.ignoringRequestMatchers("/api/auth"))
+                    .httpBasic(Customizer.withDefaults())
+                    .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                    .exceptionHandling((exceptions) -> exceptions
+                            .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                            .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+                    )
+                    .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
+                        try {
+                            authorizationManagerRequestMatcherRegistry
+                                    .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                    .anyRequest()
+                                    .authenticated()
+                                    .and()
+                                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                    } catch (Exception e) {
-                        throw new ResourceAccessException(e.getMessage());
-                    }
-                });
-        return http.build();
+                        } catch (Exception e) {
+                            throw new ResourceAccessException(e.getMessage());
+                        }
+
+                    });
+            return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://vmm.dena2rat.xyz","http://vmm.dena2rat.xyz",
+                "http://localhost:4200","https://localhost","http://localhost"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",configuration);
+        return source;
     }
 
     //todo
