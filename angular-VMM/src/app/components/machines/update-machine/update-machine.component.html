@@ -3,16 +3,16 @@
         Machine : {{machine.id}}
     </h4>
     <label for="location">Name: </label>
-    <p id="name">{{machine.name}}</p>
+    <input id="name" [(ngModel)]="machine.name">
     <label for="name">Location: </label>
-    <p id="location">{{machine.location}}</p>
+    <input id="location" [(ngModel)]="machine.location">
     <label for="dispenserAmount">Dispenser amount: </label>
-    <p id="dispenserAmount">{{machine.dispenserAmount}}</p>
+    <input id="dispenserAmount" [(ngModel)]="machine.dispenserAmount">
     <label for="dispenserDepth">Dispenser depth: </label>
-    <p id="dispenserDepth">{{machine.dispenserDepth}}</p>
+    <input id="dispenserDepth" [(ngModel)]="machine.dispenserDepth" >
+
+    <button type="button" (click)="save()">save</button>
 </div>
 <ng-template #no_machine>
     Can't find machine
 </ng-template>
-
-<button type="button" (click)="goBack()">go back</button>

@@ -1,5 +1,5 @@
 export class Machine {
-    id: string = "-1";
+    id!: string ;
     location: string;
     name: string;
     dispenserAmount: number;

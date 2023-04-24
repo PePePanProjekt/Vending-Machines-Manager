@@ -19,8 +19,9 @@ export class AddMachineComponent {
         name = name.trim();
         if(!location){return;}// todo error message
         this.machineService.addMachine(
-            new Machine(location,name,Number(dispenserAmount),Number(dispenserDepth))
+            new Machine(location,name,+dispenserAmount,+dispenserDepth)
         ).subscribe();
+
         this.router.navigateByUrl("/machines");
 
     }
