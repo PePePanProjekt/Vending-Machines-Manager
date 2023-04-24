@@ -31,7 +31,7 @@ public class Item {
     private Integer amountAvailable;
 
     @OneToMany(mappedBy = "item")
-    private List<Sales> profits;
+    private List<Sale> profits;
 
     @OneToMany(mappedBy="item")
     private List<Contains> contains;

@@ -39,7 +39,7 @@ public class VendingMachine {
     private Integer dispenserDepth;
 
     @OneToMany(mappedBy="vendingMachine")
-    private List<Sales> profits;
+    private List<Sale> profits;
 
     @OneToMany(mappedBy="vendingMachine")
     private List<Contains> contains;

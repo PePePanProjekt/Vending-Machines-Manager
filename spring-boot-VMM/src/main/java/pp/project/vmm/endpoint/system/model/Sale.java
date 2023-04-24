@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 @Data
-public class Sales {
+public class Sale {
 
     // Fields
     @Id
