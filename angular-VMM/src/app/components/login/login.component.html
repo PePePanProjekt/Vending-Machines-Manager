@@ -1,0 +1,23 @@
+<app-navbar-guest/>
+
+<div class="container mt-5" style="max-width: 700px">
+  <h1>Login</h1>
+  <p>{{message}}</p>
+  <form (ngSubmit)="login()" class="form-horizontal" #loginForm="ngForm">
+
+          <div class="mb-3">
+              <label>Username</label>
+              <input matInput id="username" type="text" name="username" class="form-control" [(ngModel)]="username" required>
+          </div>
+
+
+          <div class="mb-3">
+              <label>Password</label>
+              <input matInput id="password" type="password" name="password" class="form-control" [(ngModel)]="password" required>
+          </div>
+
+      <p>
+          <button mat-raised-button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+      </p>
+  </form>
+</div>

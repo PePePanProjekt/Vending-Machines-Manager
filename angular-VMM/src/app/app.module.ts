@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {LoginComponent} from './login/login.component';
+import {LoginComponent} from './components/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './auth/auth.interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -19,11 +19,12 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { NavbarGuestComponent } from './navbar/navbar-guest/navbar-guest.component';
-import { NavbarOwnerComponent } from './navbar/navbar-owner/navbar-owner.component';
-import { GuestComponent } from './guest/guest.component';
-import { MachinesComponent } from './machines/machines.component';
-import { AddMachineComponent } from './machines/add-machine/add-machine.component';
+import { NavbarOwnerComponent } from './components/navbar/navbar-owner/navbar-owner.component';
+import { GuestComponent } from './components/guest/guest.component';
+import { MachinesComponent } from './components/machines/machines.component';
+import { AddMachineComponent } from './components/machines/add-machine/add-machine.component';
+import { NavbarGuestComponent } from './components/navbar/navbar-guest/navbar-guest.component';
+import { MachineInfoComponent } from './components/machines/machine-info/machine-info.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { AddMachineComponent } from './machines/add-machine/add-machine.componen
         MachinesComponent,
         AddMachineComponent,
         NavbarGuestComponent,
-        NavbarOwnerComponent
+        NavbarOwnerComponent,
+        MachineInfoComponent
     ],
     imports: [
         BrowserModule,
