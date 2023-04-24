@@ -30,6 +30,10 @@ public class Item {
     @NonNull
     private Integer amountAvailable;
 
+    @Column(name = "archived")
+    @NonNull
+    private boolean archived;
+
     @OneToMany(mappedBy = "item")
     private List<Sale> profits;
 

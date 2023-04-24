@@ -31,6 +31,10 @@ public class Sale {
     @NonNull
     private Float price;
 
+    @Column(name = "archived")
+    @NonNull
+    private boolean archived;
+
     @ManyToOne
     @JoinColumn(name="vending_machine_id", nullable = false)
     private VendingMachine vendingMachine;

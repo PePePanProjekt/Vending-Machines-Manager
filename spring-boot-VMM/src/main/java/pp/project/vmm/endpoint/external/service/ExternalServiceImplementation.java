@@ -66,7 +66,7 @@ public class ExternalServiceImplementation implements ExternalService{
         containsRepository.save(containsSale);
 
         Date timestamp = java.util.Date.from(java.time.LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        Sale sale = new Sale(timestamp, containsSale.getItemPrice());
+        Sale sale = new Sale(timestamp, containsSale.getItemPrice(), false);
         sale.setItem(item);
         sale.setVendingMachine(vendingMachine.get());
         saleRepository.save(sale);

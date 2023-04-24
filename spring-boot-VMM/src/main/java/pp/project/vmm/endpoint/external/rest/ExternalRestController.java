@@ -26,5 +26,5 @@ public class ExternalRestController {
 
         return externalService.sale(machineId, dispenser);
     }
-    
+
 }
