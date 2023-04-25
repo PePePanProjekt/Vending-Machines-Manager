@@ -15,7 +15,10 @@ export class LoginComponent {
     password: string = "";
     message: string = "";
 
-    constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
+    constructor(
+        private authService: AuthService,
+        private router: Router,
+        private snackBar: MatSnackBar) {
     }
 
     public login(): void {

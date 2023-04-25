@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Machine} from "../../../models/Machine";
 import {MachineService} from "../../../services/machine.service";
 import {ActivatedRoute} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-update-machine',
@@ -13,7 +14,8 @@ export class UpdateMachineComponent {
 
     constructor(
         private machineService : MachineService,
-        private route : ActivatedRoute
+        private route : ActivatedRoute,
+        private location: Location
     ) {
     }
 
@@ -34,6 +36,11 @@ export class UpdateMachineComponent {
             this.machineService.updateMachine(this.machine)
                 .subscribe();
         }
+        this.goBack();
+    }
+
+    goBack() {
+        this.location.back();
     }
 
 

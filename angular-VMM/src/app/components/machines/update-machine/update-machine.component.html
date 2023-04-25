@@ -1,18 +1,49 @@
-<div *ngIf="machine;else no_machine">
-    <h4>
-        Machine : {{machine.id}}
-    </h4>
-    <label for="location">Name: </label>
-    <input id="name" [(ngModel)]="machine.name">
-    <label for="name">Location: </label>
-    <input id="location" [(ngModel)]="machine.location">
-    <label for="dispenserAmount">Dispenser amount: </label>
-    <input id="dispenserAmount" [(ngModel)]="machine.dispenserAmount">
-    <label for="dispenserDepth">Dispenser depth: </label>
-    <input id="dispenserDepth" [(ngModel)]="machine.dispenserDepth" >
+<app-navbar-owner/>
 
-    <button type="button" (click)="save()">save</button>
+<div class="container my-5" style="max-width: 700px;">
+    <div *ngIf="machine;else no_machine">
+        <h4>
+            Machine : {{machine.id}}
+        </h4>
+        <div class="row m-3">
+            <div class="col">
+                <label for="location">Name </label>
+            </div>
+            <div class="col">
+                <input id="name" [(ngModel)]="machine.name" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label for="name">Location </label>
+            </div>
+            <div class="col">
+                <input id="location" [(ngModel)]="machine.location" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label for="dispenserAmount">Dispenser amount </label>
+            </div>
+            <div class="col">
+                <input id="dispenserAmount" [(ngModel)]="machine.dispenserAmount" class="form-control">
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="col">
+                <label for="dispenserDepth">Dispenser depth </label>
+            </div>
+            <div class="col">
+                <input id="dispenserDepth" [(ngModel)]="machine.dispenserDepth" class="form-control">
+            </div>
+        </div>
+
+        <button type="button" (click)="save()" class="btn btn-success m-1">Save</button>
+        <button type="button" (click)="goBack()" class="btn btn-warning m-1">Cancel</button>
+
+    </div>
+    <ng-template #no_machine>
+        Can't find machine
+    </ng-template>
 </div>
-<ng-template #no_machine>
-    Can't find machine
-</ng-template>
+

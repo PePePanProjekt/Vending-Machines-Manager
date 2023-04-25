@@ -25,7 +25,7 @@
           <td>to do</td>
           <td class="">
               <button class="btn btn-info m-1"  routerLink="/machines/{{machine.id}}" >Info</button>
-              <button class="btn btn-success m-1">Refill</button>
+              <button class="btn btn-success m-1" disabled>Refill</button>
               <button class="btn btn-warning m-1" routerLink="/machines/update/{{machine.id}}">Update</button>
               <button class="btn btn-danger m-1" (click)="deleteMachine(machine)" >Delete</button>
           </td>

@@ -1,18 +1,55 @@
+<app-navbar-owner/>
+<div class="container" style="max-width: 700px;">
 <div *ngIf="machine;else no_machine">
     <h4>
         Machine : {{machine.id}}
     </h4>
-    <label for="location">Name: </label>
-    <p id="name">{{machine.name}}</p>
-    <label for="name">Location: </label>
-    <p id="location">{{machine.location}}</p>
-    <label for="dispenserAmount">Dispenser amount: </label>
-    <p id="dispenserAmount">{{machine.dispenserAmount}}</p>
-    <label for="dispenserDepth">Dispenser depth: </label>
-    <p id="dispenserDepth">{{machine.dispenserDepth}}</p>
+    <div class="row m-3">
+        <div class="col">
+            <label for="location">Name</label>
+        </div>
+        <div class="col">
+            <p id="location">{{machine.location}}</p>
+        </div>
+    </div>
+    <div class="row m-3">
+        <div class="col">
+            <label for="name">Name</label>
+        </div>
+        <div class="col">
+            <p id="name">{{machine.name}}</p>
+        </div>
+    </div>
+    <div class="row m-3">
+        <div class="col">
+            <label for="dispenserAmount">Dispenser amount</label>
+        </div>
+        <div class="col">
+            <p id="dispenserAmount">{{machine.dispenserAmount}}</p>
+        </div>
+    </div>
+    <div class="row m-3">
+        <div class="col">
+            <label for="dispenserDepth">Dispenser depth</label>
+        </div>
+        <div class="col">
+            <p id="dispenserDepth">{{machine.dispenserDepth}}</p>
+        </div>
+    </div>
+        <div class="row m-3">
+            <div class="col">
+                <label for="items">Items:</label>
+            </div>
+            <div class="col">
+                <p id="items">todo</p>
+            </div>
+
+    </div>
+
 </div>
 <ng-template #no_machine>
     Can't find machine
 </ng-template>
 
-<button type="button" (click)="goBack()">go back</button>
+<button type="button" (click)="goBack()" class="btn btn-primary m-1">go back</button>
+</div>
