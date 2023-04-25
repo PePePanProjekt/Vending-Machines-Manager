@@ -18,7 +18,7 @@ services:
     container_name: prometheus
     user: "65534:65534"
     networks: 
-      - metrics
+      - backend
     volumes:
       - ./prometheus-grafana/prometheus/prometheus.yml:/prometheus/prometheus.yml:Z
     ports:
@@ -30,7 +30,7 @@ services:
     container_name: grafana
     user: "root:root"
     networks: 
-      - metrics
+      - backend
     volumes:
       - ./prometheus-grafana/grafana/grafana.ini:/grafana/grafana.ini
       - ./prometheus-grafana/grafana/datasource.yml:/grafana/provisioning/datasources/datasource.yaml
@@ -45,7 +45,7 @@ services:
       - '--path.rootfs=/host'
     pid: host
     networks:
-      - metrics
+      - backend
     restart: unless-stopped
     volumes:
       - '/:/host:ro,rslave'
@@ -66,8 +66,6 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - backend
-      - frontend
-      - metrics
     ports:
       - "8080:8080"
   front:
@@ -81,15 +79,13 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - frontend
+      - backend
     restart: always
     depends_on:
       - back
 
 networks:
   backend: {}
-  frontend: {}
-  metrics: {}
 
 
 volumes: 
