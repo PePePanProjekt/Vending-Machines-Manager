@@ -16,6 +16,7 @@ import pp.project.vmm.endpoint.system.repository.ItemRepository;
 import pp.project.vmm.endpoint.system.service.dto.ItemDetailsDTO;
 import pp.project.vmm.endpoint.system.service.dto.ItemSimpleDTO;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,15 +67,15 @@ class ItemServiceImplementationTest {
     private List<Item> prepareMockData(){
         List<Item> item = new ArrayList<>();
 
-        item.add(new Item("name1", 1));
-        item.add(new Item("name2", 2));
-        item.add(new Item("name3", 3));
+        item.add(new Item("name1", 1, false));
+        item.add(new Item("name2", 2, false));
+        item.add(new Item("name3", 3, false));
 
         return item;
     }
 
     private Optional<Item> prepareMockData2(UUID id){
-        Item item = new Item("name1", 1);
+        Item item = new Item("name1", 1, false);
         return Optional.of(item);
     }
 
@@ -93,7 +94,7 @@ class ItemServiceImplementationTest {
     void shouldUpdateItem() {
         // Given
         ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "name1");
-        Item item = new Item("item1", 10);
+        Item item = new Item("item1", 10, false);
         given(itemRepository.existsById(simpleDTO.getId())).willReturn(true);
         given(itemRepository.findById(simpleDTO.getId())).willReturn(Optional.of(item));
 
