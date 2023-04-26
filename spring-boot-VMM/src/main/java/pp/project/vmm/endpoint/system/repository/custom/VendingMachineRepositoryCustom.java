@@ -9,4 +9,5 @@ public interface VendingMachineRepositoryCustom {
     List<VendingMachine> findNotArchived();
 
     List<VendingMachine> findArchived();
+
 }

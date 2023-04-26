@@ -9,7 +9,7 @@ import pp.project.vmm.endpoint.system.model.Contains;
 import java.util.List;
 
 @Repository
-public class ContainsRepositoryCustomImplementation implements ContainsRepositoryCustom{
+public class ContainsRepositoryCustomImpl implements ContainsRepositoryCustom{
 
     @PersistenceContext
     EntityManager entityManager;
