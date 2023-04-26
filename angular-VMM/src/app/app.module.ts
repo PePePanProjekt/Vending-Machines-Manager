@@ -25,6 +25,7 @@ import { MachinesComponent } from './components/machines/machines.component';
 import { AddMachineComponent } from './components/machines/add-machine/add-machine.component';
 import { NavbarGuestComponent } from './components/navbar/navbar-guest/navbar-guest.component';
 import { MachineInfoComponent } from './components/machines/machine-info/machine-info.component';
+import { UpdateMachineComponent } from './components/machines/update-machine/update-machine.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { MachineInfoComponent } from './components/machines/machine-info/machine
         AddMachineComponent,
         NavbarGuestComponent,
         NavbarOwnerComponent,
-        MachineInfoComponent
+        MachineInfoComponent,
+        UpdateMachineComponent
     ],
     imports: [
         BrowserModule,

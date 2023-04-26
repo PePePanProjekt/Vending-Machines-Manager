@@ -38,10 +38,12 @@
                     </div>
                 </div>
 
-        <button type="button" class="btn btn-primary"
+        <button type="button" class="btn btn-success m-1"
                 (click)="addMachine(location.value,name.value,dispenserAmount.value,dispenserDepth.value)">
             Submit
         </button>
+
+        <button type="button" (click)="goBack()" class="btn btn-primary m-1">Cancel</button>
       </form>
 
 </div>
