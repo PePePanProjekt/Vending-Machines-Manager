@@ -18,7 +18,7 @@ services:
     container_name: prometheus
     user: "65534:65534"
     depends_on:
-      - spring-backend
+      - back
       - node_exporter
     networks: 
       - backend

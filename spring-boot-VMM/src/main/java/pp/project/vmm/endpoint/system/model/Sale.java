@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 @Data
-public class Sales {
+public class Sale {
 
     // Fields
     @Id
@@ -30,6 +30,10 @@ public class Sales {
     @Column(name="price")
     @NonNull
     private Float price;
+
+    @Column(name = "archived")
+    @NonNull
+    private boolean archived;
 
     @ManyToOne
     @JoinColumn(name="vending_machine_id", nullable = false)

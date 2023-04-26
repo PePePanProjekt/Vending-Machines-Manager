@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/management-api")
+@RequestMapping("/api/management")
 public class ManagementRestController {
 
     private final MachineService machineService;

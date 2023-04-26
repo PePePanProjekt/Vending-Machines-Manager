@@ -30,8 +30,12 @@ public class Item {
     @NonNull
     private Integer amountAvailable;
 
+    @Column(name = "archived")
+    @NonNull
+    private boolean archived;
+
     @OneToMany(mappedBy = "item")
-    private List<Sales> profits;
+    private List<Sale> profits;
 
     @OneToMany(mappedBy="item")
     private List<Contains> contains;

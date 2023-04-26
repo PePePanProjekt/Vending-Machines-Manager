@@ -74,7 +74,7 @@ public class ItemServiceImplementation implements ItemService{
     @Override
     public ResponseEntity<String> addItem(ItemSimpleDTO simpleDTO) {
 
-        Item item = new Item(simpleDTO.getName(), 0);
+        Item item = new Item(simpleDTO.getName(), 0, false);
         Item dbItem = itemRepository.save(item);
 
         if(dbItem.getId() == null) {
