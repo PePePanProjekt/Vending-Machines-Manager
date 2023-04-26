@@ -4,27 +4,27 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
-import pp.project.vmm.endpoint.system.model.Sale;
+import pp.project.vmm.endpoint.system.model.Batch;
 
 import java.util.List;
 
 @Repository
-public class SaleRepositoryCustomImplementation implements SaleRepositoryCustom{
+public class BatchRepositoryCustomImpl implements BatchRepositoryCustom{
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public List<Sale> findNotArchived() {
+    public List<Batch> findNotArchived() {
 
-        TypedQuery<Sale> query = entityManager.createQuery("SELECT s FROM Sale s WHERE s.archived = false", Sale.class);
+        TypedQuery<Batch> query = entityManager.createQuery("SELECT b FROM Batch b WHERE b.archived = false", Batch.class);
         return query.getResultList();
     }
 
     @Override
-    public List<Sale> findArchived() {
+    public List<Batch> findArchived() {
 
-        TypedQuery<Sale> query = entityManager.createQuery("SELECT s FROM Sale s WHERE s.archived = true", Sale.class);
+        TypedQuery<Batch> query = entityManager.createQuery("SELECT b FROM Batch b WHERE b.archived = true", Batch.class);
         return query.getResultList();
     }
 }

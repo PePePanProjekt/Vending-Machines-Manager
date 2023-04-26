@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ExternalServiceImplementation implements ExternalService{
+public class ExternalServiceImplementation implements ExternalService {
 
     private final VendingMachineRepository machineRepository;
 

@@ -9,7 +9,7 @@ import pp.project.vmm.endpoint.system.model.VendingMachine;
 import java.util.List;
 
 @Repository
-public class VendingMachineRepositoryCustomImplementation implements VendingMachineRepositoryCustom {
+public class VendingMachineRepositoryCustomImpl implements VendingMachineRepositoryCustom {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -23,6 +23,7 @@ public class VendingMachineRepositoryCustomImplementation implements VendingMach
 
     @Override
     public List<VendingMachine> findArchived() {
+
         TypedQuery<VendingMachine> query = entityManager.createQuery("SELECT vm FROM VendingMachine vm WHERE vm.archived = true", VendingMachine.class);
         return query.getResultList();
     }

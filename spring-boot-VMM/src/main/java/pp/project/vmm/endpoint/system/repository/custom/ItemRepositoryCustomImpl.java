@@ -9,7 +9,7 @@ import pp.project.vmm.endpoint.system.model.Item;
 import java.util.List;
 
 @Repository
-public class ItemRepositoryCustomImplementation implements ItemRepositoryCustom{
+public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
     @PersistenceContext
     EntityManager entityManager;

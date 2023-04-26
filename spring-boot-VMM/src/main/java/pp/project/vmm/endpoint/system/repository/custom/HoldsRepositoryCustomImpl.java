@@ -9,7 +9,7 @@ import pp.project.vmm.endpoint.system.model.Holds;
 import java.util.List;
 
 @Repository
-public class HoldsRepositoryCustomImplementation implements HoldsRepositoryCustom{
+public class HoldsRepositoryCustomImpl implements HoldsRepositoryCustom{
 
     @PersistenceContext
     EntityManager entityManager;
