@@ -30,7 +30,7 @@ public class Batch {
 
     @Column(name = "archived")
     @NonNull
-    private boolean archived;
+    private Boolean archived;
 
     @OneToMany(mappedBy="batch")
     private List<Holds> holds;

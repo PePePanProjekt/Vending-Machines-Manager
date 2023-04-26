@@ -52,7 +52,13 @@ public class MachineServiceImplementation implements MachineService {
                 usedSlots += contains.getItemAmount();
             }
 
-            percentSlotsUsed = (usedSlots / totalSlots) * 100;
+            if(totalSlots > 0) {
+                percentSlotsUsed = (usedSlots / totalSlots) * 100;
+            }
+            else {
+                percentSlotsUsed = 0;
+            }
+
             VendingMachineSimpleDTO vendingMachineSimpleDTO = new VendingMachineSimpleDTO(
                     vendingMachine.getId(),
                     vendingMachine.getLocation(),
