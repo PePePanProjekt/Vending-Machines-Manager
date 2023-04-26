@@ -23,7 +23,9 @@ export class MachinesComponent {
         this.machineService.getMachines().subscribe(machines => this.machines = machines);
     }
 
+    //todo confirmation
     deleteMachine(machine : Machine) {
+        this.machines = this.machines.filter(m => m !== machine);
         this.machineService.deleteMachine(machine.id).subscribe();
     }
 }

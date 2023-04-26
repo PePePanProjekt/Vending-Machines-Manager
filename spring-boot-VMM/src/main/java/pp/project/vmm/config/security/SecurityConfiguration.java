@@ -37,7 +37,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -66,7 +65,7 @@ public class SecurityConfiguration{
                     .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
                         try {
                             authorizationManagerRequestMatcherRegistry
-                                    .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                    .requestMatchers("/doc/**", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
                                     .anyRequest()
                                     .authenticated()
                                     .and()
