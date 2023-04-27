@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Machine } from 'src/app/models/Machine';
 import {MachineService} from "../../services/machine.service";
+import {MachineSimpleInfo} from "../../models/MachineSimpleInfo";
 
 @Component({
   selector: 'app-machines',
@@ -9,7 +10,7 @@ import {MachineService} from "../../services/machine.service";
 })
 export class MachinesComponent {
 
-  machines: Machine[] = [];
+  machines: MachineSimpleInfo[] = [];
 
   constructor(private machineService : MachineService){
 
@@ -24,7 +25,7 @@ export class MachinesComponent {
     }
 
     //todo confirmation
-    deleteMachine(machine : Machine) {
+    deleteMachine(machine : MachineSimpleInfo) {
         this.machines = this.machines.filter(m => m !== machine);
         this.machineService.deleteMachine(machine.id).subscribe();
     }

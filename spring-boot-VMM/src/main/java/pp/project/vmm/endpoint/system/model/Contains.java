@@ -35,7 +35,7 @@ public class Contains {
 
     @Column(name = "archived")
     @NonNull
-    private boolean archived;
+    private Boolean archived;
 
     @ManyToOne
     @JoinColumn(name="vending_machine_id", nullable = false)
