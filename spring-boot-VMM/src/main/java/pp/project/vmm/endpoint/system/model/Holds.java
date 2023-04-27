@@ -31,7 +31,7 @@ public class Holds {
 
     @Column(name = "archived")
     @NonNull
-    private boolean archived;
+    private Boolean archived;
 
     @ManyToOne
     @JoinColumn(name="batch_id", nullable = false)

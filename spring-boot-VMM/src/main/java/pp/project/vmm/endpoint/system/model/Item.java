@@ -32,7 +32,7 @@ public class Item {
 
     @Column(name = "archived")
     @NonNull
-    private boolean archived;
+    private Boolean archived;
 
     @OneToMany(mappedBy = "item")
     private List<Sale> profits;

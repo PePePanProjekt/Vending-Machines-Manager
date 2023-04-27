@@ -40,7 +40,7 @@ public class VendingMachine {
 
     @Column(name = "archived")
     @NonNull
-    private boolean archived;
+    private Boolean archived;
 
     @OneToMany(mappedBy="vendingMachine")
     private List<Sale> profits;
