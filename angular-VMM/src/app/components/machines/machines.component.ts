@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Machine } from 'src/app/models/Machine';
 import {MachineService} from "../../services/machine.service";
-import {MachineSimpleInfo} from "../../models/MachineSimpleInfo";
+import {MachineSimpleInfo} from "../../models/machine/MachineSimpleInfo";
 
 @Component({
   selector: 'app-machines',

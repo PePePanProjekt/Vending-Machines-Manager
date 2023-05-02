@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import {MachineService} from "../../../services/machine.service";
-import {Machine} from "../../../models/Machine";
+import {Machine} from "../../../models/machine/Machine";
 import {Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {Location} from "@angular/common";
 
 @Component({

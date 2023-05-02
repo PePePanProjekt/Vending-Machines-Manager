@@ -7,6 +7,8 @@ import { MachinesComponent } from './components/machines/machines.component';
 import { AddMachineComponent } from './components/machines/add-machine/add-machine.component';
 import {MachineInfoComponent} from "./components/machines/machine-info/machine-info.component";
 import {UpdateMachineComponent} from "./components/machines/update-machine/update-machine.component";
+import {WarehouseComponent} from "./components/warehouse/warehouse.component";
+import {ItemsComponent} from "./components/warehouse/items/items.component";
 
 const routes: Routes = [
     {path:'', component:GuestComponent},
@@ -15,6 +17,8 @@ const routes: Routes = [
     {path:'machines/add', component:AddMachineComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'machines/:id', component: MachineInfoComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'machines/update/:id', component: UpdateMachineComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'warehouse', component:WarehouseComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'warehouse/items', component:ItemsComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path: '**', redirectTo: ''}
 ];
 
