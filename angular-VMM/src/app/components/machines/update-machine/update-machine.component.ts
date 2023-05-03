@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Machine} from "../../../models/Machine";
+import {Machine} from "../../../models/machine/Machine";
 import {MachineService} from "../../../services/machine.service";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
