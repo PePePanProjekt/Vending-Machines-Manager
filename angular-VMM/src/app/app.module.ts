@@ -28,6 +28,9 @@ import { MachineInfoComponent } from './components/machines/machine-info/machine
 import { UpdateMachineComponent } from './components/machines/update-machine/update-machine.component';
 import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { ItemsComponent } from './components/warehouse/items/items.component';
+import { ItemInfoComponent } from './components/warehouse/items/item-info/item-info.component';
+import { BatchesComponent } from './components/warehouse/batches/batches.component';
+import { UpdateItemComponent } from './components/warehouse/items/update-item/update-item.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +45,9 @@ import { ItemsComponent } from './components/warehouse/items/items.component';
         UpdateMachineComponent,
         WarehouseComponent,
         ItemsComponent,
+        ItemInfoComponent,
+        BatchesComponent,
+        UpdateItemComponent,
     ],
     imports: [
         BrowserModule,

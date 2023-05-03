@@ -3,6 +3,7 @@ import {ItemDetails} from "../models/item/ItemDetails";
 import {catchError, Observable, of, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {Machine} from "../models/machine/Machine";
 
 @Injectable({
     providedIn: 'root'
@@ -41,5 +42,20 @@ export class ItemService {
             console.error(error);
             return of(result as T);
         };
+    }
+
+    getItem(id: string) :Observable<ItemDetails> {
+        const url = `${this.itemUrl}/${id}`;
+        return this.http.get<ItemDetails>(url).pipe(
+            tap(_ =>console.log(`service fetched item id=${id}`)),
+            catchError(this.handleError<ItemDetails>(`getItem id=${id}`))
+        );
+    }
+
+    updateItem(item: ItemDetails) {
+        return this.http.put(this.itemUrl, item,this.httpOptions).pipe(
+            tap(_ =>console.log(`updated machine id=${item.id}`)),
+            catchError(this.handleError<Machine>('updatedMachine'))
+        )
     }
 }

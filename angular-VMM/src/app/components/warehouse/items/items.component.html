@@ -2,49 +2,45 @@
 
 <div class="container">
 
-    <button class="btn btn-primary m-1" routerLink="/warehouse">Go to Batches</button>
-    <form>
+    <h2 class="m-1">Items</h2>
 
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary m-1" routerLink="/warehouse/batches">Go to Batches</button>
 
-    </form>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h2 class="m-1">Items</h2>
-            </div>
-            <div class="col-md-auto">
-                <input id="newItemName" #newItemName  type="text" class="form-control m-1"
-                       style="max-width: 200px;" placeholder="new item name">
-            </div>
-            <div class="col col-lg-2">
-                <button class="btn btn-success m-1" (click)="addItem(newItemName.value)">Add New Item</button>
-            </div>
         </div>
-
-
-        <table class="table table-striped text-center">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Amount Available</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of items">
-                <td>{{item.id}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.amountAvailable}}</td>
-                <td class="">
-                    <button class="btn btn-info m-1">Info</button>
-                    <button class="btn btn-success m-1">Refill</button>
-                    <button class="btn btn-warning m-1">Update</button>
-                    <button class="btn btn-danger m-1" (click)="deleteItem(item)">Delete</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
+        <div class="col-md-auto">
+            <input id="newItemName" #newItemName type="text" class="form-control m-1"
+                   style="max-width: 200px;" placeholder="new item name">
+        </div>
+        <div class="col col-lg-2">
+            <button class="btn btn-success m-1" (click)="addItem(newItemName.value)">Add Item</button>
+        </div>
     </div>
+
+
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Amount Available</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.amountAvailable}}</td>
+            <td class="">
+                <button class="btn btn-info m-1" routerLink="{{item.id}}">Info</button>
+                <button class="btn btn-success m-1">Refill</button>
+                <button class="btn btn-warning m-1" routerLink="update/{{item.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteItem(item)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
