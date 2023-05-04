@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import {catchError, Observable, of, tap} from "rxjs";
-import {Machine} from "../models/Machine";
+import {Machine} from "../models/machine/Machine";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {MachineInfo} from "../models/MachineInfo";
+import {MachineFullInfo} from "../models/machine/MachineFullInfo";
+import {MachineSimpleInfo} from "../models/machine/MachineSimpleInfo";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MachineService {
-    private machineUrl  = environment.apiUrl+'/'+"management-api/machines"
+    private machineUrl  = environment.apiUrl+"/api/management/machines"
   constructor(private http: HttpClient) { }
 
     httpOptions = {
@@ -19,9 +20,9 @@ export class MachineService {
         return this.http.post<Machine>(this.machineUrl,machine);
     }
 
-    getMachines() : Observable<Machine[]> {
-        return this.http.get<Machine[]>(this.machineUrl).pipe(
-            catchError(this.handleError<Machine[]>('getMachines',[]))
+    getMachines() : Observable<MachineSimpleInfo[]> {
+        return this.http.get<MachineSimpleInfo[]>(this.machineUrl).pipe(
+            catchError(this.handleError<MachineSimpleInfo[]>('getMachines',[]))
         );
     }
 
@@ -32,20 +33,20 @@ export class MachineService {
         };
     }
 
-    getMachine(id: string): Observable<MachineInfo> {
+    getMachine(id: string): Observable<MachineFullInfo> {
         const url = `${this.machineUrl}/${id}`;
-        return this.http.get<MachineInfo>(url).pipe(
+        return this.http.get<MachineFullInfo>(url).pipe(
             tap(_ =>console.log(`service fetched machine id=${id}`)),
-            catchError(this.handleError<MachineInfo>(`getMachine id=${id}`))
+            catchError(this.handleError<MachineFullInfo>(`getMachine id=${id}`))
         );
 
     }
 
-    deleteMachine(id: string) :Observable<Machine> {
+    deleteMachine(id: string) :Observable<MachineSimpleInfo> {
         const url = `${this.machineUrl}/${id}`;
-        return this.http.delete<Machine>(url,this.httpOptions).pipe(
+        return this.http.delete<MachineSimpleInfo>(url,this.httpOptions).pipe(
             tap(_ =>console.log(`deleted machine id=${id}`)),
-            catchError(this.handleError<Machine>('deletedMachine'))
+            catchError(this.handleError<MachineSimpleInfo>('deletedMachine'))
         );
     }
 
