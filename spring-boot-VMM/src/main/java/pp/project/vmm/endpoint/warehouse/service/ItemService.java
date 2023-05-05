@@ -1,8 +1,9 @@
-package pp.project.vmm.endpoint.system.service;
+package pp.project.vmm.endpoint.warehouse.service;
 
 import org.springframework.http.ResponseEntity;
-import pp.project.vmm.endpoint.system.service.dto.ItemDetailsDTO;
-import pp.project.vmm.endpoint.system.service.dto.ItemSimpleDTO;
+
+import pp.project.vmm.endpoint.warehouse.service.dto.ItemDetailsDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.ItemSimpleDTO;
 
 import java.util.List;
 import java.util.UUID;

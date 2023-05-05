@@ -3,7 +3,7 @@ package pp.project.vmm.endpoint.system.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pp.project.vmm.endpoint.system.service.ItemService;
+
 import pp.project.vmm.endpoint.system.service.MachineService;
 import pp.project.vmm.endpoint.system.service.dto.*;
 
@@ -16,12 +16,9 @@ public class ManagementRestController {
 
     private final MachineService machineService;
 
-    private final ItemService itemService;
-
     @Autowired
-    public ManagementRestController(MachineService machineService, ItemService itemService) {
+    public ManagementRestController(MachineService machineService) {
         this.machineService = machineService;
-        this.itemService = itemService;
     }
 
     // Machine CRUD endpoints
@@ -66,39 +63,6 @@ public class ManagementRestController {
     public ResponseEntity<String> deleteMachine(@PathVariable UUID machineId) {
 
         ResponseEntity<String> response = machineService.deleteMachineById(machineId);
-        return response;
-    }
-
-
-    // Item CRUD endpoints
-    @GetMapping("/items")
-    public List<ItemDetailsDTO> getItems() {
-        return itemService.getItems();
-    }
-
-    @GetMapping("/items/{itemId}")
-    public ItemDetailsDTO getItemById(@PathVariable UUID itemId) {
-        return itemService.getItemById(itemId);
-    }
-
-    @PostMapping("/items")
-    public ResponseEntity<String> createItem(@RequestBody ItemSimpleDTO simpleDTO) {
-
-        ResponseEntity<String> response = itemService.addItem(simpleDTO);
-        return response;
-    }
-
-    @PutMapping("/items")
-    public ResponseEntity<String> updateItem(@RequestBody ItemSimpleDTO simpleDTO) {
-
-        ResponseEntity<String> response = itemService.updateItem(simpleDTO);
-        return response;
-    }
-
-    @DeleteMapping("/items/{itemId}")
-    public ResponseEntity<String> deleteItem(@PathVariable UUID itemId) {
-
-        ResponseEntity<String> response = itemService.deleteItemById(itemId);
         return response;
     }
 

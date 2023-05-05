@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import pp.project.vmm.endpoint.system.model.Holds;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class HoldsRepositoryCustomImpl implements HoldsRepositoryCustom{
@@ -26,5 +27,12 @@ public class HoldsRepositoryCustomImpl implements HoldsRepositoryCustom{
 
         TypedQuery<Holds> query = entityManager.createQuery("SELECT h FROM Holds h WHERE h.archived = true", Holds.class);
         return query.getResultList();
+    }
+
+    @Override
+    public List<Holds> findByItemId(UUID id) {
+
+        TypedQuery<Holds> query = entityManager.createQuery("SELECT h FROM Holds h JOIN h.item i WHERE i.id = ?1", Holds.class);
+        return query.setParameter(1, id).getResultList();
     }
 }

@@ -1,4 +1,4 @@
-package pp.project.vmm.endpoint.system.service;
+package pp.project.vmm.endpoint.warehouse.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pp.project.vmm.endpoint.system.model.Item;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
-import pp.project.vmm.endpoint.system.service.dto.ItemDetailsDTO;
-import pp.project.vmm.endpoint.system.service.dto.ItemSimpleDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.ItemDetailsDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.ItemSimpleDTO;
 
 import java.util.ArrayList;
 import java.util.List;

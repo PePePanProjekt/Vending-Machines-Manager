@@ -13,8 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pp.project.vmm.endpoint.system.model.Item;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
-import pp.project.vmm.endpoint.system.service.dto.ItemDetailsDTO;
-import pp.project.vmm.endpoint.system.service.dto.ItemSimpleDTO;
+import pp.project.vmm.endpoint.warehouse.service.ItemServiceImplementation;
+import pp.project.vmm.endpoint.warehouse.service.dto.ItemDetailsDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.ItemSimpleDTO;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
