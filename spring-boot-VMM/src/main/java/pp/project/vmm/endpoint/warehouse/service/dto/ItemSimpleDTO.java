@@ -1,4 +1,4 @@
-package pp.project.vmm.endpoint.system.service.dto;
+package pp.project.vmm.endpoint.warehouse.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,9 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDetailsDTO {
+public class ItemSimpleDTO {
 
     private UUID id;
 
     private String name;
-
-    private int amountAvailable;
 }
