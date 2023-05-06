@@ -13,6 +13,21 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - backend
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    networks: 
+      - backend
+    depends_on:
+      - db
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:5050"
   prometheus:
     image: docker.io/prom/prometheus:latest
     container_name: prometheus
@@ -96,4 +111,6 @@ volumes:
   db: 
     driver: local
   grafana-storage:
+    driver: local
+  pgadmin-data:
     driver: local
