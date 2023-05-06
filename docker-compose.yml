@@ -4,8 +4,8 @@ services:
     image: docker.io/library/postgres:latest
     container_name: db
     restart: always
-    ports:
-      - "5432:5432"
+    expose:
+      - 5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -18,7 +18,7 @@ services:
     container_name: prometheus
     user: "65534:65534"
     depends_on:
-      - spring-backend
+      - back
       - node_exporter
     networks: 
       - backend
@@ -37,6 +37,7 @@ services:
     volumes:
       - ./prometheus-grafana/grafana/grafana.ini:/grafana/grafana.ini
       - ./prometheus-grafana/grafana/datasource.yml:/grafana/provisioning/datasources/datasource.yaml
+      - grafana-storage:/var/lib/grafana
     ports:
       - 3000:3000
     links:
@@ -63,7 +64,7 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://vmm.dena2rat.xyz:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -93,4 +94,6 @@ networks:
 
 volumes: 
   db: 
+    driver: local
+  grafana-storage:
     driver: local
