@@ -1,4 +1,4 @@
-package pp.project.vmm.endpoint.system.service;
+package pp.project.vmm.endpoint.warehouse.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pp.project.vmm.endpoint.system.model.Item;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
-import pp.project.vmm.endpoint.warehouse.service.ItemServiceImplementation;
 import pp.project.vmm.endpoint.warehouse.service.dto.ItemDetailsDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.ItemSimpleDTO;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
