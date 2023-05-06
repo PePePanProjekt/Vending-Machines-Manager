@@ -31,6 +31,7 @@ import { ItemsComponent } from './components/warehouse/items/items.component';
 import { ItemInfoComponent } from './components/warehouse/items/item-info/item-info.component';
 import { BatchesComponent } from './components/warehouse/batches/batches.component';
 import { UpdateItemComponent } from './components/warehouse/items/update-item/update-item.component';
+import { AddBatchComponent } from './components/warehouse/batches/add-batch/add-batch.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +49,7 @@ import { UpdateItemComponent } from './components/warehouse/items/update-item/up
         ItemInfoComponent,
         BatchesComponent,
         UpdateItemComponent,
+        AddBatchComponent,
     ],
     imports: [
         BrowserModule,
