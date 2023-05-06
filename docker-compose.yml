@@ -15,7 +15,7 @@ services:
       - backend
   pgadmin:
     container_name: pgadmin4_container
-    image: dpage/pgadmin4
+    image: docker.io/dpage/pgadmin4:latest
     restart: always
     networks: 
       - backend
@@ -26,6 +26,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_LISTEN_PORT: 5050
     ports:
       - "5050:5050"
   prometheus:
