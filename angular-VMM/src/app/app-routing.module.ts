@@ -12,6 +12,7 @@ import {ItemsComponent} from "./components/warehouse/items/items.component";
 import {ItemInfoComponent} from "./components/warehouse/items/item-info/item-info.component";
 import {BatchesComponent} from "./components/warehouse/batches/batches.component";
 import {UpdateItemComponent} from "./components/warehouse/items/update-item/update-item.component";
+import {AddBatchComponent} from "./components/warehouse/batches/add-batch/add-batch.component";
 
 const routes: Routes = [
     {path:'', component:GuestComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
     {path:'warehouse', component:WarehouseComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'warehouse/items', component:ItemsComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'warehouse/batches', component:BatchesComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'warehouse/batches/add', component:AddBatchComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'warehouse/items/:id', component:ItemInfoComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'warehouse/items/update/:id', component:UpdateItemComponent, canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path: '**', redirectTo: ''}
