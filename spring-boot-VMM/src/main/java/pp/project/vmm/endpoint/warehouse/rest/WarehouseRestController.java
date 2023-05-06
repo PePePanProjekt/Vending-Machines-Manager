@@ -18,6 +18,7 @@ import pp.project.vmm.endpoint.warehouse.service.BatchService;
 import pp.project.vmm.endpoint.warehouse.service.HoldsService;
 import pp.project.vmm.endpoint.warehouse.service.ItemService;
 import pp.project.vmm.endpoint.warehouse.service.dto.BatchDetailsDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.BatchSimpleDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.HoldsDetailsDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.HoldsFullInfoDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.ItemDetailsDTO;
@@ -77,6 +78,16 @@ public class WarehouseRestController {
     @GetMapping("/batch/{batchId}")
     public BatchDetailsDTO getBatchById(@PathVariable UUID batchId) {
         return batchService.getById(batchId);
+    }
+
+    @GetMapping("/batch/simple")
+    public List<BatchSimpleDTO> getAllSimpleBatch() {
+        return batchService.getAllSimple();
+    }
+
+    @GetMapping("/batch/simple/{batchId}")
+    public BatchSimpleDTO getSimpleBatchById(@PathVariable UUID batchId) {
+        return batchService.getSimpleById(batchId);
     }
 
     @PostMapping("/batch")

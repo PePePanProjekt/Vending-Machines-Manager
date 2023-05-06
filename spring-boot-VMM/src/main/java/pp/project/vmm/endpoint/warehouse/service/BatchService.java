@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 
 import pp.project.vmm.endpoint.warehouse.service.dto.BatchDetailsDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.BatchSimpleDTO;
 
 public interface BatchService {
     
@@ -18,5 +19,9 @@ public interface BatchService {
     ResponseEntity<String> deleteBatchById(UUID id);
 
     ResponseEntity<String> addBatch(BatchDetailsDTO detailsDTO);
+
+    List<BatchSimpleDTO> getAllSimple();
+
+    BatchSimpleDTO getSimpleById(UUID id);
 
 }
