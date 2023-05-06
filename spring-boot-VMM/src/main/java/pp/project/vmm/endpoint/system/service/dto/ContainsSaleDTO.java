@@ -9,9 +9,12 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemSimpleDTO {
+public class ContainsSaleDTO {
 
     private UUID id;
 
-    private String name;
+    private float itemPrice;
+
+    private UUID itemId;
+
 }
