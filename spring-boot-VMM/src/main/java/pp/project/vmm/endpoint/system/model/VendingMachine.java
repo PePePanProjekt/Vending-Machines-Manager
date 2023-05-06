@@ -38,8 +38,12 @@ public class VendingMachine {
     @NonNull
     private Integer dispenserDepth;
 
+    @Column(name = "archived")
+    @NonNull
+    private Boolean archived;
+
     @OneToMany(mappedBy="vendingMachine")
-    private List<Sales> profits;
+    private List<Sale> profits;
 
     @OneToMany(mappedBy="vendingMachine")
     private List<Contains> contains;

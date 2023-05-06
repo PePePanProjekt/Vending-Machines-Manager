@@ -22,8 +22,8 @@ public class VendingMachineDetailsDTO {
     private String name;
 
     @NonNull
-    private int dispenserAmount;
+    private Integer dispenserAmount;
 
     @NonNull
-    private int dispenserDepth;
+    private Integer dispenserDepth;
 }

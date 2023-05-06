@@ -1,4 +1,4 @@
-package pp.project.vmm.endpoint.system.service.dto;
+package pp.project.vmm.endpoint.warehouse.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

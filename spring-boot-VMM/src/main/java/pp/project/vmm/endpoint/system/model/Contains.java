@@ -33,6 +33,10 @@ public class Contains {
     @NonNull
     private Integer dispenserNumber;
 
+    @Column(name = "archived")
+    @NonNull
+    private Boolean archived;
+
     @ManyToOne
     @JoinColumn(name="vending_machine_id", nullable = false)
     @NonNull

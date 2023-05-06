@@ -52,7 +52,13 @@ public class MachineServiceImplementation implements MachineService {
                 usedSlots += contains.getItemAmount();
             }
 
-            percentSlotsUsed = (usedSlots / totalSlots) * 100;
+            if(totalSlots > 0) {
+                percentSlotsUsed = (usedSlots / totalSlots) * 100;
+            }
+            else {
+                percentSlotsUsed = 0;
+            }
+
             VendingMachineSimpleDTO vendingMachineSimpleDTO = new VendingMachineSimpleDTO(
                     vendingMachine.getId(),
                     vendingMachine.getLocation(),
@@ -101,7 +107,7 @@ public class MachineServiceImplementation implements MachineService {
     @Override
     public ResponseEntity<String> addMachine(VendingMachineDetailsDTO detailsDTO) {
 
-        VendingMachine vendingMachine = new VendingMachine(detailsDTO.getLocation(), detailsDTO.getName(), detailsDTO.getDispenserAmount(), detailsDTO.getDispenserDepth());
+        VendingMachine vendingMachine = new VendingMachine(detailsDTO.getLocation(), detailsDTO.getName(), detailsDTO.getDispenserAmount(), detailsDTO.getDispenserDepth(), false);
         VendingMachine dbVendingMachine = vendingMachineRepository.save(vendingMachine);
 
         if(dbVendingMachine.getId() == null) {
@@ -119,7 +125,7 @@ public class MachineServiceImplementation implements MachineService {
             return new ResponseEntity<>("Vending machine of given id does not exist", HttpStatus.NOT_FOUND);
         }
 
-        VendingMachine vendingMachine = new VendingMachine(detailsDTO.getLocation(), detailsDTO.getName(), detailsDTO.getDispenserAmount(), detailsDTO.getDispenserDepth());
+        VendingMachine vendingMachine = new VendingMachine(detailsDTO.getLocation(), detailsDTO.getName(), detailsDTO.getDispenserAmount(), detailsDTO.getDispenserDepth(), false);
         vendingMachine.setId(detailsDTO.getId());
         VendingMachine dbVendingMachine = vendingMachineRepository.save(vendingMachine);
 
@@ -197,6 +203,7 @@ public class MachineServiceImplementation implements MachineService {
                         slotDTO.getItemPrice(),
                         slotDTO.getItemAmount(),
                         slotDTO.getSlotNumber(),
+                        false,
                         vendingMachine,
                         item
                 );

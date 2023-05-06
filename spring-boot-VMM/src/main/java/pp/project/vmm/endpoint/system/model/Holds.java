@@ -29,6 +29,10 @@ public class Holds {
     @NonNull
     private Integer itemAmount;
 
+    @Column(name = "archived")
+    @NonNull
+    private Boolean archived;
+
     @ManyToOne
     @JoinColumn(name="batch_id", nullable = false)
     @NonNull
