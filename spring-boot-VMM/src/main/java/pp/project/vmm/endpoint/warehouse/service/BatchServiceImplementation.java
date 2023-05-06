@@ -17,6 +17,7 @@ import pp.project.vmm.endpoint.system.repository.BatchRepository;
 import pp.project.vmm.endpoint.system.repository.HoldsRepository;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
 import pp.project.vmm.endpoint.warehouse.service.dto.BatchDetailsDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.BatchSimpleDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.HoldsDetailsDTO;
 
 @Service
@@ -197,5 +198,32 @@ public class BatchServiceImplementation implements BatchService {
 
         return new ResponseEntity<String>("Successfully saved a new Batch object and all associated Holds objects", HttpStatus.OK);
     }
+
+    @Override
+    public List<BatchSimpleDTO> getAllSimple() {
+        
+        List<BatchSimpleDTO> dtoList = new ArrayList<>();
+        List<Batch> batchList = batchRepository.findAll();
+        for(Batch batch : batchList) {
+            BatchSimpleDTO simpleDto = new BatchSimpleDTO(batch.getId(), batch.getDate(), batch.getHolds().size());
+            dtoList.add(simpleDto);
+        }
+        return dtoList;
+    }
+
+    @Override
+    public BatchSimpleDTO getSimpleById(UUID id) {
+
+        Optional<Batch> batchOptional = batchRepository.findById(id);
+        if(batchOptional.isEmpty()) {
+            return null;
+        }
+        Batch batch = batchOptional.get();
+
+        BatchSimpleDTO simpleDto = new BatchSimpleDTO(batch.getId(), batch.getDate(), batch.getHolds().size());
+        return simpleDto;
+    }
+
+    
     
 }
