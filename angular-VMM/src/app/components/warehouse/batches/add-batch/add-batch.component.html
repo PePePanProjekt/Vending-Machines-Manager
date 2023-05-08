@@ -1,6 +1,6 @@
 <app-navbar-owner/>
 
-<div class="container" >
+<div class="container">
     <h2>New Batch</h2>
 
     <div>
@@ -10,36 +10,37 @@
                 <label for="Date">Date</label>
             </div>
             <div class="col">
-                <input id="Date" #location type="datetime-local" class="form-control">
+                <input id="Date" #date type="datetime-local" class="form-control">
             </div>
         </div>
         <h4>Add item to batch</h4>
-        <div class="row">
-            <div class="col-auto me-auto">
-                <label for="Item">Item</label>
-            </div>
-            <div class="col">
-                <select id="Item" #Item required class="form-control">
-                    <option *ngFor="let item of allItems" [value]="item">{{item.name}}</option>
-                </select>
-            </div>
+        <div >
+            <div class="row">
+                <div class="col-auto me-auto">
+                    <label for="Item">Item</label>
+                </div>
+                <div class="col">
+                    <select id="Item" #Item required class="form-control" [(ngModel)]="hold.itemId" name="itemId">
+                        <option *ngFor="let item of allItems" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
 
-            <div class="col-auto me-auto">
-                <label for="ItemPrice">ItemPrice</label>
-            </div>
-            <div class="col">
-                <input id="ItemPrice" #ItemPrice type="number" class="form-control">
-            </div>
+                <div class="col-auto me-auto">
+                    <label for="ItemPrice">ItemPrice</label>
+                </div>
+                <div class="col">
+                    <input id="ItemPrice" #ItemPrice type="number" class="form-control" [(ngModel)]="hold.itemPrice">
+                </div>
 
-            <div class="col-auto me-auto">
-                <label for="ItemAmount">Item Amount</label>
+                <div class="col-auto me-auto">
+                    <label for="ItemAmount">Item Amount</label>
+                </div>
+                <div class="col">
+                    <input id="ItemAmount" #ItemAmount type="number" class="form-control" [(ngModel)]="hold.itemAmount">
+                </div>
             </div>
-            <div class="col">
-                <input id="ItemAmount" #ItemAmount type="number" class="form-control">
-            </div>
+            <button class="btn btn-success" (click)="addItemToBatch()">Add</button>
         </div>
-        <button class="btn btn-success" >Add</button>
-
     </div>
 
     <div>
@@ -54,17 +55,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr >
-                <td>item</td>
-                <td>date</td>
-                <td>5</td>
+            <tr *ngFor="let addedItem of itemsInBatch">
+                <td>{{this.getItemName(addedItem.itemId)}}</td>
+                <td>{{addedItem.itemPrice}}</td>
+                <td>{{addedItem.itemAmount}}</td>
                 <td class="">
-                    <button class="btn btn-danger m-1" >Delete</button>
+                    <button class="btn btn-danger m-1" (click)="deleteItemFromBatch(addedItem)">Delete</button>
                 </td>
             </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-success m-1">
+        <button type="button" class="btn btn-success m-1" (click)="addBatch(date.value)">
             Submit
         </button>
         <button type="button" (click)="goBack()" class="btn btn-primary m-1">Cancel</button>

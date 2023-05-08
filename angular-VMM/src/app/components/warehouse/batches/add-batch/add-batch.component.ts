@@ -6,39 +6,62 @@ import {ItemDetails} from "../../../../models/item/ItemDetails";
 import {ItemSimple} from "../../../../models/item/ItemSimple";
 import {ItemService} from "../../../../services/item.service";
 import {HoldsDetails} from "../../../../models/Holds/HoldsDetails";
+import {BatchDetails} from "../../../../models/Batch/BatchDetails";
 
 @Component({
-  selector: 'app-add-batch',
-  templateUrl: './add-batch.component.html',
-  styleUrls: ['./add-batch.component.css']
+    selector: 'app-add-batch',
+    templateUrl: './add-batch.component.html',
+    styleUrls: ['./add-batch.component.css']
 })
 export class AddBatchComponent {
 
-    allItems?: ItemSimple[];
+    allItems: ItemSimple[] = [];
     itemsInBatch: HoldsDetails[] = [];
-
-    //hold = new HoldDetails()
+    hold: HoldsDetails = new HoldsDetails("", 10, 10);
 
     constructor(
         private batchService: BatchService,
         private itemService: ItemService,
-        private router : Router,
-        private location : Location
-    ) {}
+        private router: Router,
+        private location: Location
+    ) {
+    }
 
-    ngOnInit(){
+    ngOnInit() {
         this.getItems();
     }
+
     goBack() {
         this.location.back();
     }
 
-    private getItems(){
+    private getItems() {
         this.itemService.getItems().subscribe(items => this.allItems = items);
     }
 
-    addItemToBatch(item: ItemSimple | undefined, itemPrice: string, itemAmount: string){
-        if(item ==null){return;} //todo error message
+    addItemToBatch() {
+        if (this.hold.itemId == "") {
+            return;
+        }
+        console.log(this.hold);
+        let newHold = new HoldsDetails(this.hold.itemId, this.hold.itemPrice, this.hold.itemAmount);
+        this.itemsInBatch.push(newHold);
     }
 
+    getItemName(itemId: string) {
+        return this.allItems.filter(item => item.id == itemId)[0].name
+    }
+
+    deleteItemFromBatch(addedItem: HoldsDetails) {
+        this.itemsInBatch = this.itemsInBatch.filter(item => item !== addedItem)
+    }
+
+    addBatch(date: string) {
+        let newBatch = new BatchDetails(date, this.itemsInBatch);
+        this.batchService.addBatch(newBatch).subscribe(b => {
+                console.log(b.id);
+            }
+        );
+        this.goBack();
+    }
 }

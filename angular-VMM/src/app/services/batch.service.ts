@@ -4,6 +4,7 @@ import {BatchDetails} from "../models/Batch/BatchDetails";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {BatchSimple} from "../models/Batch/BatchSimple";
+import {HoldsDetails} from "../models/Holds/HoldsDetails";
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,10 @@ export class BatchService {
 
     getBatches() :Observable<BatchSimple[]> {
         return this.http.get<BatchSimple[]>(this.batchUrl+"/simple");
+    }
+
+
+    addBatch(newBatch: BatchDetails):Observable<BatchDetails> {
+        return this.http.post<BatchDetails>(this.batchUrl,newBatch);
     }
 }
