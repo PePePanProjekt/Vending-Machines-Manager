@@ -1,5 +1,6 @@
 package pp.project.vmm.endpoint.warehouse.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pp.project.vmm.endpoint.system.model.Batch;
 import pp.project.vmm.endpoint.system.model.Holds;
 import pp.project.vmm.endpoint.system.model.Item;
+import pp.project.vmm.endpoint.system.model.VendingMachine;
 import pp.project.vmm.endpoint.system.repository.BatchRepository;
 import pp.project.vmm.endpoint.system.repository.HoldsRepository;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
@@ -19,6 +21,8 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(SpringExtension.class)
 class BatchServiceImplementationTest {
 
@@ -30,11 +34,18 @@ class BatchServiceImplementationTest {
     BatchRepository batchRepository;
     @InjectMocks
     BatchServiceImplementation batchService;
-    UUID id = UUID.randomUUID();
-    @Test
-    void shouldGetAllTest() {
-        // Given
-        Item item1 = new Item();
+    Item item1;
+    Item item2;
+    Batch batch1;
+    Batch batch2;
+    Holds holds1;
+    Holds holds2;
+    Holds holds3;
+    @BeforeEach
+    void init()
+    {
+        UUID id = UUID.randomUUID();
+        item1 = new Item();
         item1.setName("item1");
         item1.setId(id);
         item1.setAmountAvailable(5);
@@ -42,7 +53,7 @@ class BatchServiceImplementationTest {
 
         UUID id2 = UUID.randomUUID();
 
-        Item item2 = new Item();
+        item2 = new Item();
         item2.setName("item2");
         item2.setId(id2);
         item2.setAmountAvailable(6);
@@ -50,20 +61,20 @@ class BatchServiceImplementationTest {
 
         UUID idb1 = UUID.randomUUID();
         Date date1 = new Date(2023, Calendar.FEBRUARY, 14);
-        Batch batch1 = new Batch();
+        batch1 = new Batch();
         batch1.setId(idb1);
         batch1.setArchived(false);
         batch1.setDate(date1);
 
         UUID idb2 = UUID.randomUUID();
         Date date2 = new Date(2023, Calendar.JANUARY, 14);
-        Batch batch2 = new Batch();
+        batch2 = new Batch();
         batch2.setId(idb2);
         batch2.setArchived(false);
         batch2.setDate(date2);
 
         UUID idh1 = UUID.randomUUID();
-        Holds holds1 = new Holds();
+        holds1 = new Holds();
         holds1.setId(idh1);
         holds1.setItem(item1);
         holds1.setItemPrice(30.0f);
@@ -72,7 +83,7 @@ class BatchServiceImplementationTest {
         holds1.setItemAmount(10);
 
         UUID idh2 = UUID.randomUUID();
-        Holds holds2 = new Holds();
+        holds2 = new Holds();
         holds2.setId(idh2);
         holds2.setItem(item2);
         holds2.setItemPrice(15.0f);
@@ -81,7 +92,7 @@ class BatchServiceImplementationTest {
         holds2.setItemAmount(11);
 
         UUID idh3 = UUID.randomUUID();
-        Holds holds3 = new Holds();
+        holds3 = new Holds();
         holds3.setId(idh3);
         holds3.setItem(item2);
         holds3.setItemPrice(18.0f);
@@ -91,7 +102,10 @@ class BatchServiceImplementationTest {
 
         batch1.setHolds(Arrays.asList(holds1, holds2));
         batch2.setHolds(List.of(holds3));
-
+    }
+    @Test
+    void shouldGetAllTest() {
+        // Given
         given(batchRepository.findAll()).willReturn(Arrays.asList(batch1, batch2));
 
         // When
@@ -137,7 +151,50 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void getById() {
+    void shouldGetById() {
+        // Given
+        UUID id = UUID.randomUUID();
+
+        given(batchRepository.findById(id)).willReturn(Optional.of(batch1));
+
+        // When
+        BatchDetailsDTO result = batchService.getById(id);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(batch1.getId(), result.getId());
+        assertEquals(batch1.getDate(), result.getDate());
+
+        List<HoldsDetailsDTO> holdsDetails = result.getHolds();
+        assertNotNull(holdsDetails);
+        assertEquals(2, holdsDetails.size());
+
+        HoldsDetailsDTO holdsDetails1 = holdsDetails.get(0);
+        assertEquals(holds1.getId(), holdsDetails1.getId());
+        assertEquals(holds1.getItem().getId(), holdsDetails1.getItemId());
+        assertEquals(holds1.getItemPrice(), holdsDetails1.getItemPrice());
+        assertEquals(holds1.getItemAmount(), holdsDetails1.getItemAmount());
+
+        verify(batchRepository, times(1)).findById(id);
+        verifyNoMoreInteractions(batchRepository);
+    }
+
+    @Test
+    public void ShouldNotGetById() {
+
+        // Given
+        UUID id = UUID.randomUUID();
+
+        given(batchRepository.findById(id)).willReturn(Optional.empty());
+
+        // When
+        BatchDetailsDTO result = batchService.getById(id);
+
+        assertNull(result);
+
+        // Then
+        verify(batchRepository, times(1)).findById(id);
+        verifyNoMoreInteractions(batchRepository);
     }
 
     @Test
