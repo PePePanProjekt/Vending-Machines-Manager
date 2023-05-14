@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -106,9 +107,17 @@ public class BatchServiceImplementation implements BatchService {
         Batch batch = batchOptional.get();
         batch.setDate(detailsDTO.getDate());
 
+        List<UUID> holdsIdList = batch.getHolds().stream().map(Holds::getId).toList();
+        List<HoldsDetailsDTO> holdsToDelete = detailsDTO.getHolds().stream().filter(x -> (!holdsIdList.contains(x.getId())) && x.getId() != null).toList();
+        List<HoldsDetailsDTO> holdsToKeep = detailsDTO.getHolds().stream().filter(x -> holdsIdList.contains(x.getId()) || x.getId() == null).toList();
+
+        for(HoldsDetailsDTO holdsDetailsDTO : holdsToDelete) {
+            holdsRepository.deleteById(holdsDetailsDTO.getId());
+        }
+
         List<Holds> holdsList = new ArrayList<>();
         List<Item> itemList = new ArrayList<>();
-        for(HoldsDetailsDTO holdsDetailsDto : detailsDTO.getHolds()) {
+        for(HoldsDetailsDTO holdsDetailsDto : holdsToKeep) {
 
             Optional<Item> itemOptional = itemRepository.findById(holdsDetailsDto.getItemId());
             if(itemOptional.isEmpty()) {
