@@ -123,6 +123,7 @@ public class BatchServiceImplementation implements BatchService {
                 if(holds.getId() == null) {
                     return new ResponseEntity<>("Unsuccessful creation of new Holds object", HttpStatus.INTERNAL_SERVER_ERROR);
                 }
+                holdsDetailsDto.setId(holds.getId());
             }
 
             Optional<Holds> holdsOptional = holdsRepository.findById(holdsDetailsDto.getId());
