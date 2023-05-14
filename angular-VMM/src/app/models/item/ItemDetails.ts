@@ -1,10 +1,11 @@
 export class ItemDetails {
     id!: string;
     name: string;
-    amountAvailable: number = 0;
+    amountAvailable: number;
 
 
-    constructor(name: string) {
+    constructor(name: string, amountAvailable: number) {
         this.name = name;
+        this.amountAvailable = amountAvailable;
     }
 }

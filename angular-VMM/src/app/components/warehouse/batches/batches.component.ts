@@ -9,7 +9,7 @@ import {BatchSimple} from "../../../models/Batch/BatchSimple";
   styleUrls: ['./batches.component.css']
 })
 export class BatchesComponent {
-    batches?: BatchSimple[];
+    batches: BatchSimple[] = [];
 
     constructor(
         private batchService: BatchService
@@ -21,6 +21,11 @@ export class BatchesComponent {
 
     private getBatches(){
         this.batchService.getBatches().subscribe(batches => this.batches = batches)
+    }
+
+    deleteBatch(batch: BatchSimple){
+        this.batches = this.batches.filter(b => b!==batch);
+        this.batchService.deleteBatch(batch.id).subscribe();
     }
 
 }
