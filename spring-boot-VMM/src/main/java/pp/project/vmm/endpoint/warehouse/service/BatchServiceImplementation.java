@@ -107,8 +107,8 @@ public class BatchServiceImplementation implements BatchService {
         Batch batch = batchOptional.get();
         batch.setDate(detailsDTO.getDate());
 
-        List<UUID> holdsIdList = batch.getHolds().stream().map(Holds::getId).toList();
-        List<HoldsDetailsDTO> holdsToDelete = detailsDTO.getHolds().stream().filter(x -> (!holdsIdList.contains(x.getId())) && x.getId() != null).toList();
+        List<UUID> holdsIdList = detailsDTO.getHolds().stream().map(HoldsDetailsDTO::getId).toList();
+        List<HoldsDetailsDTO> holdsToDelete = detailsDTO.getHolds().stream().filter(x -> !(holdsIdList.contains(x.getId())) && x.getId() != null).toList();
         List<HoldsDetailsDTO> holdsToKeep = detailsDTO.getHolds().stream().filter(x -> holdsIdList.contains(x.getId()) || x.getId() == null).toList();
 
         for(HoldsDetailsDTO holdsDetailsDTO : holdsToDelete) {
