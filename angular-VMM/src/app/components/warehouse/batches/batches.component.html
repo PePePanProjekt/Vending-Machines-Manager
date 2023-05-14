@@ -1,6 +1,39 @@
 <app-navbar-owner/>
 <div class="container">
     <h2 class="m-1">Batches</h2>
-    <button class="btn btn-primary m-1" routerLink="/warehouse/items">Go to Items</button>
+
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary m-1" routerLink="/warehouse/items">Go to Items</button>
+
+        </div>
+        <div class="col col-lg-2">
+            <button class="btn btn-success m-1" routerLink="add">Add Batch</button>
+        </div>
+    </div>
+
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Number of items</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let batch of batches">
+            <td>{{batch.id}}</td>
+            <td>{{batch.date}}</td>
+            <td>{{batch.holdsAmount}}</td>
+            <td class="">
+                <button class="btn btn-info m-1" routerLink="{{batch.id}}">Info</button>
+                <button class="btn btn-warning m-1" routerLink="update/{{batch.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteBatch(batch)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>

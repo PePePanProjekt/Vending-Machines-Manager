@@ -35,7 +35,6 @@
             <td>{{item.amountAvailable}}</td>
             <td class="">
                 <button class="btn btn-info m-1" routerLink="{{item.id}}">Info</button>
-                <button class="btn btn-success m-1">Refill</button>
                 <button class="btn btn-warning m-1" routerLink="update/{{item.id}}">Update</button>
                 <button class="btn btn-danger m-1" (click)="deleteItem(item)">Delete</button>
             </td>

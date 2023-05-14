@@ -10,7 +10,7 @@ import {Machine} from "../models/machine/Machine";
 })
 export class ItemService {
 
-    private itemUrl  =environment.apiUrl+`/api/management/items`;
+    private itemUrl  =environment.apiUrl+`/api/warehouse/items`;
 
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
