@@ -240,7 +240,24 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void deleteBatchById() {
+    void shouldDeleteBatchById() {
+        // Given
+        List<Holds> holdsList = new ArrayList<>();
+        holdsList.add(holds1);
+        holdsList.add(holds2);
+        batch1.setHolds(holdsList);
+
+        given(batchRepository.findById(batch1.getId())).willReturn(Optional.of(batch1));
+
+        // When
+        ResponseEntity<String> response = batchService.deleteBatchById(batch1.getId());
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Successfully deleted Batch object and all associated Holds objects", response.getBody());
+
+        verify(holdsRepository, times(1)).deleteAllInBatch(holdsList);
+        verify(batchRepository, times(1)).delete(batch1);
     }
 
     @Test
