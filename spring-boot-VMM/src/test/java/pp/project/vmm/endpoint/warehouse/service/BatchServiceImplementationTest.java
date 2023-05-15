@@ -6,6 +6,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pp.project.vmm.endpoint.system.model.Batch;
 import pp.project.vmm.endpoint.system.model.Holds;
@@ -17,6 +19,8 @@ import pp.project.vmm.endpoint.system.repository.ItemRepository;
 import pp.project.vmm.endpoint.warehouse.service.dto.BatchDetailsDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.HoldsDetailsDTO;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -198,7 +202,41 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void updateBatch() {
+    void shouldUpdateBatch() {
+        // Given
+        BatchDetailsDTO detailsDTO = new BatchDetailsDTO();
+        detailsDTO.setId(batch1.getId());
+        detailsDTO.setDate(batch1.getDate());
+
+        List<HoldsDetailsDTO> holdsDetailsDTOList = new ArrayList<>();
+        HoldsDetailsDTO holdsDetailsDTO1 = new HoldsDetailsDTO();
+        holdsDetailsDTO1.setId(holds1.getId());
+        holdsDetailsDTO1.setItemId(item1.getId());
+        holdsDetailsDTO1.setItemAmount(holds1.getItemAmount());
+        holdsDetailsDTO1.setItemPrice(holds1.getItemPrice());
+        holdsDetailsDTOList.add(holdsDetailsDTO1);
+
+        detailsDTO.setHolds(holdsDetailsDTOList);
+
+        List<Holds> holdsList = new ArrayList<>();
+        holdsList.add(holds1);
+        batch1.setHolds(holdsList);
+
+        given(batchRepository.findById(detailsDTO.getId())).willReturn(Optional.of(batch1));
+        given(holdsRepository.findById(holdsDetailsDTO1.getId())).willReturn(Optional.of(holds1));
+        given(itemRepository.findById(holdsDetailsDTO1.getItemId())).willReturn(Optional.of(item1));
+
+        // When
+        ResponseEntity<String> responseEntity = batchService.updateBatch(detailsDTO);
+
+        // Then
+        verify(batchRepository, times(1)).save(batch1);
+        verify(itemRepository, times(1)).save(item1);
+        verify(holdsRepository, times(1)).save(holds1);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Successfully updated Batch object and all associated Holds objects", responseEntity.getBody());
+
     }
 
     @Test
