@@ -162,7 +162,7 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void shouldGetById() {
+    void shouldGetByIdTest() {
         // Given
         UUID id = UUID.randomUUID();
 
@@ -191,7 +191,7 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    public void ShouldNotGetById() {
+    public void ShouldNotGetByIdTest() {
 
         // Given
         UUID id = UUID.randomUUID();
@@ -209,7 +209,7 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void shouldUpdateBatch() {
+    void shouldUpdateBatchTest() {
         // Given
         BatchDetailsDTO detailsDTO = new BatchDetailsDTO();
         detailsDTO.setId(batch1.getId());
@@ -247,7 +247,7 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void shouldDeleteBatchById() {
+    void shouldDeleteBatchByIdTest() {
         // Given
         List<Holds> holdsList = new ArrayList<>();
         holdsList.add(holds1);
@@ -268,7 +268,30 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void addBatch() {
+    void shouldAddBatchTest() {
+        // Given
+        BatchDetailsDTO detailsDTO = new BatchDetailsDTO();
+        detailsDTO.setDate(batch1.getDate());
+        HoldsDetailsDTO holdsDetailsDTO = new HoldsDetailsDTO();
+        holdsDetailsDTO.setItemAmount(holds1.getItemAmount());
+        holdsDetailsDTO.setItemPrice(holds1.getItemPrice());
+        holdsDetailsDTO.setItemId(UUID.randomUUID());
+
+        List<HoldsDetailsDTO> holdsDetailsDTOList = new ArrayList<>();
+        holdsDetailsDTOList.add(holdsDetailsDTO);
+        detailsDTO.setHolds(holdsDetailsDTOList);
+        Batch batch = new Batch(detailsDTO.getDate(), false);
+
+        given(batchRepository.save(batch)).willReturn(batch);
+        given(itemRepository.findById(holdsDetailsDTO.getItemId())).willReturn(Optional.of(item1));
+        given(holdsRepository.saveAll(List.of(holds1))).willReturn(List.of(holds1));
+
+        // When
+        ResponseEntity<String> responseEntity = batchService.addBatch(detailsDTO);
+
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Successfully saved a new Batch object and all associated Holds objects", responseEntity.getBody());
     }
 
     @Test
