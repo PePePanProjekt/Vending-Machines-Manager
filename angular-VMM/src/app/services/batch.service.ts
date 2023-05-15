@@ -4,7 +4,6 @@ import {BatchDetails} from "../models/Batch/BatchDetails";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {BatchSimple} from "../models/Batch/BatchSimple";
-import {HoldsDetails} from "../models/Holds/HoldsDetails";
 import {ItemDetails} from "../models/item/ItemDetails";
 
 @Injectable({
