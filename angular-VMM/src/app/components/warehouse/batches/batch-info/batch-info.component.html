@@ -1,0 +1,46 @@
+<app-navbar-owner/>
+
+<div class="container" >
+    <div *ngIf="batch;else no_batch">
+        <h3>
+            Batch : {{batch.id}}
+        </h3>
+
+        <div class="row m-3">
+            <div class="col">
+                <label for="date">Date</label>
+            </div>
+            <div class="col">
+                <p id="date">{{batch.date}}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        <h4>Items</h4>
+        <table class="table table-striped text-center">
+            <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Item Price</th>
+                <th scope="col">Item Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let addedItem of batch?.holds">
+                <td>{{this.getItemName(addedItem.itemId)}}</td>
+                <td>{{addedItem.itemPrice}}</td>
+                <td>{{addedItem.itemAmount}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <ng-template #no_batch>
+        Can't find batch
+    </ng-template>
+
+    <button type="button" (click)="goBack()" class="btn btn-primary m-1">go back</button>
+</div>

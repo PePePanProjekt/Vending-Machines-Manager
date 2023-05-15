@@ -1,0 +1,106 @@
+<app-navbar-owner/>
+
+<div class="container">
+    <div *ngIf="batch;else no_batch">
+
+        <div class="row m-3 my-5">
+            <div class="col">
+                <h2>Update Batch:</h2>
+            </div>
+            <div class="col">
+                <h4>{{batch.id}}</h4>
+            </div>
+        </div>
+
+
+        <div class="form-check">
+            <div class="row m-3">
+                <div class="col ">
+                    <input class="form-check-input" type="radio" name="radio" id="radioOld"
+                           value="old" #oldDate checked >
+                    <label for="oldDate">Old Date</label>
+                </div>
+                <div class="col">
+                    <input id="oldDate" type="text" class="form-control"   value="{{batch.date}}" disabled>
+
+                </div>
+            </div>
+            <div class="row m-3">
+                <div class="col">
+                    <input class="form-check-input" type="radio" name="radio" id="radioNew"
+                           value="new">
+                    <label for="newDate">New Date</label>
+                </div>
+                <div class="col">
+                    <input id="newDate" #date type="datetime-local" class="form-control">
+                </div>
+            </div>
+
+            <h4>Add item to batch</h4>
+            <div>
+                <div class="row">
+                    <div class="col-auto me-auto">
+                        <label for="Item">Item</label>
+                    </div>
+                    <div class="col">
+                        <select id="Item" #Item required class="form-control" [(ngModel)]="hold.itemId" name="itemId">
+                            <option *ngFor="let item of allItems" [value]="item.id">{{item.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-auto me-auto">
+                        <label for="ItemPrice">ItemPrice</label>
+                    </div>
+                    <div class="col">
+                        <input id="ItemPrice" #ItemPrice type="number" class="form-control"
+                               [(ngModel)]="hold.itemPrice">
+                    </div>
+
+                    <div class="col-auto me-auto">
+                        <label for="ItemAmount">Item Amount</label>
+                    </div>
+                    <div class="col">
+                        <input id="ItemAmount" #ItemAmount type="number" class="form-control"
+                               [(ngModel)]="hold.itemAmount">
+                    </div>
+                </div>
+                <button class="btn btn-success" (click)="addItemToBatch()">Add</button>
+            </div>
+        </div>
+
+        <div>
+            <h4>Items</h4>
+            <table class="table table-striped text-center">
+                <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Item Price</th>
+                    <th scope="col">Item Amount</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let addedItem of itemsInBatch">
+                    <td>{{this.getItemName(addedItem.itemId)}}</td>
+                    <td>{{addedItem.itemPrice}}</td>
+                    <td>{{addedItem.itemAmount}}</td>
+                    <td class="">
+                        <button class="btn btn-danger m-1" (click)="deleteItemFromBatch(addedItem)">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button type="button" class="btn btn-success m-1" (click)="updateBatch(oldDate.checked ,date.value)">
+                Submit
+            </button>
+
+            <button type="button" (click)="goBack()" class="btn btn-primary m-1">Cancel</button>
+        </div>
+    </div>
+    <ng-template #no_batch>
+        Can't find batch
+        <button type="button" (click)="goBack()" class="btn btn-primary m-1">go back</button>
+    </ng-template>
+
+</div>

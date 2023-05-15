@@ -1,34 +1,32 @@
 <app-navbar-owner/>
 
-  <div class="container">
-      <a routerLink="/machines/add">
-          <button class="btn btn-success">Add new machine</button>
-      </a>
-  <table class="table table-striped text-center">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">location</th>
-        <th scope="col">Name</th>
-        <th scope="col">Status</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let machine of machines">
-          <td>{{machine.id}}</td>
-          <td>{{machine.location}}</td>
-          <td>{{machine.name}}</td>
-          <td>to do</td>
-          <td class="">
-              <button class="btn btn-info m-1"  routerLink="/machines/{{machine.id}}" >Info</button>
-              <button class="btn btn-success m-1" disabled>Refill</button>
-              <button class="btn btn-warning m-1" routerLink="/machines/update/{{machine.id}}">Update</button>
-              <button class="btn btn-danger m-1" (click)="deleteMachine(machine)" >Delete</button>
-          </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="container">
+    <button class="btn btn-success" routerLink="/machines/add">Add new machine</button>
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">location</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let machine of machines">
+            <td>{{machine.id}}</td>
+            <td>{{machine.location}}</td>
+            <td>{{machine.name}}</td>
+            <td>to do</td>
+            <td class="">
+                <button class="btn btn-info m-1" routerLink="/machines/{{machine.id}}">Info</button>
+                <button class="btn btn-success m-1" disabled>Refill</button>
+                <button class="btn btn-warning m-1" routerLink="/machines/update/{{machine.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteMachine(machine)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 
 </div>

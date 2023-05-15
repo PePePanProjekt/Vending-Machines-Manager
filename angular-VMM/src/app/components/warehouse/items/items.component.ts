@@ -21,7 +21,7 @@ export class ItemsComponent {
      addItem(newItemName: string) {
         newItemName = newItemName.trim();
         if(newItemName == ""){return;}
-        let newItem = new ItemDetails(newItemName);
+        let newItem = new ItemDetails(newItemName,0);
         this.itemService.addItem(newItem).subscribe();
     }
 
