@@ -64,18 +64,25 @@ class BatchServiceImplementationTest {
         item2.setArchived(false);
 
         UUID idb1 = UUID.randomUUID();
-        Date date1 = new Date(2023, Calendar.FEBRUARY, 14);
+        Calendar date1 = Calendar.getInstance();
+        date1.set(Calendar.YEAR, 2022);
+        date1.set(Calendar.MONTH, Calendar.JANUARY);
+        date1.set(Calendar.DAY_OF_MONTH, 1);
+
         batch1 = new Batch();
         batch1.setId(idb1);
         batch1.setArchived(false);
-        batch1.setDate(date1);
+        batch1.setDate(date1.getTime());
 
         UUID idb2 = UUID.randomUUID();
-        Date date2 = new Date(2023, Calendar.JANUARY, 14);
+        Calendar date2 = Calendar.getInstance();
+        date2.set(Calendar.YEAR, 2022);
+        date2.set(Calendar.MONTH, Calendar.FEBRUARY);
+        date2.set(Calendar.DAY_OF_MONTH, 1);
         batch2 = new Batch();
         batch2.setId(idb2);
         batch2.setArchived(false);
-        batch2.setDate(date2);
+        batch2.setDate(date2.getTime());
 
         UUID idh1 = UUID.randomUUID();
         holds1 = new Holds();
