@@ -17,6 +17,7 @@ import pp.project.vmm.endpoint.system.repository.BatchRepository;
 import pp.project.vmm.endpoint.system.repository.HoldsRepository;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
 import pp.project.vmm.endpoint.warehouse.service.dto.BatchDetailsDTO;
+import pp.project.vmm.endpoint.warehouse.service.dto.BatchSimpleDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.HoldsDetailsDTO;
 
 import java.time.LocalDate;
@@ -295,7 +296,24 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void getAllSimple() {
+    void shouldGetAllSimpleTest() {
+        // Given
+        List<Batch> batches = new ArrayList<>();
+        batches.add(batch1);
+        batches.add(batch2);
+        given(batchRepository.findAll()).willReturn(batches);
+
+        // When
+        List<BatchSimpleDTO> result = batchService.getAllSimple();
+
+        // Then
+        assertEquals(2, result.size());
+
+        assertEquals(batches.get(0).getId(), result.get(0).getId());
+        assertEquals(batches.get(0).getDate(), result.get(0).getDate());
+
+        assertEquals(batches.get(1).getId(), result.get(1).getId());
+        assertEquals(batches.get(1).getDate(), result.get(1).getDate());
     }
 
     @Test
