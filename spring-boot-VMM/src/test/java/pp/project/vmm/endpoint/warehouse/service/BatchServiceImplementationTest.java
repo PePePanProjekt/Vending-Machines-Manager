@@ -317,6 +317,31 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    void getSimpleById() {
+    void shouldGetSimpleByIdTest() {
+        // given
+
+        when(batchRepository.findById(batch1.getId())).thenReturn(Optional.of(batch1));
+
+        // when
+        BatchSimpleDTO result = batchService.getSimpleById(batch1.getId());
+
+        // then
+        assertNotNull(result);
+        assertEquals(batch1.getId(), result.getId());
+        assertEquals(batch1.getDate(), result.getDate());
+        assertEquals(batch1.getHolds().size(), result.getHoldsAmount());
+    }
+
+    @Test
+    public void shouldNotGetSimpleByIdTest() {
+        // given
+        UUID id = UUID.randomUUID();
+        given(batchRepository.findById(id)).willReturn(Optional.empty());
+
+        // when
+        BatchSimpleDTO result = batchService.getSimpleById(id);
+
+        // then
+        assertNull(result);
     }
 }
