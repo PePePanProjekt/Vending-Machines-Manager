@@ -36,7 +36,8 @@
                     <label for="ItemAmount">Item Amount</label>
                 </div>
                 <div class="col">
-                    <input id="ItemAmount" #ItemAmount type="number" class="form-control" [(ngModel)]="newSlot.itemAmount">
+                    <input id="ItemAmount" #ItemAmount type="number" class="form-control" [(ngModel)]="newSlot.itemAmount"
+                           (change)="newAmount(ItemAmount.value)">
                 </div>
             </div>
             <button class="btn btn-success" (click)="addNewSlot()">Add Slot</button>
@@ -58,16 +59,14 @@
                 <td>{{slot.itemName}}</td>
                 <td>{{slot.itemAmount}}</td>
                 <td>{{slot.itemPrice}}</td>
-<!--                <td class="">-->
-<!--                    <button class="btn btn-info m-1" routerLink="/machines/{{machine.id}}">Info</button>-->
-<!--                    <button class="btn btn-success m-1" routerLink="refill/{{machine.id}}">Refill</button>-->
-<!--                    <button class="btn btn-warning m-1" routerLink="/machines/update/{{machine.id}}">Update</button>-->
-<!--                    <button class="btn btn-danger m-1" (click)="deleteMachine(machine)">Delete</button>-->
-<!--                </td>-->
+                <td class="">
+
+                    <button class="btn btn-danger m-1" (click)="deleteSlot(slot)">Delete</button>
+                </td>
             </tr>
             </tbody>
         </table>
-
+        <button class="btn btn-success m-1" (click)="SubmitSlots()">Submit</button>
 
 
     </div>
@@ -75,5 +74,6 @@
         Can't find machine
     </ng-template>
 
-    <button type="button" (click)="goBack()" class="btn btn-primary m-1">go back</button>
+    <button type="button" (click)="goBack()" class="btn btn-primary m-1">Cancel</button>
 </div>
+

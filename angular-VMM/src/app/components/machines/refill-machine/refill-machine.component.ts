@@ -6,6 +6,7 @@ import {Location} from "@angular/common";
 import {Slot} from "../../../models/Slot";
 import {ItemDetails} from "../../../models/item/ItemDetails";
 import {ItemService} from "../../../services/item.service";
+import {max} from "rxjs";
 
 @Component({
     selector: 'app-refill-machine',
@@ -30,7 +31,7 @@ export class RefillMachineComponent {
 
     ngOnInit() {
         this.newSlot.slotNumber = 0;
-        this.newSlot.itemPrice = 0;
+        this.newSlot.itemPrice = 10;
         this.newSlot.itemAmount = 0;
         // this.newSlot.itemId =
         // this.newSlot.itemName =
@@ -44,17 +45,17 @@ export class RefillMachineComponent {
                 this.machine = m;
                 this.slotList = m.slots;
                 let id = 0
-                while (id<m.details.dispenserAmount){
+                while (id < m.details.dispenserAmount) {
                     this.freeSlotIds.push(id);
                     id++;
                 }
-                this.slotList.filter(slot => slot.slotNumber !in this.freeSlotIds)
+                this.slotList.filter(slot => slot.slotNumber ! in this.freeSlotIds)
 
             }
         )
     }
 
-    private getItems(){
+    private getItems() {
         this.itemsService.getItems().subscribe(
             items => {
                 this.allItems = items;
@@ -69,15 +70,67 @@ export class RefillMachineComponent {
     }
 
 
-
+    //sorry for this
     addNewSlot() {
-        let slot = new Slot()
-        slot.slotNumber = this.newSlot.slotNumber;
-        slot.itemId = this.newSlot.itemId;
-        slot.itemAmount = this.newSlot.itemAmount;
-        slot.itemPrice = this.newSlot.itemPrice;
-        slot.itemName = this.newSlot.itemName;
-        this.slotList.push(slot);
-        this.freeSlotIds= this.freeSlotIds.filter(id => id != slot.slotNumber);
+        if (this.freeSlotIds.length == 0) return;
+        if (this.newSlot.slotNumber != null && this.freeSlotIds.includes(this.newSlot.slotNumber)) {
+            let slot = new Slot()
+            slot.slotNumber = this.newSlot.slotNumber;
+            slot.itemId = this.newSlot.itemId;
+            slot.itemAmount = this.newSlot.itemAmount;
+            if (this.newSlot.itemAmount != null &&
+                (this.newSlot.itemAmount <= 0 ||
+                    (this.allItems.filter(
+                        item => item.id == this.newSlot.itemId)[0].amountAvailable - this.newSlot.itemAmount < 0))) return;
+            if (this.newSlot.itemPrice != null) slot.itemPrice = +(Math.round(this.newSlot.itemPrice * 100) / 100).toFixed(2);
+            if (slot.itemPrice != null && slot.itemPrice < 0) return;
+            slot.itemName = this.allItems.filter(item => item.id == this.newSlot.itemId)[0].name;
+            this.slotList.push(slot);
+            if (this.newSlot.itemAmount != null)
+                this.allItems.filter(
+                    item => this.newSlot.itemId == item.id)[0].amountAvailable -= this.newSlot.itemAmount;
+            this.freeSlotIds = this.freeSlotIds.filter(id => id != slot.slotNumber);
+        }
+        this.newSlot.slotNumber = this.freeSlotIds[0];
+        if (this.newSlot.itemAmount != null) this.newAmount(this.newSlot.itemAmount.toString())
+    }
+
+    newAmount(value: string) {
+        if (this.machine != null) {
+            let newAmount = +value;
+            let maxAmount =
+                this.machine.details.dispenserDepth
+                >
+                this.allItems.filter(item => item.id == this.newSlot.itemId)[0].amountAvailable
+                    ?
+                    this.allItems.filter(item => item.id == this.newSlot.itemId)[0].amountAvailable
+                    :
+                    this.machine.details.dispenserDepth;
+
+            if (newAmount > maxAmount) {
+                newAmount = maxAmount;
+            } else if (newAmount < 0) {
+                newAmount = 0;
+            }
+            this.newSlot.itemAmount = newAmount;
+        }
+    }
+
+    deleteSlot(slot: Slot) {
+        if (slot.itemAmount != null) {
+            this.allItems.filter(item => item.id == slot.itemId)[0].amountAvailable += slot.itemAmount;
+        }
+        if (slot.slotNumber != null) {
+            this.freeSlotIds.push(slot.slotNumber);
+            this.freeSlotIds.sort();
+        }
+        this.slotList = this.slotList.filter(s => s !== slot);
+
+    }
+
+    SubmitSlots() {
+        const id = String(this.route.snapshot.paramMap.get('id'));
+        this.machineService.refill(id, this.slotList).subscribe();
+        this.goBack();
     }
 }
