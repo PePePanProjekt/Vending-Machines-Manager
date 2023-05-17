@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {Machine} from "../../../models/machine/Machine";
+import {Machine} from "../../../models/Machine/Machine";
 import {MachineService} from "../../../services/machine.service";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 
 @Component({
-  selector: 'app-update-machine',
+  selector: 'app-update-Machine',
   templateUrl: './update-machine.component.html',
   styleUrls: ['./update-machine.component.css']
 })

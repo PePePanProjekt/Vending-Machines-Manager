@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, of, tap} from "rxjs";
-import {Machine} from "../models/machine/Machine";
+import {Machine} from "../models/Machine/Machine";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {MachineFullInfo} from "../models/machine/MachineFullInfo";
-import {MachineSimpleInfo} from "../models/machine/MachineSimpleInfo";
+import {MachineFullInfo} from "../models/Machine/MachineFullInfo";
+import {MachineSimpleInfo} from "../models/Machine/MachineSimpleInfo";
 import {Slot} from "../models/Slot";
 
 @Injectable({

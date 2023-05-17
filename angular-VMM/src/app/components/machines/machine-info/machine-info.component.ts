@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import {Machine} from "../../../models/machine/Machine";
+import {Machine} from "../../../models/Machine/Machine";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {MachineService} from "../../../services/machine.service";
-import {MachineFullInfo} from "../../../models/machine/MachineFullInfo";
+import {MachineFullInfo} from "../../../models/Machine/MachineFullInfo";
 @Component({
-    selector: 'app-machine-info',
+    selector: 'app-Machine-info',
     templateUrl: './machine-info.component.html',
     styleUrls: ['./machine-info.component.css']
 })

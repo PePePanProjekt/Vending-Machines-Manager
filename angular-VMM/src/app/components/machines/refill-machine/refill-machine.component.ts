@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {MachineFullInfo} from "../../../models/machine/MachineFullInfo";
+import {MachineFullInfo} from "../../../models/Machine/MachineFullInfo";
 import {MachineService} from "../../../services/machine.service";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
@@ -9,7 +9,7 @@ import {ItemService} from "../../../services/item.service";
 import {max} from "rxjs";
 
 @Component({
-    selector: 'app-refill-machine',
+    selector: 'app-refill-Machine',
     templateUrl: './refill-machine.component.html',
     styleUrls: ['./refill-machine.component.css']
 })
@@ -49,8 +49,11 @@ export class RefillMachineComponent {
                     this.freeSlotIds.push(id);
                     id++;
                 }
-                this.slotList.filter(slot => slot.slotNumber ! in this.freeSlotIds)
 
+                // removes taken slots from freeSlots[]
+                this.freeSlotIds = this.freeSlotIds.filter(
+                    freeSlot => !this.machine?.slots.some(
+                        machineSlot => machineSlot.slotNumber ===freeSlot))
             }
         )
     }

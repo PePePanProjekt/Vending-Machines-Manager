@@ -1,0 +1,72 @@
+<app-navbar-owner/>
+
+<div class="container">
+    <h1>Employees</h1>
+
+    <h3>Owners</h3>
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let owner of owners">
+            <td>{{owner.id}}</td>
+            <td>{{owner.firstName}}</td>
+            <td>{{owner.lastName}}</td>
+            <td>{{owner.email}}</td>
+            <td>{{owner.phoneNumber}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success">Add Owner</button>
+    <h3>Admins</h3>
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let admin of admins">
+            <td>{{admin.id}}</td>
+            <td>{{admin.firstName}}</td>
+            <td>{{admin.lastName}}</td>
+            <td>{{admin.email}}</td>
+            <td>{{admin.phoneNumber}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success">Add Admin</button>
+    <h3>Maintenance</h3>
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let worker of workers">
+            <td>{{worker.id}}</td>
+            <td>{{worker.firstName}}</td>
+            <td>{{worker.lastName}}</td>
+            <td>{{worker.email}}</td>
+            <td>{{worker.phoneNumber}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success">Add Maintenance</button>
+</div>
