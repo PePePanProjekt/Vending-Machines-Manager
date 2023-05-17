@@ -15,15 +15,20 @@ import {UpdateItemComponent} from "./components/warehouse/items/update-item/upda
 import {AddBatchComponent} from "./components/warehouse/batches/add-batch/add-batch.component";
 import {BatchInfoComponent} from "./components/warehouse/batches/batch-info/batch-info.component";
 import {UpdateBatchComponent} from "./components/warehouse/batches/update-batch/update-batch.component";
+import {RefillMachineComponent} from "./components/machines/refill-machine/refill-machine.component";
+import {EmployeesComponent} from "./components/employees/employees.component";
 
 const routes: Routes = [
-    {path:'',                               component:GuestComponent},
+    {path:'',                               component:LoginComponent},
     {path:'login',                          component: LoginComponent},
+
+    {path:'employees',                      component:EmployeesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'machines',                       component:MachinesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'machines/add',                   component:AddMachineComponent,      canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
-    {path:'machines/:id',                   component: MachineInfoComponent,    canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
-    {path:'machines/update/:id',            component: UpdateMachineComponent,  canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'machines/update/:id',            component:UpdateMachineComponent,  canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'machines/refill/:id',            component:RefillMachineComponent,  canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'machines/:id',                   component:MachineInfoComponent,    canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'warehouse',                      component:WarehouseComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'warehouse/batches',              component:BatchesComponent,         canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},

@@ -73,7 +73,6 @@ export class UpdateBatchComponent {
         let updatedBatch = new BatchDetails(this.oldDate, this.itemsInBatch);
         updatedBatch.id = String(this.route.snapshot.paramMap.get('id'));
         if (!oldDate) updatedBatch.date = newDate;
-        console.log(updatedBatch);
         this.batchService.updateBatch(updatedBatch).subscribe();
         this.goBack();
 

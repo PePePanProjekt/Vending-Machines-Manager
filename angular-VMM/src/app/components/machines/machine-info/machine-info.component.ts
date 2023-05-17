@@ -1,15 +1,16 @@
 import {Component} from '@angular/core';
-import {Machine} from "../../../models/machine/Machine";
+import {Machine} from "../../../models/Machine/Machine";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {MachineService} from "../../../services/machine.service";
+import {MachineFullInfo} from "../../../models/Machine/MachineFullInfo";
 @Component({
-    selector: 'app-machine-info',
+    selector: 'app-Machine-info',
     templateUrl: './machine-info.component.html',
     styleUrls: ['./machine-info.component.css']
 })
 export class MachineInfoComponent {
-    machine?:Machine;
+    machine?:MachineFullInfo;
     constructor(
         private route: ActivatedRoute,
         private location: Location,
@@ -25,7 +26,7 @@ export class MachineInfoComponent {
         const id :string = String(this.route.snapshot.paramMap.get('id'));
         this.machineService.getMachine(id).subscribe(
             machineInfo => {
-                this.machine = machineInfo.details;
+                this.machine = machineInfo;
             });
     }
 
