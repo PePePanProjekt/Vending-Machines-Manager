@@ -192,7 +192,7 @@ class BatchServiceImplementationTest {
     }
 
     @Test
-    public void ShouldNotGetByIdTest() {
+    void shouldNotGetByIdTest() {
 
         // Given
         UUID id = UUID.randomUUID();
@@ -320,7 +320,7 @@ class BatchServiceImplementationTest {
     void shouldGetSimpleByIdTest() {
         // given
 
-        when(batchRepository.findById(batch1.getId())).thenReturn(Optional.of(batch1));
+        given(batchRepository.findById(batch1.getId())).willReturn(Optional.of(batch1));
 
         // when
         BatchSimpleDTO result = batchService.getSimpleById(batch1.getId());
