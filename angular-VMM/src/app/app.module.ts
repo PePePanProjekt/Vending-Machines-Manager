@@ -36,6 +36,7 @@ import { BatchInfoComponent } from './components/warehouse/batches/batch-info/ba
 import { UpdateBatchComponent } from './components/warehouse/batches/update-batch/update-batch.component';
 import { RefillMachineComponent } from './components/machines/refill-machine/refill-machine.component';
 import { EmployeesComponent } from './components/employees/employees.component';
+import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { EmployeesComponent } from './components/employees/employees.component';
         UpdateBatchComponent,
         RefillMachineComponent,
         EmployeesComponent,
+        AddEmployeeComponent,
     ],
     imports: [
         BrowserModule,

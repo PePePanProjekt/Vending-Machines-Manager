@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
 import {AuthGuard} from './auth/auth-guard.service';
-import { GuestComponent } from './components/guest/guest.component';
 import { MachinesComponent } from './components/machines/machines.component';
 import { AddMachineComponent } from './components/machines/add-machine/add-machine.component';
 import {MachineInfoComponent} from "./components/machines/machine-info/machine-info.component";
@@ -17,18 +16,20 @@ import {BatchInfoComponent} from "./components/warehouse/batches/batch-info/batc
 import {UpdateBatchComponent} from "./components/warehouse/batches/update-batch/update-batch.component";
 import {RefillMachineComponent} from "./components/machines/refill-machine/refill-machine.component";
 import {EmployeesComponent} from "./components/employees/employees.component";
+import {AddEmployeeComponent} from "./components/employees/add-employee/add-employee.component";
 
 const routes: Routes = [
     {path:'',                               component:LoginComponent},
     {path:'login',                          component: LoginComponent},
 
-    {path:'employees',                      component:EmployeesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'employees',                      component:EmployeesComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'employees/add-employee',         component:AddEmployeeComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'machines',                       component:MachinesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'machines/add',                   component:AddMachineComponent,      canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
-    {path:'machines/update/:id',            component:UpdateMachineComponent,  canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
-    {path:'machines/refill/:id',            component:RefillMachineComponent,  canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
-    {path:'machines/:id',                   component:MachineInfoComponent,    canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'machines/update/:id',            component:UpdateMachineComponent,   canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'machines/refill/:id',            component:RefillMachineComponent,   canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'machines/:id',                   component:MachineInfoComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'warehouse',                      component:WarehouseComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'warehouse/batches',              component:BatchesComponent,         canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
