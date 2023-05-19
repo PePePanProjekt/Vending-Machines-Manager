@@ -21,4 +21,12 @@ export class EmployeeService {
     deleteEmployee(id: string): Observable<Employee> {
         return of(EMPLOYEES.filter(e=> e.id == id)[0]);
     }
+
+    getEmployee(id: string) {
+        return of(EMPLOYEES.filter(e => e.id == id)[0])
+    }
+
+    updateEmployee(employee: Employee) {
+        return of(EMPLOYEES.filter(e => e ===employee));
+    }
 }

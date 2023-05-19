@@ -17,6 +17,7 @@ import {UpdateBatchComponent} from "./components/warehouse/batches/update-batch/
 import {RefillMachineComponent} from "./components/machines/refill-machine/refill-machine.component";
 import {EmployeesComponent} from "./components/employees/employees.component";
 import {AddEmployeeComponent} from "./components/employees/add-employee/add-employee.component";
+import {UpdateEmployeeComponent} from "./components/employees/update-employee/update-employee.component";
 
 const routes: Routes = [
     {path:'',                               component:LoginComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
 
     {path:'employees',                      component:EmployeesComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'employees/add-employee',         component:AddEmployeeComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'employees/update/:id',           component:UpdateEmployeeComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'machines',                       component:MachinesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'machines/add',                   component:AddMachineComponent,      canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},

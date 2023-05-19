@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Employee} from "../../models/Employee/Employee";
 import {EmployeeService} from "../../services/employee.service";
+import {getLocaleFirstDayOfWeek} from "@angular/common";
 
 @Component({
     selector: 'app-employees',
@@ -36,4 +37,6 @@ export class EmployeesComponent {
 
         this.employeeService.deleteEmployee(id).subscribe();
     }
+
+    protected readonly getLocaleFirstDayOfWeek = getLocaleFirstDayOfWeek;
 }

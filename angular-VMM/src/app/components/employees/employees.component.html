@@ -23,7 +23,7 @@
             <td>{{owner.email}}</td>
             <td>{{owner.phoneNumber}}</td>
             <td>
-                <button class="btn btn-warning m-1">Update</button>
+                <button class="btn btn-warning m-1" routerLink="update/{{owner.id}}">Update</button>
                 <button class="btn btn-danger m-1" (click)="deleteEmployee(owner.id)">Delete</button>
             </td>
         </tr>
