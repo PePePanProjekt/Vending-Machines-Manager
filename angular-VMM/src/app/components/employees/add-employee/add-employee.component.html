@@ -24,11 +24,11 @@
         </div>
         <div class="form-group m-1">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" required [(ngModel)]="newEmployee.email"
-                   name="email" #email="ngModel">
-            <div [hidden]="email.valid || email.pristine"
+            <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" required [(ngModel)]="newEmployee.email"
+                   name="email" #email="ngModel" ngModel email>
+            <div [hidden]="email.valid || email.pristine || !email.errors?.['pattern']"
                  class="alert alert-danger">
-                Email Name is required
+                Please enter a valid email address
             </div>
         </div>
         <div class="form-group m-1">
