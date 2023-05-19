@@ -38,6 +38,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -47,6 +48,10 @@
             <td>{{admin.lastName}}</td>
             <td>{{admin.email}}</td>
             <td>{{admin.phoneNumber}}</td>
+            <td>
+                <button class="btn btn-warning m-1" routerLink="update/{{admin.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteEmployee(admin.id)">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -59,6 +64,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -68,6 +74,10 @@
             <td>{{worker.lastName}}</td>
             <td>{{worker.email}}</td>
             <td>{{worker.phoneNumber}}</td>
+            <td>
+                <button class="btn btn-warning m-1" routerLink="update/{{worker.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteEmployee(worker.id)">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
