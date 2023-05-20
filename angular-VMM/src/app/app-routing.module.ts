@@ -18,10 +18,13 @@ import {RefillMachineComponent} from "./components/machines/refill-machine/refil
 import {EmployeesComponent} from "./components/employees/employees.component";
 import {AddEmployeeComponent} from "./components/employees/add-employee/add-employee.component";
 import {UpdateEmployeeComponent} from "./components/employees/update-employee/update-employee.component";
+import {FinancesComponent} from "./components/finances/finances.component";
 
 const routes: Routes = [
     {path:'',                               component:LoginComponent},
     {path:'login',                          component: LoginComponent},
+
+    {path:'finances',                       component:FinancesComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'employees',                      component:EmployeesComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'employees/add-employee',         component:AddEmployeeComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},

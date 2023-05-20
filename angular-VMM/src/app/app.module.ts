@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './components/login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormGroup, FormsModule} from '@angular/forms';
 import {AuthInterceptor} from './auth/auth.interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -38,6 +38,7 @@ import { RefillMachineComponent } from './components/machines/refill-machine/ref
 import { EmployeesComponent } from './components/employees/employees.component';
 import { AddEmployeeComponent } from './components/employees/add-employee/add-employee.component';
 import { UpdateEmployeeComponent } from './components/employees/update-employee/update-employee.component';
+import { FinancesComponent } from './components/finances/finances.component';
 
 @NgModule({
     declarations: [
@@ -62,6 +63,7 @@ import { UpdateEmployeeComponent } from './components/employees/update-employee/
         EmployeesComponent,
         AddEmployeeComponent,
         UpdateEmployeeComponent,
+        FinancesComponent,
     ],
     imports: [
         BrowserModule,
