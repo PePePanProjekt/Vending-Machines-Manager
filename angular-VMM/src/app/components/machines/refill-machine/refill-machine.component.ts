@@ -6,7 +6,6 @@ import {Location} from "@angular/common";
 import {Slot} from "../../../models/Slot";
 import {ItemDetails} from "../../../models/item/ItemDetails";
 import {ItemService} from "../../../services/item.service";
-import {max} from "rxjs";
 
 @Component({
     selector: 'app-refill-Machine',

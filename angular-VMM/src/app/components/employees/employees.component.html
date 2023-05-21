@@ -2,7 +2,7 @@
 
 <div class="container">
     <h1>Employees</h1>
-
+    <button class="btn btn-success" routerLink="add-employee">Add new employee</button>
     <h3>Owners</h3>
     <table class="table table-striped text-center">
         <thead>
@@ -12,6 +12,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -21,10 +22,13 @@
             <td>{{owner.lastName}}</td>
             <td>{{owner.email}}</td>
             <td>{{owner.phoneNumber}}</td>
+            <td>
+                <button class="btn btn-warning m-1" routerLink="update/{{owner.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteEmployee(owner.id)">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-success">Add Owner</button>
     <h3>Admins</h3>
     <table class="table table-striped text-center">
         <thead>
@@ -34,6 +38,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -43,10 +48,13 @@
             <td>{{admin.lastName}}</td>
             <td>{{admin.email}}</td>
             <td>{{admin.phoneNumber}}</td>
+            <td>
+                <button class="btn btn-warning m-1" routerLink="update/{{admin.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteEmployee(admin.id)">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-success">Add Admin</button>
     <h3>Maintenance</h3>
     <table class="table table-striped text-center">
         <thead>
@@ -56,6 +64,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -65,8 +74,11 @@
             <td>{{worker.lastName}}</td>
             <td>{{worker.email}}</td>
             <td>{{worker.phoneNumber}}</td>
+            <td>
+                <button class="btn btn-warning m-1" routerLink="update/{{worker.id}}">Update</button>
+                <button class="btn btn-danger m-1" (click)="deleteEmployee(worker.id)">Delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-success">Add Maintenance</button>
 </div>
