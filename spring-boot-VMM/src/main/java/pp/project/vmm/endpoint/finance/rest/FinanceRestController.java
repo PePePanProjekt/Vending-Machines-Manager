@@ -1,7 +1,9 @@
 package pp.project.vmm.endpoint.finance.rest;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pp.project.vmm.endpoint.finance.service.FinanceService;
 import pp.project.vmm.endpoint.finance.service.dto.*;
 
 import java.util.UUID;
@@ -10,18 +12,25 @@ import java.util.UUID;
 @RequestMapping("/api/finance")
 public class FinanceRestController {
 
+    private FinanceService financeService;
+
+    @Autowired
+    private FinanceRestController(FinanceService financeService) {
+        this.financeService = financeService;
+    }
+
     @GetMapping("/items/{itemId}")
     public SingleItemStatsDTO getSingleItemStats(@PathVariable UUID itemId, @RequestBody StatsRequestDTO requestDTO) {
-        throw new NotImplementedException( this.getClass().getSimpleName() + " / getSingleItemStats method not yet implemented");
+        return financeService.getSingleItemStats(requestDTO.getStartDate(), requestDTO.getEndDate(), itemId);
     }
 
     @GetMapping("/machines/{machineId}")
     public SingleMachineStatsDTO getSingleMachineStats(@PathVariable UUID machineId, @RequestBody StatsRequestDTO requestDTO) {
-        throw new NotImplementedException( this.getClass().getSimpleName() + " / getSingleMachineStats method not yet implemented");
+        return financeService.getSingleMachineStats(requestDTO.getStartDate(), requestDTO.getEndDate(), machineId);
     }
 
     @GetMapping("/all")
     public AllStatsDTO getAllStats(@RequestBody StatsRequestDTO requestDTO) {
-        throw new NotImplementedException( this.getClass().getSimpleName() + " / getAllStats method not yet implemented");
+        return financeService.getAllStats(requestDTO.getStartDate(), requestDTO.getEndDate());
     }
 }

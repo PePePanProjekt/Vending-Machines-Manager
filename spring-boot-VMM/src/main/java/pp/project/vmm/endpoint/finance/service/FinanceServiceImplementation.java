@@ -1,5 +1,6 @@
 package pp.project.vmm.endpoint.finance.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pp.project.vmm.endpoint.finance.service.dto.*;
 import pp.project.vmm.endpoint.system.model.*;
@@ -11,11 +12,12 @@ import java.util.stream.Collectors;
 @Service
 public class FinanceServiceImplementation implements FinanceService {
 
-    private ItemRepository itemRepository;
-    private VendingMachineRepository vendingMachineRepository;
-    private SaleRepository saleRepository;
-    private BatchRepository batchRepository;
+    private final ItemRepository itemRepository;
+    private final VendingMachineRepository vendingMachineRepository;
+    private final SaleRepository saleRepository;
+    private final BatchRepository batchRepository;
 
+    @Autowired
     public FinanceServiceImplementation(ItemRepository itemRepository,
                                         VendingMachineRepository vendingMachineRepository,
                                         SaleRepository saleRepository,
@@ -90,8 +92,6 @@ public class FinanceServiceImplementation implements FinanceService {
         Map.Entry<UUID, Integer> bestItemEntry = Collections.max(itemPerformance.entrySet(), Map.Entry.comparingByValue());
         Optional<Item> worstItemOptional = itemRepository.findById(worstItemEntry.getKey());
         Optional<Item> bestItemOptional = itemRepository.findById(bestItemEntry.getKey());
-        String worstItemName = worstItemOptional.map(Item::getName).orElse("");
-        String bestItemName = bestItemOptional.map(Item::getName).orElse("");
 
         return new SingleMachineStatsDTO(
                 vendingMachine.getId(),
@@ -99,16 +99,74 @@ public class FinanceServiceImplementation implements FinanceService {
                 totalSold,
                 totalProfit,
                 bestItemEntry.getKey(),
-                bestItemName,
+                bestItemOptional.map(Item::getName).orElse("Error getting item name"),
                 bestItemEntry.getValue(),
                 worstItemEntry.getKey(),
-                worstItemName,
+                worstItemOptional.map(Item::getName).orElse("Error getting item name"),
                 worstItemEntry.getValue()
         );
     }
 
     @Override
     public AllStatsDTO getAllStats(Date startDate, Date endDate) {
-        return null;
+        List<Sale> saleList = saleRepository.findAll()
+                .stream()
+                .filter(x -> x.getSaleTime().compareTo(startDate) >= 0 && x.getSaleTime().compareTo(endDate) <= 0)
+                .toList();
+        List<Batch> batchList = batchRepository.findAll()
+                .stream()
+                .filter(x -> x.getDate().compareTo(startDate) >= 0 && x.getDate().compareTo(endDate) <= 0)
+                .toList();
+
+        int totalSales = saleList.size();
+        float totalProfit = (float)saleList.stream()
+                .mapToDouble(Sale::getPrice)
+                .sum();
+        int totalBought = 0;
+        float totalExpenses = 0;
+        for(Batch batch : batchList) {
+            totalBought += batch.getHolds()
+                    .stream()
+                    .mapToInt(Holds::getItemAmount)
+                    .sum();
+            totalExpenses += batch.getHolds()
+                    .stream()
+                    .mapToDouble(x -> x.getItemPrice() * x.getItemAmount())
+                    .sum();
+        }
+
+        Map<UUID, Integer> itemPerformance = new HashMap<>();
+        Map<UUID, Integer> machinePerformance = new HashMap<>();
+        for(Sale sale : saleList) {
+            itemPerformance.merge(sale.getItem().getId(), 1, Integer::sum);
+            machinePerformance.merge(sale.getVendingMachine().getId(), 1, Integer::sum);
+        }
+        Map.Entry<UUID, Integer> bestItemEntry = Collections.max(itemPerformance.entrySet(), Map.Entry.comparingByValue());
+        Map.Entry<UUID, Integer> worstItemEntry = Collections.min(itemPerformance.entrySet(), Map.Entry.comparingByValue());
+        Map.Entry<UUID, Integer> bestMachineEntry = Collections.max(machinePerformance.entrySet(), Map.Entry.comparingByValue());
+        Map.Entry<UUID, Integer> worstMachineEntry = Collections.min(machinePerformance.entrySet(), Map.Entry.comparingByValue());
+        Optional<Item> bestItemOptional = itemRepository.findById(bestItemEntry.getKey());
+        Optional<Item> worstItemOptional = itemRepository.findById(worstItemEntry.getKey());
+        Optional<VendingMachine> bestMachineOptional = vendingMachineRepository.findById(bestMachineEntry.getKey());
+        Optional<VendingMachine> worstMachineOptional = vendingMachineRepository.findById(worstMachineEntry.getKey());
+
+        return new AllStatsDTO(
+                totalSales,
+                totalProfit,
+                totalBought,
+                totalExpenses,
+                bestItemEntry.getKey(),
+                bestItemOptional.map(Item::getName).orElse("Error getting item name"),
+                bestItemEntry.getValue(),
+                worstItemEntry.getKey(),
+                worstItemOptional.map(Item::getName).orElse("Error getting item name"),
+                worstItemEntry.getValue(),
+                bestMachineEntry.getKey(),
+                bestMachineOptional.map(x -> x.getLocation() + " / " + x.getName()).orElse("Error getting vending machine name"),
+                bestMachineEntry.getValue(),
+                worstMachineEntry.getKey(),
+                worstMachineOptional.map(x -> x.getLocation() + " / " + x.getName()).orElse("Error getting vending machine name"),
+                worstMachineEntry.getValue()
+        );
     }
 }
