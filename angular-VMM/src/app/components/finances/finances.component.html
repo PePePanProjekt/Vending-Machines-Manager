@@ -1,0 +1,93 @@
+<app-navbar-owner/>
+<div class="container">
+    <h1>Finances</h1>
+
+    <div class="row my-2">
+        <div class="col">
+            <label for="Since">Since</label>
+            <input id="Since" #Since type="date" class="form-control">
+        </div>
+        <div class="col">
+            <label for="To">To</label>
+            <input id="To" #To type="date" class="form-control">
+        </div>
+
+    </div>
+    <div class="row-cols-4 my-2">
+        <div class="col">
+            <button class="btn btn-success my-2" (click)="changeDates(Since.value,To.value)">Change to new dates
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col">
+            <h2 class="d-flex justify-content-end">
+                since {{sinceDate | date: 'dd MMM yyyy'}}
+            </h2>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+            <h2>
+                to {{toDate | date: 'dd MMM yyyy'}}
+            </h2>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col d-flex justify-content-center">
+            <h1>
+                Income
+            </h1>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <h1>
+            Expenses
+            </h1>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <h1>
+                Balance
+            </h1>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col d-flex justify-content-center">
+            <h1 class="text-success">
+                {{income}}
+            </h1>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <h1 class="text-danger">
+                {{expenses}}
+            </h1>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <h1 [ngClass]="{
+            'text-danger': balance<0,
+            'text-success': balance>0
+            }">
+                {{balance}}
+            </h1>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col d-flex justify-content-center">
+            <h2>Best Machine</h2>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <h2>Best Product</h2>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col d-flex justify-content-center">
+            <h3>{{bestMachineId}}</h3>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <h3>{{bestProductName}}</h3>
+        </div>
+    </div>
+
+</div>

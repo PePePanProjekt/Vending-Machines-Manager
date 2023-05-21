@@ -3,7 +3,7 @@ import {ItemDetails} from "../models/item/ItemDetails";
 import {catchError, Observable, of, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Machine} from "../models/machine/Machine";
+import {Machine} from "../models/Machine/Machine";
 
 @Injectable({
     providedIn: 'root'

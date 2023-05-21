@@ -1,0 +1,53 @@
+<app-navbar-owner/>
+
+<div class="container" style="max-width: 500px">
+    <h1>Update employee</h1>
+
+    <form #employeeForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group m-1">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName"
+                   required [(ngModel)]="employee.firstName"
+                   name="firstName" #firstName="ngModel">
+            <div [hidden]="firstName.valid || firstName.pristine"
+                 class="alert alert-danger">
+                First Name is required
+            </div>
+        </div>
+        <div class="form-group m-1">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" required [(ngModel)]="employee.lastName"
+                   name="lastName" #lastName="ngModel">
+            <div [hidden]="lastName.valid || lastName.pristine"
+                 class="alert alert-danger">
+                Last Name is required
+            </div>
+        </div>
+        <div class="form-group m-1">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" required [(ngModel)]="employee.email"
+                   name="email" #email="ngModel" ngModel email>
+            <div [hidden]="email.valid || email.pristine || !email.errors?.['pattern']"
+                 class="alert alert-danger">
+                Please enter a valid email address
+            </div>
+        </div>
+        <div class="form-group m-1">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" class="form-control" id="phoneNumber" required [(ngModel)]="employee.phoneNumber"
+                   name="phoneNumber" #phoneNumber="ngModel">
+            <div [hidden]="phoneNumber.valid || phoneNumber.pristine"
+                 class="alert alert-danger">
+                Phone number is required
+            </div>
+        </div>
+        <div class="form-group m-1">
+            <label for="role">Role</label>
+            <select class="form-control" id="role" required [(ngModel)]="employee.role" name="role">
+                <option *ngFor="let r of roles" [value]="r"> {{r}}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!employeeForm.form.valid">Submit</button>
+        <button type="button" class="btn btn-primary m-1" (click)="goBack()">Cancel</button>
+    </form>
+</div>

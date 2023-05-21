@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {MachineService} from "../../../services/machine.service";
-import {Machine} from "../../../models/machine/Machine";
+import {Machine} from "../../../models/Machine/Machine";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
 
 @Component({
-  selector: 'app-add-machine',
+  selector: 'app-add-Machine',
   templateUrl: './add-machine.component.html',
   styleUrls: ['./add-machine.component.css']
 })
