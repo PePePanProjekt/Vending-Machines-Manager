@@ -14,10 +14,7 @@ import pp.project.vmm.endpoint.system.repository.HoldsRepository;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
 import pp.project.vmm.endpoint.warehouse.service.dto.HoldsFullInfoDTO;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -114,13 +111,15 @@ class HoldsServiceImplementationTest {
     }
     @Test
     void shouldGetAllTest() {
-
+        // Given
         List<Holds> holdsList = Arrays.asList(holds1, holds2);
 
         given(holdsRepository.findAll()).willReturn(holdsList);
 
+        // When
         List<HoldsFullInfoDTO> result = holdsService.getAll();
 
+        // Then
         verify(holdsRepository, times(1)).findAll();
         assertEquals(2, result.size());
 
@@ -140,7 +139,37 @@ class HoldsServiceImplementationTest {
     }
 
     @Test
-    void getById() {
+    void shouldGetByIdTest() {
+        // Given
+        given(holdsRepository.findById(holds1.getId())).willReturn(Optional.of(holds1));
+
+        // When
+        HoldsFullInfoDTO result = holdsService.getById(holds1.getId());
+
+        // Then
+        verify(holdsRepository, times(1)).findById(holds1.getId());
+
+        assertNotNull(result);
+        assertEquals(holds1.getId(), result.getId());
+        assertEquals(holds1.getItem().getId(), result.getItemId());
+        assertEquals(holds1.getBatch().getId(), result.getBatchId());
+        assertEquals(holds1.getItemPrice(), result.getItemPrice());
+        assertEquals(holds1.getItemAmount(), result.getItemAmount());
+    }
+    @Test
+    void shouldNotGetByIdTest() {
+        // Given
+        UUID id = UUID.randomUUID();
+
+        given(holdsRepository.findById(id)).willReturn(Optional.empty());
+
+        // When
+        HoldsFullInfoDTO result = holdsService.getById(id);
+
+        // Then
+        verify(holdsRepository, times(1)).findById(id);
+
+        assertNull(result);
     }
 
     @Test
