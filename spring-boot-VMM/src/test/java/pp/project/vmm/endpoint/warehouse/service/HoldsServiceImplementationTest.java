@@ -18,8 +18,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class HoldsServiceImplementationTest {
@@ -173,7 +172,28 @@ class HoldsServiceImplementationTest {
     }
 
     @Test
-    void getAllByItemId() {
+    void shouldGetAllByItemIdTest() {
+        // Given
+        List<Holds> holdsList = new ArrayList<>();
+        holdsList.add(holds1);
+
+        given(holdsRepository.findByItemId(item1.getId())).willReturn(holdsList);
+
+        // When
+        List<HoldsFullInfoDTO> dtoList = holdsService.getAllByItemId(item1.getId());
+
+        // Then
+        assertEquals(1, dtoList.size());
+
+        HoldsFullInfoDTO dto1 = dtoList.get(0);
+        assertEquals(holds1.getId(), dto1.getId());
+        assertEquals(holds1.getItem().getId(), dto1.getItemId());
+        assertEquals(holds1.getBatch().getId(), dto1.getBatchId());
+        assertEquals(holds1.getItemPrice(), dto1.getItemPrice());
+        assertEquals(holds1.getItemAmount(), dto1.getItemAmount());
+
+        verify(holdsRepository, times(1)).findByItemId(item1.getId());
+        verifyNoMoreInteractions(holdsRepository);
     }
 
     @Test
