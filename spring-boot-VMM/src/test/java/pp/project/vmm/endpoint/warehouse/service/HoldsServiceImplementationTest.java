@@ -225,7 +225,18 @@ class HoldsServiceImplementationTest {
     }
 
     @Test
-    void deleteById() {
+    void shouldDeleteByIdTest() {
+
+        given(holdsRepository.findById(holds1.getId())).willReturn(Optional.of(holds1));
+
+        ResponseEntity<String> response = holdsService.deleteById(holds1.getId());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Successfully deleted Holds object", response.getBody());
+
+        verify(holdsRepository, times(1)).findById(holds1.getId());
+        verify(holdsRepository, times(1)).deleteById(holds1.getId());
+        verify(itemRepository, times(1)).save(item1);
     }
 
     @Test
