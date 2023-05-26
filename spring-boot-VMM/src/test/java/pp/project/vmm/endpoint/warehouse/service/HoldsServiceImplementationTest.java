@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pp.project.vmm.endpoint.system.model.Batch;
 import pp.project.vmm.endpoint.system.model.Holds;
@@ -12,6 +14,7 @@ import pp.project.vmm.endpoint.system.model.Item;
 import pp.project.vmm.endpoint.system.repository.BatchRepository;
 import pp.project.vmm.endpoint.system.repository.HoldsRepository;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
+import pp.project.vmm.endpoint.warehouse.service.dto.HoldsDetailsDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.HoldsFullInfoDTO;
 
 import java.util.*;
@@ -197,7 +200,28 @@ class HoldsServiceImplementationTest {
     }
 
     @Test
-    void update() {
+    void shouldUpdateTest() {
+        // Given
+        HoldsDetailsDTO detailsDTO = new HoldsDetailsDTO();
+        detailsDTO.setId(holds1.getId());
+        detailsDTO.setItemId(item1.getId());
+        detailsDTO.setItemAmount(item1.getAmountAvailable());
+        detailsDTO.setItemPrice(20.0f);
+
+        given(holdsRepository.findById(holds1.getId())).willReturn(Optional.of(holds1));
+        given(itemRepository.findById(item1.getId())).willReturn(Optional.of(item1));
+
+        // When
+        ResponseEntity<String> response = holdsService.update(detailsDTO);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Successfully updated Holds object", response.getBody());
+
+        verify(holdsRepository, times(1)).findById(holds1.getId());
+        verify(itemRepository, times(1)).findById(item1.getId());
+        verify(holdsRepository, times(1)).save(holds1);
+        verify(itemRepository, times(1)).save(item1);
     }
 
     @Test
