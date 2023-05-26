@@ -1,4 +1,4 @@
-package pp.project.vmm.endpoint.system.service;
+package pp.project.vmm.endpoint.warehouse.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pp.project.vmm.endpoint.system.model.Item;
 import pp.project.vmm.endpoint.system.repository.ItemRepository;
-import pp.project.vmm.endpoint.warehouse.service.ItemServiceImplementation;
 import pp.project.vmm.endpoint.warehouse.service.dto.ItemDetailsDTO;
 import pp.project.vmm.endpoint.warehouse.service.dto.ItemSimpleDTO;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,7 +36,7 @@ class ItemServiceImplementationTest {
     ItemServiceImplementation itemService;
     UUID id = UUID.randomUUID();
     @BeforeEach
-    public void init()
+    void init()
     {
         given(itemRepository.findAll()).willReturn(prepareMockData());
         given(itemRepository.findById(id)).willReturn(prepareMockData2(id));
@@ -112,7 +110,7 @@ class ItemServiceImplementationTest {
     }
 
     @Test
-    public void shouldNotUpdateItem() {
+    void shouldNotUpdateItem() {
         // Given
         ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "item1");
 
@@ -132,7 +130,7 @@ class ItemServiceImplementationTest {
     }
 
     @Test
-    public void shouldAddItem() {
+    void shouldAddItem() {
         // Given
         ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "item1");
         Item item = new Item();
@@ -152,7 +150,7 @@ class ItemServiceImplementationTest {
     }
 
     @Test
-    public void shouldNotAddItem() {
+    void shouldNotAddItem() {
         // Given
         ItemSimpleDTO simpleDTO = new ItemSimpleDTO(id, "item1");
         Item item1 = new Item();
@@ -172,7 +170,7 @@ class ItemServiceImplementationTest {
     }
 
     @Test
-    public void shouldDeleteItemById() {
+    void shouldDeleteItemById() {
         // Given
         Item item = new Item();
         item.setId(id);
@@ -191,7 +189,7 @@ class ItemServiceImplementationTest {
     }
 
     @Test
-    public void shouldNotDeleteItemById() {
+    void shouldNotDeleteItemById() {
         // Given
         given(itemRepository.existsById(id)).willReturn(false);
 
