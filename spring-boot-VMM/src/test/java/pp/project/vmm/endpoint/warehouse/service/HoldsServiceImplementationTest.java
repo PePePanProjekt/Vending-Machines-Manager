@@ -240,6 +240,24 @@ class HoldsServiceImplementationTest {
     }
 
     @Test
-    void add() {
+    void shouldAddTest() {
+        UUID batchId = UUID.randomUUID();
+        UUID itemId = UUID.randomUUID();
+
+        HoldsDetailsDTO holdsDTO = new HoldsDetailsDTO();
+        holdsDTO.setItemPrice(10.0f);
+        holdsDTO.setItemAmount(5);
+        holdsDTO.setItemId(itemId);
+
+        given(batchRepository.findById(batchId)).willReturn(Optional.of(batch1));
+        given(itemRepository.findById(itemId)).willReturn(Optional.of(item1));
+
+        ResponseEntity<String> response = holdsService.add(batchId, holdsDTO);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Successfully created a new Holds object", response.getBody());
+
+        Holds expectedHolds = new Holds(10.0f, 5, false, batch1, item1);
+        verify(holdsRepository, times(1)).save(expectedHolds);
     }
 }
