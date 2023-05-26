@@ -1,0 +1,79 @@
+<app-navbar-owner></app-navbar-owner>
+<div class="container">
+    <div *ngIf="machine;else no_machine">
+
+        <h4>Refill Machine : {{machine.details.id}}</h4>
+        <h6>Empty slots : {{machine.details.dispenserAmount-slotList.length}}</h6>
+
+        <div >
+            <div class="row">
+                <div class="col-auto me-auto">
+                    <label for="SlotNumber">SlotNumber</label>
+                </div>
+                <div class="col">
+                    <select id="SlotNumber" #SlotNumber required class="form-control" [(ngModel)]="newSlot.slotNumber" name="itemId">
+                        <option *ngFor="let slotNumber of freeSlotIds" [value]="slotNumber">{{slotNumber}}</option>
+                    </select>
+                </div>
+                <div class="col-auto me-auto">
+                    <label for="Item">Item</label>
+                </div>
+
+                <div class="col">
+                    <select id="Item" #Item required class="form-control" [(ngModel)]="newSlot.itemId" name="itemId">
+                        <option *ngFor="let item of allItems" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-auto me-auto">
+                    <label for="ItemPrice">ItemPrice</label>
+                </div>
+                <div class="col">
+                    <input id="ItemPrice" #ItemPrice type="number" class="form-control" [(ngModel)]="newSlot.itemPrice">
+                </div>
+
+                <div class="col-auto me-auto">
+                    <label for="ItemAmount">Item Amount</label>
+                </div>
+                <div class="col">
+                    <input id="ItemAmount" #ItemAmount type="number" class="form-control" [(ngModel)]="newSlot.itemAmount"
+                           (change)="newAmount(ItemAmount.value)">
+                </div>
+            </div>
+            <button class="btn btn-success" (click)="addNewSlot()">Add Slot</button>
+        </div>
+
+        <table class="table table-striped text-center">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">item</th>
+                <th scope="col">amount</th>
+                <th scope="col">price</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let slot of slotList">
+                <td>{{slot.slotNumber}}</td>
+                <td>{{slot.itemName}}</td>
+                <td>{{slot.itemAmount}}</td>
+                <td>{{slot.itemPrice}}</td>
+                <td class="">
+
+                    <button class="btn btn-danger m-1" (click)="deleteSlot(slot)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-success m-1" (click)="SubmitSlots()">Submit</button>
+
+
+    </div>
+    <ng-template #no_machine>
+        Can't find machine
+    </ng-template>
+
+    <button type="button" (click)="goBack()" class="btn btn-primary m-1">Cancel</button>
+</div>
+

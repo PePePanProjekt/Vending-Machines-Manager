@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {ItemService} from "../../../services/item.service";
 import {ItemDetails} from "../../../models/item/ItemDetails";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-items',
@@ -11,7 +12,8 @@ export class ItemsComponent {
 
     items : ItemDetails[] = [];
     constructor(
-        private itemService : ItemService
+        private itemService : ItemService,
+        private snackBar: MatSnackBar
     ) { }
 
     ngOnInit(){
@@ -21,8 +23,9 @@ export class ItemsComponent {
      addItem(newItemName: string) {
         newItemName = newItemName.trim();
         if(newItemName == ""){return;}
-        let newItem = new ItemDetails(newItemName);
+        let newItem = new ItemDetails(newItemName,0);
         this.itemService.addItem(newItem).subscribe();
+        this.snackBar.open(`Added new item: ${newItem.name}`, "OK").onAction()
     }
 
      getItems() {

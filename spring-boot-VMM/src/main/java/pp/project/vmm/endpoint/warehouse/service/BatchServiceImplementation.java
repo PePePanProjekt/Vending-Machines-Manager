@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,17 +99,49 @@ public class BatchServiceImplementation implements BatchService {
 
     @Override
     public ResponseEntity<String> updateBatch(BatchDetailsDTO detailsDTO) {
-        
+
         Optional<Batch> batchOptional = batchRepository.findById(detailsDTO.getId());
         if(batchOptional.isEmpty()) {
             return new ResponseEntity<String>("Batch object of given id does not exist: " + detailsDTO.getId(), HttpStatus.NOT_FOUND);
         }
         Batch batch = batchOptional.get();
         batch.setDate(detailsDTO.getDate());
-        
+
+        List<UUID> holdsIdList = detailsDTO.getHolds().stream().map(HoldsDetailsDTO::getId).toList();
+        List<HoldsDetailsDTO> holdsToDelete = batch.getHolds().stream()
+                .filter(x -> !(holdsIdList.contains(x.getId())) && x.getId() != null)
+                .map(x -> new HoldsDetailsDTO(
+                        x.getId(),
+                        x.getItem().getId(),
+                        x.getItemPrice(),
+                        x.getItemAmount()
+                ))
+                .toList();
+        List<HoldsDetailsDTO> holdsToKeep = detailsDTO.getHolds().stream().filter(x -> holdsIdList.contains(x.getId()) || x.getId() == null).toList();
+
+        for(HoldsDetailsDTO holdsDetailsDTO : holdsToDelete) {
+            holdsRepository.deleteById(holdsDetailsDTO.getId());
+        }
+
         List<Holds> holdsList = new ArrayList<>();
         List<Item> itemList = new ArrayList<>();
-        for(HoldsDetailsDTO holdsDetailsDto : detailsDTO.getHolds()) {
+        for(HoldsDetailsDTO holdsDetailsDto : holdsToKeep) {
+
+            Optional<Item> itemOptional = itemRepository.findById(holdsDetailsDto.getItemId());
+            if(itemOptional.isEmpty()) {
+                return new ResponseEntity<String>("Item of given id does not exist: " + holdsDetailsDto.getItemId(), HttpStatus.NOT_FOUND);
+            }
+            Item item = itemOptional.get();
+
+
+            if(holdsDetailsDto.getId() == null) {
+                Holds holds = new Holds(holdsDetailsDto.getItemPrice(), holdsDetailsDto.getItemAmount(), false, batch, item);
+                holds = holdsRepository.save(holds);
+                if(holds.getId() == null) {
+                    return new ResponseEntity<>("Unsuccessful creation of new Holds object", HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                holdsDetailsDto.setId(holds.getId());
+            }
 
             Optional<Holds> holdsOptional = holdsRepository.findById(holdsDetailsDto.getId());
             if(holdsOptional.isEmpty()) {
@@ -119,21 +152,13 @@ public class BatchServiceImplementation implements BatchService {
             if(!holds.getBatch().getId().equals(batch.getId())) {
                 return new ResponseEntity<String>("Holds object of given id is not associated with given Batch object: " + holdsDetailsDto, HttpStatus.BAD_REQUEST);
             }
-            
-            Optional<Item> itemOptional = itemRepository.findById(holdsDetailsDto.getItemId());
-            if(itemOptional.isEmpty()) {
-                return new ResponseEntity<String>("Item of given id does not exist: " + holdsDetailsDto.getItemId(), HttpStatus.NOT_FOUND);
-            }
-            Item item = itemOptional.get();
 
             if(holds.getItem().getId().equals(item.getId())) {
-                
+
                 int oldItemAmount = holds.getItemAmount();
                 holds.setItemAmount(holdsDetailsDto.getItemAmount());
                 holds.setItemPrice(holdsDetailsDto.getItemPrice());
                 item.setAmountAvailable(item.getAmountAvailable() - (oldItemAmount - holds.getItemAmount()));
-                itemList.add(item);
-                holdsList.add(holds);
             }
             else {
 
@@ -144,18 +169,14 @@ public class BatchServiceImplementation implements BatchService {
                 holds.setItem(item);
                 item.setAmountAvailable(item.getAmountAvailable() + holds.getItemAmount());
                 itemList.add(oldItem);
-                itemList.add(item);
-                holdsList.add(holds);
             }
+            itemList.add(item);
+            holdsList.add(holds);
         }
 
         batchRepository.save(batch);
-        for(Item item : itemList) {
-            itemRepository.save(item);
-        }
-        for(Holds holds : holdsList) {
-            holdsRepository.save(holds);
-        }
+        holdsRepository.saveAll(holdsList);
+        itemRepository.saveAll(itemList);
 
         return new ResponseEntity<String>("Successfully updated Batch object and all associated Holds objects", HttpStatus.OK);
     }
@@ -170,6 +191,11 @@ public class BatchServiceImplementation implements BatchService {
         Batch batch = batchOptional.get();
 
         List<Holds> holdsList = batch.getHolds();
+        for(Holds holds : holdsList) {
+            Item item = holds.getItem();
+            item.setAmountAvailable(item.getAmountAvailable() - holds.getItemAmount());
+            itemRepository.save(item);
+        }
         holdsRepository.deleteAllInBatch(holdsList);
         batchRepository.delete(batch);
 
@@ -182,6 +208,7 @@ public class BatchServiceImplementation implements BatchService {
         Batch batch = new Batch(detailsDTO.getDate(), false);
         batch = batchRepository.save(batch);
 
+        List<Item> itemList = new ArrayList<>();
         List<Holds> holdsList = new ArrayList<>();
         for(HoldsDetailsDTO holdsDetailsDto : detailsDTO.getHolds()) {
 
@@ -190,11 +217,14 @@ public class BatchServiceImplementation implements BatchService {
                 return new ResponseEntity<String>("Item object of given id does not exist: " + holdsDetailsDto.getItemId(), HttpStatus.NOT_FOUND);
             }
             Item item = itemOptional.get();
+            item.setAmountAvailable(item.getAmountAvailable() + holdsDetailsDto.getItemAmount());
+            itemList.add(item);
 
             Holds holds = new Holds(holdsDetailsDto.getItemPrice(), holdsDetailsDto.getItemAmount(), false, batch, item);
             holdsList.add(holds);
         }
         holdsRepository.saveAll(holdsList);
+        itemRepository.saveAll(itemList);
 
         return new ResponseEntity<String>("Successfully saved a new Batch object and all associated Holds objects", HttpStatus.OK);
     }
