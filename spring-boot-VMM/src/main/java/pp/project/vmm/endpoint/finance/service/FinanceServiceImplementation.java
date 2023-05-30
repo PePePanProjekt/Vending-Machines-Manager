@@ -7,7 +7,6 @@ import pp.project.vmm.endpoint.system.model.*;
 import pp.project.vmm.endpoint.system.repository.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class FinanceServiceImplementation implements FinanceService {
@@ -88,22 +87,22 @@ public class FinanceServiceImplementation implements FinanceService {
             totalProfit += sale.getPrice();
             itemPerformance.merge(sale.getItem().getId(), 1, Integer::sum);
         }
-        Map.Entry<UUID, Integer> worstItemEntry = Collections.min(itemPerformance.entrySet(), Map.Entry.comparingByValue());
-        Map.Entry<UUID, Integer> bestItemEntry = Collections.max(itemPerformance.entrySet(), Map.Entry.comparingByValue());
-        Optional<Item> worstItemOptional = itemRepository.findById(worstItemEntry.getKey());
-        Optional<Item> bestItemOptional = itemRepository.findById(bestItemEntry.getKey());
+        Map.Entry<UUID, Integer> worstItemEntry = !itemPerformance.isEmpty() ? Collections.min(itemPerformance.entrySet(), Map.Entry.comparingByValue()) : null;
+        Map.Entry<UUID, Integer> bestItemEntry = !itemPerformance.isEmpty() ? Collections.max(itemPerformance.entrySet(), Map.Entry.comparingByValue()) : null;
+        Optional<Item> worstItemOptional = worstItemEntry != null ? itemRepository.findById(worstItemEntry.getKey()) : Optional.empty();
+        Optional<Item> bestItemOptional = bestItemEntry != null ? itemRepository.findById(bestItemEntry.getKey()) : Optional.empty();
 
         return new SingleMachineStatsDTO(
                 vendingMachine.getId(),
                 vendingMachine.getLocation() + " / " + vendingMachine.getName(),
                 totalSold,
                 totalProfit,
-                bestItemEntry.getKey(),
+                bestItemEntry != null ? bestItemEntry.getKey() : UUID.randomUUID(),
                 bestItemOptional.map(Item::getName).orElse("Error getting item name"),
-                bestItemEntry.getValue(),
-                worstItemEntry.getKey(),
+                bestItemEntry != null ? bestItemEntry.getValue() : 0,
+                worstItemEntry != null ? worstItemEntry.getKey() : UUID.randomUUID(),
                 worstItemOptional.map(Item::getName).orElse("Error getting item name"),
-                worstItemEntry.getValue()
+                worstItemEntry != null ? worstItemEntry.getValue() : 0
         );
     }
 
@@ -141,32 +140,32 @@ public class FinanceServiceImplementation implements FinanceService {
             itemPerformance.merge(sale.getItem().getId(), 1, Integer::sum);
             machinePerformance.merge(sale.getVendingMachine().getId(), 1, Integer::sum);
         }
-        Map.Entry<UUID, Integer> bestItemEntry = Collections.max(itemPerformance.entrySet(), Map.Entry.comparingByValue());
-        Map.Entry<UUID, Integer> worstItemEntry = Collections.min(itemPerformance.entrySet(), Map.Entry.comparingByValue());
-        Map.Entry<UUID, Integer> bestMachineEntry = Collections.max(machinePerformance.entrySet(), Map.Entry.comparingByValue());
-        Map.Entry<UUID, Integer> worstMachineEntry = Collections.min(machinePerformance.entrySet(), Map.Entry.comparingByValue());
-        Optional<Item> bestItemOptional = itemRepository.findById(bestItemEntry.getKey());
-        Optional<Item> worstItemOptional = itemRepository.findById(worstItemEntry.getKey());
-        Optional<VendingMachine> bestMachineOptional = vendingMachineRepository.findById(bestMachineEntry.getKey());
-        Optional<VendingMachine> worstMachineOptional = vendingMachineRepository.findById(worstMachineEntry.getKey());
+        Map.Entry<UUID, Integer> bestItemEntry = !itemPerformance.isEmpty() ? Collections.max(itemPerformance.entrySet(), Map.Entry.comparingByValue()) : null;
+        Map.Entry<UUID, Integer> worstItemEntry = !itemPerformance.isEmpty() ? Collections.min(itemPerformance.entrySet(), Map.Entry.comparingByValue()) : null;
+        Map.Entry<UUID, Integer> bestMachineEntry = !machinePerformance.isEmpty() ? Collections.max(machinePerformance.entrySet(), Map.Entry.comparingByValue()) : null;
+        Map.Entry<UUID, Integer> worstMachineEntry = !machinePerformance.isEmpty() ? Collections.min(machinePerformance.entrySet(), Map.Entry.comparingByValue()) : null;
+        Optional<Item> bestItemOptional = bestItemEntry != null ? itemRepository.findById(bestItemEntry.getKey()) : Optional.empty();
+        Optional<Item> worstItemOptional = worstItemEntry != null ? itemRepository.findById(worstItemEntry.getKey()) : Optional.empty();
+        Optional<VendingMachine> bestMachineOptional = bestMachineEntry != null ? vendingMachineRepository.findById(bestMachineEntry.getKey()) : Optional.empty();
+        Optional<VendingMachine> worstMachineOptional = worstMachineEntry != null ? vendingMachineRepository.findById(worstMachineEntry.getKey()) : Optional.empty();
 
         return new AllStatsDTO(
                 totalSales,
                 totalProfit,
                 totalBought,
                 totalExpenses,
-                bestItemEntry.getKey(),
+                bestItemEntry != null ? bestItemEntry.getKey() : UUID.randomUUID(),
                 bestItemOptional.map(Item::getName).orElse("Error getting item name"),
-                bestItemEntry.getValue(),
-                worstItemEntry.getKey(),
+                bestItemEntry != null ? bestItemEntry.getValue() : 0,
+                worstItemEntry != null ? worstItemEntry.getKey() : UUID.randomUUID(),
                 worstItemOptional.map(Item::getName).orElse("Error getting item name"),
-                worstItemEntry.getValue(),
-                bestMachineEntry.getKey(),
+                worstItemEntry != null ? worstItemEntry.getValue() : 0,
+                bestMachineEntry != null ? bestMachineEntry.getKey() : UUID.randomUUID(),
                 bestMachineOptional.map(x -> x.getLocation() + " / " + x.getName()).orElse("Error getting vending machine name"),
-                bestMachineEntry.getValue(),
-                worstMachineEntry.getKey(),
+                bestMachineEntry != null ? bestMachineEntry.getValue() : 0,
+                worstMachineEntry != null ? worstMachineEntry.getKey() : UUID.randomUUID(),
                 worstMachineOptional.map(x -> x.getLocation() + " / " + x.getName()).orElse("Error getting vending machine name"),
-                worstMachineEntry.getValue()
+                worstMachineEntry != null ? worstMachineEntry.getValue() : 0
         );
     }
 }
