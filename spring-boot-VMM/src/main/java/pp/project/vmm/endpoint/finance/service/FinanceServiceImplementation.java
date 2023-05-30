@@ -128,7 +128,7 @@ public class FinanceServiceImplementation implements FinanceService {
                     .stream()
                     .mapToInt(Holds::getItemAmount)
                     .sum();
-            totalExpenses += batch.getHolds()
+            totalExpenses += (float)batch.getHolds()
                     .stream()
                     .mapToDouble(x -> x.getItemPrice() * x.getItemAmount())
                     .sum();
