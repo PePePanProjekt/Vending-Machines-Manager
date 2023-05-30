@@ -1,0 +1,52 @@
+<app-navbar-owner/>
+<div class="container">
+    <h1>Items Reports</h1>
+
+    <div class="row my-2">
+        <div class="col">
+            <label for="Since">Since</label>
+            <input id="Since" #Since type="date" class="form-control">
+        </div>
+        <div class="col">
+            <label for="To">To</label>
+            <input id="To" #To type="date" class="form-control">
+        </div>
+
+    </div>
+    <!--    <div class="row-cols-4 my-2">-->
+    <!--        <div class="col">-->
+    <!--            <button class="btn btn-success my-2" (click)="changeDates(Since.value,To.value)">Change to new dates-->
+    <!--            </button>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+
+    <label for="Item">Item</label>
+    <select id="Item" #Item required class="form-control" [(ngModel)]="selectedItemId" name="itemId">
+        <option *ngFor="let item of allItems" [value]="item.id">{{item.name}}</option>
+    </select>
+
+    <button class="btn btn-primary" (click)="changeDates(Since.value,To.value)"> Get Report</button>
+
+    <div *ngIf="itemStats;else itemStatsError">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Stat</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Total Sales</td>
+                <td>{{itemStats.totalSales}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <ng-template #itemStatsError>
+        Can't reach data
+    </ng-template>
+</div>

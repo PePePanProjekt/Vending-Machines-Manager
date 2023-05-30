@@ -40,6 +40,8 @@ import { AddEmployeeComponent } from './components/employees/add-employee/add-em
 import { UpdateEmployeeComponent } from './components/employees/update-employee/update-employee.component';
 import { FinancesComponent } from './components/finances/finances.component';
 import { SaleApiComponent } from './components/sale-api/sale-api.component';
+import { ItemReportComponent } from './components/finances/item-report/item-report.component';
+import { MachineReportComponent } from './components/finances/machine-report/machine-report.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +68,8 @@ import { SaleApiComponent } from './components/sale-api/sale-api.component';
         UpdateEmployeeComponent,
         FinancesComponent,
         SaleApiComponent,
+        ItemReportComponent,
+        MachineReportComponent,
     ],
     imports: [
         BrowserModule,
