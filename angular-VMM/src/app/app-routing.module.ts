@@ -19,10 +19,13 @@ import {EmployeesComponent} from "./components/employees/employees.component";
 import {AddEmployeeComponent} from "./components/employees/add-employee/add-employee.component";
 import {UpdateEmployeeComponent} from "./components/employees/update-employee/update-employee.component";
 import {FinancesComponent} from "./components/finances/finances.component";
+import {SaleApiComponent} from "./components/sale-api/sale-api.component";
 
 const routes: Routes = [
     {path:'',                               component:LoginComponent},
     {path:'login',                          component: LoginComponent},
+
+    {path:'sale-api',                       component:SaleApiComponent,         canActivate:[AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'finances',                       component:FinancesComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 

@@ -20,7 +20,6 @@
         </div>
     </div>
 
-
     <div class="row mt-4">
         <div class="col">
             <h2 class="d-flex justify-content-end">
@@ -35,59 +34,127 @@
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col d-flex justify-content-center">
-            <h1>
-                Income
-            </h1>
-        </div>
-        <div class="col d-flex justify-content-center">
-            <h1>
-            Expenses
-            </h1>
-        </div>
-        <div class="col d-flex justify-content-center">
-            <h1>
-                Balance
-            </h1>
-        </div>
+    <div *ngIf="allStats;else allStatsError" >
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Stat</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Total Sales</td>
+                <td>{{allStats.totalSales}}</td>
+            </tr>
+            <tr>
+                <td>Total Profit</td>
+                <td>{{allStats.totalProfit}}</td>
+            </tr>
+            <tr>
+                <td>Total Bought</td>
+                <td>{{allStats.totalBought}}</td>
+            </tr>
+            <tr>
+                <td>Total Expenses</td>
+                <td>{{allStats.totalExpenses}}</td>
+            </tr>
+            <tr>
+                <td>Best selling item name</td>
+                <td>{{allStats.bestSellingItemName}}</td>
+            </tr>
+            <tr>
+                <td>Best selling item amount</td>
+                <td>{{allStats.bestSellingItemAmount}}</td>
+            </tr>
+            <tr>
+                <td>Worst selling item name</td>
+                <td>{{allStats.worstSellingItemName}}</td>
+            </tr>
+            <tr>
+                <td>Worst selling item amount</td>
+                <td>{{allStats.worstSellingItemAmount}}</td>
+            </tr>
+            <tr>
+                <td>Best Performing Machine Id</td>
+                <td>{{allStats.bestPerformingMachineName}}</td>
+            </tr>
+            <tr>
+                <td>Best Performing Machine Sales</td>
+                <td>{{allStats.bestPerformingMachineSales}}</td>
+            </tr>
+            <tr>
+                <td>Worst Performing Machine Id</td>
+                <td>{{allStats.worstPerformingMachineName}}</td>
+            </tr>
+            <tr>
+                <td>Worst Performing Machine Sales</td>
+                <td>{{allStats.worstPerformingMachineSales}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="row my-5">
-        <div class="col d-flex justify-content-center">
-            <h1 class="text-success">
-                {{income}}
-            </h1>
-        </div>
-        <div class="col d-flex justify-content-center">
-            <h1 class="text-danger">
-                {{expenses}}
-            </h1>
-        </div>
-        <div class="col d-flex justify-content-center">
-            <h1 [ngClass]="{
-            'text-danger': balance<0,
-            'text-success': balance>0
-            }">
-                {{balance}}
-            </h1>
-        </div>
-    </div>
+    <ng-template #allStatsError>
+        Can't reach data
+    </ng-template>
 
-    <div class="row mt-5">
-        <div class="col d-flex justify-content-center">
-            <h2>Best Machine</h2>
-        </div>
-        <div class="col d-flex justify-content-center">
-            <h2>Best Product</h2>
-        </div>
-    </div>
-    <div class="row mt-1">
-        <div class="col d-flex justify-content-center">
-            <h3>{{bestMachineId}}</h3>
-        </div>
-        <div class="col d-flex justify-content-center">
-            <h3>{{bestProductName}}</h3>
-        </div>
-    </div>
+    <button class="btn btn-primary me-3">Items Report</button>
+    <button class="btn btn-primary mx-3">Machines Report</button>
+
+
+    <!--    <div class="row mt-5">-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h1>-->
+    <!--                Income-->
+    <!--            </h1>-->
+    <!--        </div>-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h1>-->
+    <!--            Expenses-->
+    <!--            </h1>-->
+    <!--        </div>-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h1>-->
+    <!--                Balance-->
+    <!--            </h1>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <div class="row my-5">-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h1 class="text-success">-->
+    <!--                {{income}}-->
+    <!--            </h1>-->
+    <!--        </div>-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h1 class="text-danger">-->
+    <!--                {{expenses}}-->
+    <!--            </h1>-->
+    <!--        </div>-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h1 [ngClass]="{-->
+    <!--            'text-danger': balance<0,-->
+    <!--            'text-success': balance>0-->
+    <!--            }">-->
+    <!--                {{balance}}-->
+    <!--            </h1>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="row mt-5">-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h2>Best Machine</h2>-->
+    <!--        </div>-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h2>Best Product</h2>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--    <div class="row mt-1">-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h3>{{bestMachineId}}</h3>-->
+    <!--        </div>-->
+    <!--        <div class="col d-flex justify-content-center">-->
+    <!--            <h3>{{bestProductName}}</h3>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 </div>
