@@ -7,6 +7,7 @@ import {formatDate, registerLocaleData} from "@angular/common";
 import {dateTimestampProvider} from "rxjs/internal/scheduler/dateTimestampProvider";
 import localePl from '@angular/common/locales/pl';
 import {SingleItemStats} from "../models/Finance/SingleItemStats";
+import {SingleMachineStats} from "../models/Finance/SingleMachineStats";
 @Injectable({
   providedIn: 'root'
 })
@@ -44,5 +45,12 @@ export class FinanceService {
         const stopDateString = this.formatDate(toDate);
         let url = this.financeUrl +`items/${selectedItemId}/${startDateString}/${stopDateString}`;
         return this.http.get<SingleItemStats>(url);
+    }
+
+    getMachineStats(sinceDate: Date, toDate: Date, selectedMachine: string) {
+        const startDateString = this.formatDate(sinceDate);
+        const stopDateString = this.formatDate(toDate);
+        let url = this.financeUrl +`machines/${selectedMachine}/${startDateString}/${stopDateString}`;
+        return this.http.get<SingleMachineStats>(url);
     }
 }
