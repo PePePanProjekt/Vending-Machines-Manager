@@ -54,7 +54,7 @@ export class SaleApiComponent {
             this.saleService.makeSale(this.selectedMachineId, this.selectedSlotId).subscribe();
             this.snackBar.open(
                 `${this.allMachines.filter(m=>m.id==this.selectedMachineId)[0].name}`
-            ).onAction()
+            ,"OK")
         }
     }
 }

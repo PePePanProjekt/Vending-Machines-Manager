@@ -22,6 +22,8 @@ export class FinancesComponent {
         this.getReport();
     }
 
+
+
     private getReport() {
         this.financeService.getAllStats(this.sinceDate, this.toDate).subscribe(report => {
             this.allStats = report;

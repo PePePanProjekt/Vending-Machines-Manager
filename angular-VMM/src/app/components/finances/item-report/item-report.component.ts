@@ -4,6 +4,7 @@ import {ItemSimple} from "../../../models/item/ItemSimple";
 import {ItemService} from "../../../services/item.service";
 import {ItemDetails} from "../../../models/item/ItemDetails";
 import {SingleItemStats} from "../../../models/Finance/SingleItemStats";
+import {Location} from "@angular/common";
 
 @Component({
     selector: 'app-item-report',
@@ -19,12 +20,17 @@ export class ItemReportComponent {
 
     constructor(
         private financeService: FinanceService,
-        private itemService: ItemService
+        private itemService: ItemService,
+        private location: Location,
     ) {
     }
 
     ngOnInit() {
         this.getItems();
+    }
+
+    goBack() {
+        this.location.back();
     }
 
     private getItems() {
