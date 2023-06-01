@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/finance")
 public class FinanceRestController {
 

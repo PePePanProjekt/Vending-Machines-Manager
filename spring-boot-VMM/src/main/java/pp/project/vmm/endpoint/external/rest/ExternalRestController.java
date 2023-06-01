@@ -8,6 +8,7 @@ import pp.project.vmm.endpoint.external.service.ExternalService;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/external")
 public class ExternalRestController {
 
