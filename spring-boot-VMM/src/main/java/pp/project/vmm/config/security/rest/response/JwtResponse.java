@@ -1,8 +1,6 @@
 package pp.project.vmm.config.security.rest.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,8 +10,19 @@ import java.util.UUID;
 @NoArgsConstructor
 public class JwtResponse {
 
-    private String jwt;
+
     private UUID id;
     private String username;
     private List<String> roles;
+    private String accessToken;
+    private String tokenType;
+
+    public JwtResponse(String jwt, UUID id, String username, List<String> roles) {
+        this.accessToken = jwt;
+        this.id = id;
+        this.username = username;
+        this.roles = roles;
+        this.tokenType = "Bearer";
+    }
+
 }
