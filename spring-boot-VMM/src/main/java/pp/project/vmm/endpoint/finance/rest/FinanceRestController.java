@@ -1,5 +1,6 @@
 package pp.project.vmm.endpoint.finance.rest;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -28,6 +29,7 @@ public class FinanceRestController {
     }
 
     @GetMapping("/items/{itemId}/{startDateString}/{endDateString}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public SingleItemStatsDTO getSingleItemStats(@PathVariable UUID itemId, @PathVariable String startDateString, @PathVariable String endDateString) {
         LocalDate localStartDate = LocalDate.parse(startDateString, dateTimeFormatter);
         Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
@@ -37,6 +39,7 @@ public class FinanceRestController {
     }
 
     @GetMapping("/machines/{machineId}/{startDateString}/{endDateString}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public SingleMachineStatsDTO getSingleMachineStats(@PathVariable UUID machineId, @PathVariable String startDateString, @PathVariable String endDateString) {
         LocalDate localStartDate = LocalDate.parse(startDateString, dateTimeFormatter);
         Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
@@ -46,6 +49,7 @@ public class FinanceRestController {
     }
 
     @GetMapping("/all/{startDateString}/{endDateString}")
+    @SecurityRequirement(name = "Bearer Authentication")
     public AllStatsDTO getAllStats(@PathVariable String startDateString, @PathVariable String endDateString) {
         LocalDate localStartDate = LocalDate.parse(startDateString, dateTimeFormatter);
         Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());

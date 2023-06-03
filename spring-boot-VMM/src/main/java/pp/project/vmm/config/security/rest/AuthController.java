@@ -1,5 +1,6 @@
 package pp.project.vmm.config.security.rest;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -70,6 +71,7 @@ public class AuthController {
     }
 
     @PostMapping("/create")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         if(userRepository.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already in use"));

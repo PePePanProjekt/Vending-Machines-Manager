@@ -34,13 +34,19 @@ public class TestConfiguration {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Use only when testing with H2 database or create-drop option
+    // Initialize roles and create a default user
     @Bean
     public void createUsers() {
         for(ERole roleName : ERole.values()) {
+            if(roleRepository.existsRoleByName(roleName)) {
+                continue;
+            }
             Role role = new Role();
             role.setName(roleName);
             roleRepository.save(role);
+        }
+        if(userRepository.existsByUsername("user")) {
+            return;
         }
         User user = new User();
         user.setUsername("user");
