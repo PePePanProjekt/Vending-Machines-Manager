@@ -34,21 +34,22 @@ export class AuthService {
         sessionStorage.removeItem("app.roles");
     }
 
-    isUserInRole(roleFromRoute: string) {
+    isUserInRole(roleFromRoute: string): boolean {
         const roles = sessionStorage.getItem("app.roles");
-
-        if (roles!.includes(",")) {
-            if (roles === roleFromRoute) {
-                return true;
-            }
-        } else {
-            const roleArray = roles!.split(",");
-            for (let role of roleArray) {
-                if (role === roleFromRoute) {
-                    return true;
+        if (roles) {
+            let rolesArray = roles.split(",");
+            let success = false
+            rolesArray.forEach(r=> {
+                    if (roleFromRoute.includes(r)) {
+                        success = true;
+                    }
                 }
-            }
+            );
+            return success;
         }
         return false;
     }
+
+
+
 }
