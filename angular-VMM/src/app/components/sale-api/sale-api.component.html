@@ -1,0 +1,20 @@
+<app-navbar-owner></app-navbar-owner>
+
+<div class="container" style="max-width: 500px">
+    <h1>Sale simulation</h1>
+    <div class="my-3">
+        <h2>Pick machine</h2>
+        <select class="form-select" id="Item" (change)="machineChange()" [(ngModel)]="selectedMachineId">
+            <option *ngFor="let machine of allMachines" [value]="machine.id">{{machine.name}}</option>
+        </select>
+    </div>
+    <div class="my-3">
+        <h2>Pick slot</h2>
+        <select class="form-select" id="Slot" [(ngModel)]="selectedSlotId">
+            <option *ngFor="let slot of slots" [value]="slot.slotNumber">{{slot.itemName}}</option>
+        </select>
+        <div class="row justify-content-center" >
+            <button class="btn btn-success my-3 m-3 " style="max-width: 400px" (click)="sale()">Buy</button>
+        </div>
+    </div>
+</div>

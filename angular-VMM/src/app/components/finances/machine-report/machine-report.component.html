@@ -1,0 +1,76 @@
+<app-navbar-owner/>
+<div class="container">
+    <h1>Items Reports</h1>
+
+    <div class="row my-2">
+        <div class="col">
+            <label for="Since">Since</label>
+            <input id="Since" #Since type="date" class="form-control">
+        </div>
+        <div class="col">
+            <label for="To">To</label>
+            <input id="To" #To type="date" class="form-control">
+        </div>
+
+    </div>
+    <!--    <div class="row-cols-4 my-2">-->
+    <!--        <div class="col">-->
+    <!--            <button class="btn btn-success my-2" (click)="changeDates(Since.value,To.value)">Change to new dates-->
+    <!--            </button>-->
+    <!--        </div>-->
+    <!--    </div>-->
+
+
+    <label for="Item">Item</label>
+    <select id="Item" #Item required class="form-control" [(ngModel)]="selectedMachine" name="itemId">
+        <option *ngFor="let machine of allMachines" [value]="machine.id">{{machine.name}}</option>
+    </select>
+    <div class="my-3">
+        <button class="btn btn-primary" (click)="changeDates(Since.value,To.value)"> Get Report</button>
+        <button class="btn btn-primary ms-3" (click)="goBack()"> Go Back</button>
+    </div>
+    <div *ngIf="machineStats;else machineStatsError">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Stat</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Machine Name</td>
+                <td>{{machineStats.machineName}}</td>
+            </tr>
+            <tr>
+                <td>Items Sold</td>
+                <td>{{machineStats.itemsSold}}</td>
+            </tr>
+            <tr>
+                <td>Total Profit</td>
+                <td>{{machineStats.totalProfit}}</td>
+            </tr>
+            <tr>
+                <td>Best Selling Item Name</td>
+                <td>{{machineStats.bestSellingItemName}}</td>
+            </tr>
+            <tr>
+                <td>Best Selling Item Amount</td>
+                <td>{{machineStats.bestSellingItemAmount}}</td>
+            </tr>
+            <tr>
+                <td>Worst Selling Item Name</td>
+                <td>{{machineStats.worstSellingItemName}}</td>
+            </tr>
+            <tr>
+                <td>Worst Selling Item Amount</td>
+                <td>{{machineStats.worstSellingItemAmount}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <ng-template #machineStatsError>
+    </ng-template>
+</div>

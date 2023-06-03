@@ -53,7 +53,7 @@ public class MachineServiceImplementation implements MachineService {
             }
 
             if(totalSlots > 0) {
-                percentSlotsUsed = (usedSlots / totalSlots) * 100;
+                percentSlotsUsed = (int)((float)usedSlots / totalSlots) * 100;
             }
             else {
                 percentSlotsUsed = 0;
