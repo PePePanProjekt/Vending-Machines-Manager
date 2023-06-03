@@ -26,12 +26,12 @@ export class LoginComponent {
 
         this.authService.login(this.username, this.password)
             .subscribe({
-                next: (token) => {
-                    sessionStorage.setItem("app.token", token);
+                next: (jwtResponse) => {
+                    sessionStorage.setItem("app.token", jwtResponse.accessToken);
 
-                    const decodedToken = jwtDecode<JwtPayload>(token);
+                    //const decodedToken = jwtDecode<JwtPayload>(jwtResponse.roles);
                     // @ts-ignore
-                    sessionStorage.setItem("app.roles",  decodedToken.scope);
+                    sessionStorage.setItem("app.roles",  jwtResponse.roles);
 
                     this.router.navigateByUrl("/machines");
                 },
