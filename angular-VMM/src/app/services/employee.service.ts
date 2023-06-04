@@ -11,7 +11,7 @@ import {RegisterRequest} from "../models/Employee/RegisterRequest";
 })
 export class EmployeeService {
 
-    private registerURL  =environment.apiUrl+`/create`;
+    private registerURL  =environment.apiUrl+`/api/auth/create`;
     constructor(
         private http: HttpClient,
     ) {}
