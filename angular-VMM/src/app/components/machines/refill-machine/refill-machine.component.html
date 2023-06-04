@@ -2,7 +2,7 @@
 <div class="container">
     <div *ngIf="machine;else no_machine">
 
-        <h4>Refill Machine : {{machine.details.id}}</h4>
+        <h4>Refill Machine : {{machine.details.name}} | {{machine.details.location}}</h4>
         <h6>Empty slots : {{machine.details.dispenserAmount-slotList.length}}</h6>
 
         <div >

@@ -6,7 +6,6 @@
     <table class="table table-striped text-center">
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">location</th>
             <th scope="col">Name</th>
             <th scope="col">Status</th>
@@ -15,7 +14,6 @@
         </thead>
         <tbody>
         <tr *ngFor="let machine of machines">
-            <td>{{machine.id}}</td>
             <td>{{machine.location}}</td>
             <td>{{machine.name}}</td>
             <td [ngClass]="

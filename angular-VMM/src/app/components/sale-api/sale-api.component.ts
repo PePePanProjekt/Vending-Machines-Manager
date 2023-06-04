@@ -53,7 +53,7 @@ export class SaleApiComponent {
         if (this.selectedMachineId != null && this.selectedSlotId != null) {
             this.saleService.makeSale(this.selectedMachineId, this.selectedSlotId).subscribe();
             this.snackBar.open(
-                `${this.allMachines.filter(m=>m.id==this.selectedMachineId)[0].name}`
+                `You bought item from machine:${this.allMachines.filter(m=>m.id==this.selectedMachineId)[0].name} slot:${this.selectedSlotId}`
             ,"OK")
         }
     }
