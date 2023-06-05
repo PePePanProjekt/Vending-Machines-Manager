@@ -92,7 +92,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
                 "https://vmm.dena2rat.xyz","http://vmm.dena2rat.xyz",
-                "http://localhost:4200","https://localhost","http://localhost"));
+                "http://localhost:4200","https://localhost:4200","https://localhost","http://localhost"));
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
