@@ -67,6 +67,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/api/management/**").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
