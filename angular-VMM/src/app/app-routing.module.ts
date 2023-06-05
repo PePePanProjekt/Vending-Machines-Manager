@@ -19,12 +19,19 @@ import {EmployeesComponent} from "./components/employees/employees.component";
 import {AddEmployeeComponent} from "./components/employees/add-employee/add-employee.component";
 import {UpdateEmployeeComponent} from "./components/employees/update-employee/update-employee.component";
 import {FinancesComponent} from "./components/finances/finances.component";
+import {SaleApiComponent} from "./components/sale-api/sale-api.component";
+import {ItemReportComponent} from "./components/finances/item-report/item-report.component";
+import {MachineReportComponent} from "./components/finances/machine-report/machine-report.component";
 
 const routes: Routes = [
     {path:'',                               component:LoginComponent},
     {path:'login',                          component: LoginComponent},
 
+    {path:'sale-api',                       component:SaleApiComponent,         canActivate:[AuthGuard], data: {role: 'ROLE_USER'}},
+
     {path:'finances',                       component:FinancesComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'finances/item',                  component:ItemReportComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
+    {path:'finances/machine',               component:MachineReportComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
 
     {path:'employees',                      component:EmployeesComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
     {path:'employees/add-employee',         component:AddEmployeeComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_USER'}},
