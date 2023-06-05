@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Employee} from "../../../models/Employee/Employee";
 import {EmployeeService} from "../../../services/employee.service";
 import {Location} from "@angular/common";
+import {RegisterRequest} from "../../../models/Employee/RegisterRequest";
 
 @Component({
     selector: 'app-add-employee',
@@ -10,7 +11,7 @@ import {Location} from "@angular/common";
 })
 export class AddEmployeeComponent {
     roles = ['Owner', 'Admin', 'Worker'];
-    newEmployee = new Employee('', '', '', '', '', '');
+    newEmployee: Employee = new Employee('', '', '', '', '', '',false, []);
 
     ngOnInit() {
 

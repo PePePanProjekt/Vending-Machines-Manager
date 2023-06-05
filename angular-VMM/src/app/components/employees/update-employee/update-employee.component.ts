@@ -11,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class UpdateEmployeeComponent {
     roles = ['Owner', 'Admin', 'Worker'];
-    employee = new Employee('', '', '', '', '', '');
+    employee = new Employee('', '', '', '', '', '',false,[]);
 
     constructor(
         private employeeService : EmployeeService,
@@ -24,7 +24,7 @@ export class UpdateEmployeeComponent {
     }
 
     onSubmit() {
-        this.employeeService.updateEmployee(this.employee).subscribe();
+        //this.employeeService.updateEmployee(this.employee).subscribe();
         this.goBack();
     }
 
@@ -34,8 +34,8 @@ export class UpdateEmployeeComponent {
 
     private getEmployee(){
         const id :string = String(this.route.snapshot.paramMap.get('id'));
-        this.employeeService.getEmployee(id).subscribe(e =>{
-            this.employee = e;
-        })
+        // this.employeeService.getEmployee(id).subscribe(e =>{
+        //     this.employee = e;
+        // })
     }
 }
