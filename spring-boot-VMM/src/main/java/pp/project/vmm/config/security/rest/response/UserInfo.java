@@ -1,21 +1,23 @@
-package pp.project.vmm.config.security.rest.request;
+package pp.project.vmm.config.security.rest.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class UserInfo {
+
+    private UUID userId;
 
     private String username;
-    private String password;
+
     private String firstName;
+
     private String lastName;
+
     private String phoneNumber;
-    private List<String> roles;
 }

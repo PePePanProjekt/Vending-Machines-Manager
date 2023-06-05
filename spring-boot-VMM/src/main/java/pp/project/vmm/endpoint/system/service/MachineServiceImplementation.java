@@ -15,9 +15,7 @@ import pp.project.vmm.endpoint.system.service.dto.VendingMachineFullInfoDTO;
 import pp.project.vmm.endpoint.system.service.dto.VendingMachineSimpleDTO;
 import pp.project.vmm.endpoint.system.service.dto.VendingMachineSlotDTO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class MachineServiceImplementation implements MachineService {
@@ -53,7 +51,7 @@ public class MachineServiceImplementation implements MachineService {
             }
 
             if(totalSlots > 0) {
-                percentSlotsUsed = (int)((float)usedSlots / totalSlots) * 100;
+                percentSlotsUsed = (int)(((float)usedSlots / (float)totalSlots) * 100);
             }
             else {
                 percentSlotsUsed = 0;
@@ -139,79 +137,54 @@ public class MachineServiceImplementation implements MachineService {
 
     @Override
     public ResponseEntity<String> refillMachine(UUID id, List<VendingMachineSlotDTO> slotDTOList) {
+        VendingMachine vendingMachine = vendingMachineRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vending machine of given id does not exist"));
 
-        // Check if all items given exist
-        if(!vendingMachineRepository.existsById(id)) {
-            return new ResponseEntity<>("Vending machine of given id does not exist", HttpStatus.NOT_FOUND);
+        // Remove old Contains objects and add their item amounts to the total
+        List<Contains> currentContains = vendingMachine.getContains();
+        for(Contains contains : currentContains) {
+            Item item = contains.getItem();
+            item.setAmountAvailable(item.getAmountAvailable() + contains.getItemAmount());
+            itemRepository.save(item);
         }
+        containsRepository.deleteAllInBatch(currentContains);
+
+        // Create new contains objects and subtract their item amount from the total
+        List<Contains> newContains = new ArrayList<>();
+        Map<Item, Integer> itemAmounts = new HashMap<>();
         for(VendingMachineSlotDTO slotDTO : slotDTOList) {
-            if(!itemRepository.existsById(slotDTO.getItemId())) {
-                return new ResponseEntity<>("Item of given id does not exist", HttpStatus.NOT_FOUND);
+            if(slotDTO.getItemAmount() > vendingMachine.getDispenserDepth()) {
+                return new ResponseEntity<>("Item amount too large for this vending machine" + slotDTO, HttpStatus.BAD_REQUEST);
+            }
+            if(slotDTO.getSlotNumber() > vendingMachine.getDispenserAmount()) {
+                return new ResponseEntity<>("Dispenser does not exist in this vending machine" + slotDTO, HttpStatus.BAD_REQUEST);
+            }
+            Item item = itemRepository.findById(slotDTO.getItemId())
+                    .orElseThrow(() -> new RuntimeException("Item of given id does not exist " + slotDTO.getItemId()));
+            itemAmounts.merge(item, slotDTO.getItemAmount(), Integer::sum);
+            Contains contains = new Contains(
+                    slotDTO.getItemPrice(),
+                    slotDTO.getItemAmount(),
+                    slotDTO.getSlotNumber(),
+                    false,
+                    vendingMachine,
+                    item
+            );
+            newContains.add(contains);
+        }
+        List<Item> updatedItems = new ArrayList<>();
+        if(!itemAmounts.isEmpty()) {
+            for(Map.Entry<Item, Integer> itemAmount : itemAmounts.entrySet()) {
+                if(itemAmount.getKey().getAmountAvailable() < itemAmount.getValue()) {
+                    return new ResponseEntity<>("Given item amount greater than total reserves", HttpStatus.BAD_REQUEST);
+                }
+                Item item = itemAmount.getKey();
+                item.setAmountAvailable(item.getAmountAvailable() - itemAmount.getValue());
+                updatedItems.add(item);
             }
         }
-
-        // Get list of currently used dispensers
-        if(vendingMachineRepository.findById(id).isEmpty()) {
-            return new ResponseEntity<>("This error should have no way of happening", HttpStatus.BAD_REQUEST);
-        }
-        VendingMachine vendingMachine = vendingMachineRepository.findById(id).get();
-        List<Contains> containsList = vendingMachine.getContains();
-        List<Integer> usedDispensers = new ArrayList<>();
-        for(Contains contains : containsList) {
-            usedDispensers.add(contains.getDispenserNumber());
-        }
-
-        // Create or update Contains entities to mach new data
-        for(VendingMachineSlotDTO slotDTO : slotDTOList) {
-            if(usedDispensers.contains(slotDTO.getSlotNumber())) {
-
-                // Check the correctness of given data;
-                if(vendingMachine.getDispenserDepth() < slotDTO.getItemAmount()) {
-                    return new ResponseEntity<>("Given item amount too big for given dispenser", HttpStatus.BAD_REQUEST);
-                }
-
-                // Get contains object matching the current slotDTO
-                Contains contains = containsList.stream()
-                        .filter(item -> item.getDispenserNumber().equals(slotDTO.getSlotNumber()))
-                        .toList()
-                        .get(0);
-
-                // Update contains information for the current dispenser
-                if(itemRepository.findById(slotDTO.getItemId()).isEmpty()) {
-                    return new ResponseEntity<>("This error should have no way of happening", HttpStatus.BAD_REQUEST);
-                }
-                Item item = itemRepository.findById(slotDTO.getItemId()).get();
-                contains.setItem(item);
-                contains.setItemPrice(slotDTO.getItemPrice());
-                contains.setItemAmount(slotDTO.getItemAmount());
-                containsRepository.save(contains);
-
-            }
-            else {
-
-                // Check the correctness of given data;
-                if(vendingMachine.getDispenserAmount() < slotDTO.getSlotNumber()) {
-                    return new ResponseEntity<>("Dispenser of given number does not exist", HttpStatus.BAD_REQUEST);
-                }
-                if(vendingMachine.getDispenserDepth() < slotDTO.getItemAmount()) {
-                    return new ResponseEntity<>("Given item amount too big for given dispenser", HttpStatus.BAD_REQUEST);
-                }
-
-                // Create and save a new contains entity
-                Item item = itemRepository.findById(slotDTO.getItemId()).get();
-                Contains contains = new Contains(
-                        slotDTO.getItemPrice(),
-                        slotDTO.getItemAmount(),
-                        slotDTO.getSlotNumber(),
-                        false,
-                        vendingMachine,
-                        item
-                );
-                containsRepository.save(contains);
-
-            }
-        }
-
+        itemRepository.saveAll(updatedItems);
+        containsRepository.saveAll(newContains);
         return new ResponseEntity<>("Vending machine refilled correctly", HttpStatus.OK);
     }
 

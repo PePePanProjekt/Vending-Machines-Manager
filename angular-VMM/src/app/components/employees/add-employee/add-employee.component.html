@@ -24,7 +24,8 @@
         </div>
         <div class="form-group m-1">
             <label for="email">Email</label>
-            <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" required [(ngModel)]="newEmployee.email"
+            <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email"
+                   required [(ngModel)]="newEmployee.username"
                    name="email" #email="ngModel" ngModel email>
             <div [hidden]="email.valid || email.pristine || !email.errors?.['pattern']"
                  class="alert alert-danger">
@@ -32,8 +33,18 @@
             </div>
         </div>
         <div class="form-group m-1">
+            <label for="password">Password</label>
+            <input id="password" type="password" pattern="^.{4,}$" class="form-control"
+                   required [(ngModel)]="newEmployee.password"
+                   name="password "#password="ngModel"  ngModel password>
+        </div>
+        <div [hidden]="password.valid || password.pristine || !password.errors?.['pattern']"
+             class="alert alert-danger">
+            Password must have at least 4 characters
+        </div>
+        <div class="form-group m-1">
             <label for="phoneNumber">Phone Number</label>
-            <input type="text" class="form-control" id="phoneNumber" required [(ngModel)]="newEmployee.phoneNumber"
+            <input type="text"  class="form-control" id="phoneNumber" required [(ngModel)]="newEmployee.phoneNumber"
                    name="phoneNumber" #phoneNumber="ngModel">
             <div [hidden]="phoneNumber.valid || phoneNumber.pristine"
                  class="alert alert-danger">
@@ -42,7 +53,7 @@
         </div>
         <div class="form-group m-1">
             <label for="role">Role</label>
-            <select class="form-control" id="role" required [(ngModel)]="newEmployee.role" name="role">
+            <select class="form-control" id="role" required [(ngModel)]="newEmployee.roles[0]" name="role">
                 <option *ngFor="let r of roles" [value]="r"> {{r}}</option>
             </select>
         </div>

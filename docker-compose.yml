@@ -87,6 +87,7 @@ services:
       - backend
     ports:
       - "8080:8080"
+      - "8433:8433"
   sonarQube:
     container_name: sonarQube
     image: docker.io/library/sonarqube:latest

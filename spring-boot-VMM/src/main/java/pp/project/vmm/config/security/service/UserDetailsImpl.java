@@ -18,6 +18,9 @@ public class UserDetailsImpl implements UserDetails {
     private String username;
     @JsonIgnore
     private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserDetailsImpl build(User user) {
@@ -28,6 +31,9 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getUsername(),
                 user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneNumber(),
                 grantedAuthorities
         );
     }
@@ -69,5 +75,17 @@ public class UserDetailsImpl implements UserDetails {
 
     public UUID getId() {
         return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }
