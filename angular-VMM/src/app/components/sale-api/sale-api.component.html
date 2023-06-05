@@ -11,7 +11,7 @@
     <div class="my-3">
         <h2>Pick slot</h2>
         <select class="form-select" id="Slot" [(ngModel)]="selectedSlotId">
-            <option *ngFor="let slot of slots" [value]="slot.slotNumber">{{slot.itemName}}</option>
+            <option *ngFor="let slot of slots" [value]="slot.slotNumber">{{slot.slotNumber}} | {{slot.itemName}}</option>
         </select>
         <div class="row justify-content-center" >
             <button class="btn btn-success my-3 m-3 " style="max-width: 400px" (click)="sale()">Buy</button>

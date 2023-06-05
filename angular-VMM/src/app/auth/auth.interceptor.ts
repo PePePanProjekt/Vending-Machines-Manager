@@ -32,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error.status === 401) {
             //this.router.navigateByUrl("/login", {replaceUrl: true});
             this.snackBar.open(
-                `You don't have the access to this page`
+                `Action not possible`
                 ,"OK")
         }
         return throwError(() => error);

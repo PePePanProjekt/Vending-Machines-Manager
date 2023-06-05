@@ -2,22 +2,22 @@
 <div class="container" style="max-width: 700px;">
     <div *ngIf="machine;else no_machine">
         <h4>
-            Machine : {{machine.details.id}}
+            Machine : {{machine.details.name}}
         </h4>
         <div class="row m-3">
             <div class="col">
-                <label for="location">Name</label>
+                <label for="name">Id</label>
             </div>
             <div class="col">
-                <p id="location">{{machine.details.location}}</p>
+                <p id="name">{{machine.details.id}}</p>
             </div>
         </div>
         <div class="row m-3">
             <div class="col">
-                <label for="name">Name</label>
+                <label for="location">Location</label>
             </div>
             <div class="col">
-                <p id="name">{{machine.details.name}}</p>
+                <p id="location">{{machine.details.location}}</p>
             </div>
         </div>
         <div class="row m-3">

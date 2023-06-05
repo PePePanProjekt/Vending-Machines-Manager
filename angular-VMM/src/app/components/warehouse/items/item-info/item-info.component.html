@@ -3,15 +3,15 @@
 <div class="container" style="max-width: 700px;">
     <div *ngIf="item;else no_item">
         <h4>
-            Item : {{item.id}}
+            Item : {{item.name}}
         </h4>
 
         <div class="row m-3">
             <div class="col">
-                <label for="name">Name</label>
+                <label for="name">Id</label>
             </div>
             <div class="col">
-                <p id="name">{{item.name}}</p>
+                <p id="name">{{item.id}}</p>
             </div>
         </div>
         <div class="row m-3">

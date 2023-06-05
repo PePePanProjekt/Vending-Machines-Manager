@@ -25,7 +25,7 @@
         <tbody>
         <tr *ngFor="let batch of batches">
             <td>{{batch.id}}</td>
-            <td>{{batch.date}}</td>
+            <td>{{formatDateString(batch.date)}}</td>
             <td>{{batch.holdsAmount}}</td>
             <td class="">
                 <button class="btn btn-info m-1" routerLink="{{batch.id}}">Info</button>

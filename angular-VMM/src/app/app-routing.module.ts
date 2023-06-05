@@ -27,7 +27,7 @@ const routes: Routes = [
     {path:'',                               component:LoginComponent},
     {path:'login',                          component: LoginComponent},
 
-    {path:'sale-api',                       component:SaleApiComponent,         canActivate:[AuthGuard], data: {role: 'ROLE_OWNER'}},
+    {path:'sale-api',                       component:SaleApiComponent,         canActivate:[AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
 
     {path:'finances',                       component:FinancesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
     {path:'finances/item',                  component:ItemReportComponent,      canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
@@ -37,21 +37,21 @@ const routes: Routes = [
     {path:'employees/add-employee',         component:AddEmployeeComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
     {path:'employees/update/:id',           component:UpdateEmployeeComponent,  canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
 
-    {path:'machines',                       component:MachinesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'machines/add',                   component:AddMachineComponent,      canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'machines/update/:id',            component:UpdateMachineComponent,   canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'machines/refill/:id',            component:RefillMachineComponent,   canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'machines/:id',                   component:MachineInfoComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
+    {path: 'machines',                      component: MachinesComponent,       canActivate: [AuthGuard],  data: {role: ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_MAINTENANCE']}},
+    {path:'machines/add',                   component:AddMachineComponent,      canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_MAINTENANCE']}},
+    {path:'machines/update/:id',            component:UpdateMachineComponent,   canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_MAINTENANCE']}},
+    {path:'machines/refill/:id',            component:RefillMachineComponent,   canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_MAINTENANCE']}},
+    {path:'machines/:id',                   component:MachineInfoComponent,     canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_MAINTENANCE']}},
 
-    {path:'warehouse',                      component:WarehouseComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'warehouse/batches',              component:BatchesComponent,         canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'warehouse/batches/add',          component:AddBatchComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'warehouse/batches/:id',          component:BatchInfoComponent,       canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'warehouse/batches/update/:id',   component:UpdateBatchComponent,     canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
+    {path:'warehouse',                      component:WarehouseComponent,       canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
+    {path:'warehouse/batches',              component:BatchesComponent,         canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
+    {path:'warehouse/batches/add',          component:AddBatchComponent,        canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
+    {path:'warehouse/batches/:id',          component:BatchInfoComponent,       canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
+    {path:'warehouse/batches/update/:id',   component:UpdateBatchComponent,     canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
 
-    {path:'warehouse/items',                component:ItemsComponent,           canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'warehouse/items/:id',            component:ItemInfoComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
-    {path:'warehouse/items/update/:id',     component:UpdateItemComponent,      canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
+    {path:'warehouse/items',                component:ItemsComponent,           canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
+    {path:'warehouse/items/:id',            component:ItemInfoComponent,        canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
+    {path:'warehouse/items/update/:id',     component:UpdateItemComponent,      canActivate: [AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
     {path: '**', redirectTo: ''}
 ];
 

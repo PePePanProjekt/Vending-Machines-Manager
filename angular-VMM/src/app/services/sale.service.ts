@@ -13,6 +13,6 @@ export class SaleService {
 
     makeSale(machineId: string, slotId: number){
        let url = this.saleUrl+'/sale'
-        return this.http.post<String>(url +`/${machineId}/${slotId}`,null);
+        return this.http.get<String>(url +`/${machineId}/${slotId}`);
     }
 }
