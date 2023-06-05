@@ -46,4 +46,17 @@ export class BatchInfoComponent {
     getItemName(itemId: string) {
         return this.allItems.filter(item => item.id == itemId)[0].name
     }
+    formatDateString(dateString: string): string {
+        const date = new Date(dateString);
+        const options: Intl.DateTimeFormatOptions = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'UTC' // Set the desired time zone here
+        };
+        const formattedDate = date.toLocaleString('en-GB', options).replace(',', '');
+        return formattedDate;
+    }
 }

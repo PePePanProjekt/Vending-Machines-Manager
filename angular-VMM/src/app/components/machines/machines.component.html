@@ -6,7 +6,6 @@
     <table class="table table-striped text-center">
         <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">location</th>
             <th scope="col">Name</th>
             <th scope="col">Status</th>
@@ -15,12 +14,11 @@
         </thead>
         <tbody>
         <tr *ngFor="let machine of machines">
-            <td>{{machine.id}}</td>
             <td>{{machine.location}}</td>
             <td>{{machine.name}}</td>
             <td [ngClass]="
-            {'bg-danger': machine.status<=10,
-            'bg-warning': machine.status<=50 && machine.status>10}">
+            {'bg-danger text-white': machine.status<=10,
+            'bg-warning text-dark': machine.status<=50 && machine.status>10}">
                 {{machine.status}}%
             </td>
             <td class="">

@@ -23,6 +23,7 @@ import pp.project.vmm.config.security.rest.response.JwtResponse;
 import pp.project.vmm.config.security.rest.response.MessageResponse;
 import pp.project.vmm.config.security.service.UserDetailsImpl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +54,12 @@ public class AuthController {
         this.jwtUtils = jwtUtils;
     }
 
+
+    @GetMapping("/users")
+    public List<User> getUsers(){
+        return userRepository.findAll();
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -80,6 +87,9 @@ public class AuthController {
         user.setUsername(registerRequest.getUsername());
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setFirstName(registerRequest.getFirstName());
+        user.setLastName(registerRequest.getLastName());
+        user.setPhoneNumber(registerRequest.getPhoneNumber());
 
         List<String> stringRoles = registerRequest.getRoles();
         Set<Role> roles = new HashSet<>();

@@ -28,7 +28,10 @@ export class MachinesComponent {
 
     //todo confirmation
     deleteMachine(machine: MachineSimpleInfo) {
-        this.machines = this.machines.filter(m => m !== machine);
-        this.machineService.deleteMachine(machine.id).subscribe();
+        console.log(this.machineService.deleteMachine(machine.id).subscribe(
+            info => {
+                if(info != undefined){
+                this.machines = this.machines.filter(m => m !== machine);}
+            }));
     }
 }

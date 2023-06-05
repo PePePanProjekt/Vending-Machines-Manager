@@ -24,19 +24,17 @@ export class EmployeesComponent {
 
     private getEmployees() {
         this.employeeService.getEmployees().subscribe(allEmployees => {
-            this.owners = allEmployees.filter(e => e.role == 'OWNER');
-            this.admins = allEmployees.filter(e => e.role == 'ADMIN');
-            this.workers = allEmployees.filter(e => e.role == 'WORKER');
+            this.owners = allEmployees.filter(e => e.roles[0].name == 'ROLE_OWNER');
+            this.admins = allEmployees.filter(e => e.roles[0].name == 'ROLE_ADMIN');
+            this.workers = allEmployees.filter(e => e.roles[0].name == 'ROLE_MAINTENANCE');
         });
     }
 
-    deleteEmployee(id: string) {
-        this.owners = this.owners.filter(e => e.id !== id);
-        this.admins = this.admins.filter(e => e.id !== id);
-        this.workers = this.workers.filter(e => e.id !== id);
-
-        this.employeeService.deleteEmployee(id).subscribe();
-    }
-
-    protected readonly getLocaleFirstDayOfWeek = getLocaleFirstDayOfWeek;
+    // deleteEmployee(id: string) {
+    //     this.owners = this.owners.filter(e => e.id !== id);
+    //     this.admins = this.admins.filter(e => e.id !== id);
+    //     this.workers = this.workers.filter(e => e.id !== id);
+    //
+    //     //this.employeeService.deleteEmployee(id).subscribe();
+    // }
 }
