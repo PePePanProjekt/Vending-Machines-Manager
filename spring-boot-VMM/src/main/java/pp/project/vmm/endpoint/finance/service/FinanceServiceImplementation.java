@@ -80,6 +80,20 @@ public class FinanceServiceImplementation implements FinanceService {
                 .filter(x -> x.getSaleTime().compareTo(startDate) >= 0 && x.getSaleTime().compareTo(endDate) <= 0)
                 .toList();
 
+        List<Item> soldItems = saleList.stream()
+                .map(Sale::getItem)
+                .toList();
+        List<Item> allItems = itemRepository.findAll();
+        List<ZeroSaleItem> zeroSaleItems = new ArrayList<>();
+        for(Item item : allItems) {
+            if(!soldItems.contains(item)) {
+                zeroSaleItems.add(new ZeroSaleItem(
+                        item.getId(),
+                        item.getName()
+                ));
+            }
+        }
+
         int totalSold = saleList.size();
         float totalProfit = 0;
         Map<UUID, Integer> itemPerformance = new HashMap<>();
@@ -102,7 +116,8 @@ public class FinanceServiceImplementation implements FinanceService {
                 bestItemEntry != null ? bestItemEntry.getValue() : 0,
                 worstItemEntry != null ? worstItemEntry.getKey() : UUID.randomUUID(),
                 worstItemOptional.map(Item::getName).orElse("Error getting item name"),
-                worstItemEntry != null ? worstItemEntry.getValue() : 0
+                worstItemEntry != null ? worstItemEntry.getValue() : 0,
+                zeroSaleItems
         );
     }
 
@@ -116,6 +131,34 @@ public class FinanceServiceImplementation implements FinanceService {
                 .stream()
                 .filter(x -> x.getDate().compareTo(startDate) >= 0 && x.getDate().compareTo(endDate) <= 0)
                 .toList();
+
+        List<VendingMachine> usedMachines = saleList.stream()
+                .map(Sale::getVendingMachine)
+                .toList();
+        List<Item> soldItems = saleList.stream()
+                .map(Sale::getItem)
+                .toList();
+        List<VendingMachine> allMachines = vendingMachineRepository.findAll();
+        List<Item> allItems = itemRepository.findAll();
+        List<ZeroSaleItem> zeroSaleItems = new ArrayList<>();
+        List<ZeroSaleMachine> zeroSaleMachines = new ArrayList<>();
+        for(Item item : allItems) {
+            if(!soldItems.contains(item)) {
+                zeroSaleItems.add(new ZeroSaleItem(
+                        item.getId(),
+                        item.getName()
+                ));
+            }
+        }
+        for(VendingMachine vendingMachine : allMachines) {
+            if(!usedMachines.contains(vendingMachine)) {
+                zeroSaleMachines.add(new ZeroSaleMachine(
+                        vendingMachine.getId(),
+                        vendingMachine.getName(),
+                        vendingMachine.getLocation()
+                ));
+            }
+        }
 
         int totalSales = saleList.size();
         float totalProfit = (float)saleList.stream()
@@ -165,7 +208,9 @@ public class FinanceServiceImplementation implements FinanceService {
                 bestMachineEntry != null ? bestMachineEntry.getValue() : 0,
                 worstMachineEntry != null ? worstMachineEntry.getKey() : UUID.randomUUID(),
                 worstMachineOptional.map(x -> x.getLocation() + " / " + x.getName()).orElse("Error getting vending machine name"),
-                worstMachineEntry != null ? worstMachineEntry.getValue() : 0
+                worstMachineEntry != null ? worstMachineEntry.getValue() : 0,
+                zeroSaleItems,
+                zeroSaleMachines
         );
     }
 }
