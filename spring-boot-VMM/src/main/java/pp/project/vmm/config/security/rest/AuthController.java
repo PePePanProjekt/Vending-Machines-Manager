@@ -21,12 +21,10 @@ import pp.project.vmm.config.security.rest.request.LoginRequest;
 import pp.project.vmm.config.security.rest.request.RegisterRequest;
 import pp.project.vmm.config.security.rest.response.JwtResponse;
 import pp.project.vmm.config.security.rest.response.MessageResponse;
+import pp.project.vmm.config.security.rest.response.UserInfo;
 import pp.project.vmm.config.security.service.UserDetailsImpl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -54,10 +52,37 @@ public class AuthController {
         this.jwtUtils = jwtUtils;
     }
 
-
     @GetMapping("/users")
+    @SecurityRequirement(name = "Bearer Authentication")
     public List<User> getUsers(){
         return userRepository.findAll();
+    }
+
+    @GetMapping("/users/{userId}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<?> getUserInfo(@PathVariable UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User of given id does not exist"));
+        return ResponseEntity.ok(new UserInfo(
+                user.getId(),
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneNumber()
+        ));
+    }
+
+    @GetMapping("/self")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<?> getSelfInfo() {
+        UserDetailsImpl user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(new UserInfo(
+                user.getId(),
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneNumber()
+        ));
     }
 
     @PostMapping("/signin")
@@ -73,8 +98,8 @@ public class AuthController {
                 jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                roles)
-        );
+                roles
+        ));
     }
 
     @PostMapping("/create")
@@ -84,13 +109,26 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already in use"));
         }
         User user = new User();
+        userRepository.save(generateUser(user, registerRequest));
+        return ResponseEntity.ok(new MessageResponse("User created successfully"));
+    }
+
+    @PutMapping("/users/{userId}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<?> updateUser(@PathVariable UUID userId, @RequestBody RegisterRequest registerRequest) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User of given id does nto exist"));
+        userRepository.save(generateUser(user, registerRequest));
+        return ResponseEntity.ok("User updated successfully");
+    }
+
+    private User generateUser(User user, RegisterRequest registerRequest) {
         user.setUsername(registerRequest.getUsername());
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setFirstName(registerRequest.getFirstName());
         user.setLastName(registerRequest.getLastName());
         user.setPhoneNumber(registerRequest.getPhoneNumber());
-
         List<String> stringRoles = registerRequest.getRoles();
         Set<Role> roles = new HashSet<>();
         if(stringRoles == null || stringRoles.isEmpty()) {
@@ -120,8 +158,7 @@ public class AuthController {
             }
         }
         user.setRoles(roles);
-        userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User created successfully"));
+        return user;
     }
 
 }

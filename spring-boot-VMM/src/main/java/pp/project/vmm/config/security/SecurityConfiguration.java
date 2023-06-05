@@ -71,6 +71,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/api/management/**").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
+                                .requestMatchers("/api/auth/self").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
+                                .requestMatchers("api/auth/users/**").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
+                                .requestMatchers("api/auth/users").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
                                 .requestMatchers("/api/warehouse/**").hasAnyRole("OWNER", "ADMIN")
                                 .requestMatchers("/api/auth/create").hasAnyRole("OWNER", "ADMIN")
                                 .requestMatchers("/api/finance/**").hasRole("OWNER")
