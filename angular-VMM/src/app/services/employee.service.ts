@@ -54,4 +54,9 @@ export class EmployeeService {
         const url = this.apiAuthURL+`/self`;
         return this.http.get<UserInfo>(url);
     }
+
+    deleteEmployee(id: string) {
+        const url = this.apiAuthURL+`/users/${id}`;
+        return this.http.delete<UserInfo>(url);
+    }
 }

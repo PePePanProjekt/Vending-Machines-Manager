@@ -24,6 +24,8 @@ export class EmployeesComponent {
 
     private getEmployees() {
         this.employeeService.getEmployees().subscribe(allEmployees => {
+            allEmployees = allEmployees.filter( e => e.enabled);
+
             this.owners = allEmployees.filter(e => e.roles[0].name == 'ROLE_OWNER');
             this.admins = allEmployees.filter(e => e.roles[0].name == 'ROLE_ADMIN');
             this.workers = allEmployees.filter(e => e.roles[0].name == 'ROLE_MAINTENANCE');
@@ -31,10 +33,15 @@ export class EmployeesComponent {
     }
 
     deleteEmployee(id: string) {
-        this.owners = this.owners.filter(e => e.id !== id);
-        this.admins = this.admins.filter(e => e.id !== id);
-        this.workers = this.workers.filter(e => e.id !== id);
 
-        //this.employeeService.deleteEmployee(id).subscribe();
+
+        this.employeeService.deleteEmployee(id).subscribe(info=>
+        {
+            if(info!=null){
+                this.owners = this.owners.filter(e => e.id !== id);
+                this.admins = this.admins.filter(e => e.id !== id);
+                this.workers = this.workers.filter(e => e.id !== id);
+            }
+        });
     }
 }
