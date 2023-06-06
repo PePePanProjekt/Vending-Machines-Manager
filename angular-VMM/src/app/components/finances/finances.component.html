@@ -43,13 +43,18 @@
             </tr>
             </thead>
             <tbody>
+            <tr class="fw-bold">
+                <td>Balance</td>
+                <td   [ngClass]="{'text-danger': allStats.totalProfit-allStats.totalExpenses<0,
+                'text-success': allStats.totalProfit-allStats.totalExpenses>0}">{{allStats.totalProfit-allStats.totalExpenses}}</td>
+            </tr>
             <tr>
                 <td>Total Sales</td>
                 <td>{{allStats.totalSales}}</td>
             </tr>
             <tr>
                 <td>Total Profit</td>
-                <td>{{allStats.totalProfit}}</td>
+                <td class="text-success">{{allStats.totalProfit}}</td>
             </tr>
             <tr>
                 <td>Total Bought</td>
@@ -57,7 +62,7 @@
             </tr>
             <tr>
                 <td>Total Expenses</td>
-                <td>{{allStats.totalExpenses}}</td>
+                <td class="text-danger">{{allStats.totalExpenses}}</td>
             </tr>
             <tr>
                 <td>Best selling item name</td>

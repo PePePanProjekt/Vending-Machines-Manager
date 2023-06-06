@@ -25,8 +25,8 @@ export class EmployeeService {
         return this.http.get<Employee[]>(this.getAllUsersURL);
     }
 
-    addEmployee(newEmployee: Employee): Observable<Employee> {
-        let role = newEmployee.roles[0].name.toLowerCase();
+    addEmployee(newEmployee: RegisterRequest): Observable<RegisterRequest> {
+        let role = newEmployee.roles[0].toLowerCase();
 
         let registerRequest = new RegisterRequest(
             newEmployee.username,
@@ -35,7 +35,7 @@ export class EmployeeService {
             newEmployee.lastName,
             newEmployee.phoneNumber,
             [role]);
-        return this.http.post<Employee>(this.registerURL, registerRequest);
+        return this.http.post<RegisterRequest>(this.registerURL, registerRequest);
     }
 
     getEmployee(id: string) {

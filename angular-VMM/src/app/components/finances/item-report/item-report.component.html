@@ -62,6 +62,12 @@
                 <td>Total Expenses</td>
                 <td>{{itemStats.totalExpenses}}</td>
             </tr>
+            <tr class="fw-bold">
+                <td>Balance</td>
+                <td [ngClass]="{'text-success': itemStats.totalProfit-itemStats.totalExpenses>0,
+                'text-danger': itemStats.totalProfit-itemStats.totalExpenses<0}"
+                >{{itemStats.totalProfit-itemStats.totalExpenses}}</td>
+            </tr>
             </tbody>
         </table>
 

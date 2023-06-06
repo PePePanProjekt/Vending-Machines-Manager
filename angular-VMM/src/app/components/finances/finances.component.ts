@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import {FinanceService} from "../../services/finance.service";
 import {AllStats} from "../../models/Finance/AllStats";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-finances',
@@ -15,6 +16,7 @@ export class FinancesComponent {
 
     constructor(
         private financeService: FinanceService,
+        private snackBar: MatSnackBar
     ) {
     }
 
@@ -31,6 +33,13 @@ export class FinancesComponent {
     }
 
     changeDates(newSince: string, newTo: string) {
+        if(newSince == '' || newTo == ''){
+            this.snackBar.open(
+                `Please select a dates`
+                ,"OK")
+            return;
+        }
+
         this.sinceDate = new Date(newSince);
         this.toDate = new Date(newTo);
         this.getReport();

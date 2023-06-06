@@ -11,7 +11,7 @@ import {RegisterRequest} from "../../../models/Employee/RegisterRequest";
 })
 export class AddEmployeeComponent {
     roles = ['Owner', 'Admin', 'Maintenance'];
-    newEmployee: Employee = new Employee('', '', '', '', '', '',false, []);
+    newEmployee: RegisterRequest = new RegisterRequest('', '', '', '', '',  []);
 
     ngOnInit() {
 

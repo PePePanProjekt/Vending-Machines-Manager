@@ -5,6 +5,7 @@ import {Location} from "@angular/common";
 import {MachineSimpleInfo} from "../../../models/Machine/MachineSimpleInfo";
 import {MachineService} from "../../../services/machine.service";
 import {SingleMachineStats} from "../../../models/Finance/SingleMachineStats";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-machine-report',
@@ -22,6 +23,7 @@ export class MachineReportComponent {
         private financeService: FinanceService,
         private machineService: MachineService,
         private location: Location,
+        private snackBar: MatSnackBar
     ) {
     }
 
@@ -49,6 +51,13 @@ export class MachineReportComponent {
     }
 
     changeDates(newSince: string, newTo: string) {
+        if(newSince == '' || newTo == ''){
+            this.snackBar.open(
+                `Please select a dates`
+                ,"OK")
+            return;
+        }
+
         this.sinceDate = new Date(newSince);
         this.toDate = new Date(newTo);
         this.getMachineStats();
