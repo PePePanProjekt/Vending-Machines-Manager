@@ -32,7 +32,7 @@ public class FinanceRestController {
     @SecurityRequirement(name = "Bearer Authentication")
     public SingleItemStatsDTO getSingleItemStats(@PathVariable UUID itemId, @PathVariable String startDateString, @PathVariable String endDateString) {
         LocalDate localStartDate = LocalDate.parse(startDateString, dateTimeFormatter);
-        Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
+        Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         LocalDate localEndDate = LocalDate.parse(endDateString, dateTimeFormatter);
         Date endDate = Date.from(localEndDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
         return financeService.getSingleItemStats(startDate, endDate, itemId);
@@ -42,7 +42,7 @@ public class FinanceRestController {
     @SecurityRequirement(name = "Bearer Authentication")
     public SingleMachineStatsDTO getSingleMachineStats(@PathVariable UUID machineId, @PathVariable String startDateString, @PathVariable String endDateString) {
         LocalDate localStartDate = LocalDate.parse(startDateString, dateTimeFormatter);
-        Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
+        Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         LocalDate localEndDate = LocalDate.parse(endDateString, dateTimeFormatter);
         Date endDate = Date.from(localEndDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
         return financeService.getSingleMachineStats(startDate, endDate, machineId);
@@ -52,7 +52,7 @@ public class FinanceRestController {
     @SecurityRequirement(name = "Bearer Authentication")
     public AllStatsDTO getAllStats(@PathVariable String startDateString, @PathVariable String endDateString) {
         LocalDate localStartDate = LocalDate.parse(startDateString, dateTimeFormatter);
-        Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
+        Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         LocalDate localEndDate = LocalDate.parse(endDateString, dateTimeFormatter);
         Date endDate = Date.from(localEndDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant());
         return financeService.getAllStats(startDate, endDate);
