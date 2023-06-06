@@ -7,6 +7,7 @@ import {ItemSimple} from "../../../../models/item/ItemSimple";
 import {ItemService} from "../../../../services/item.service";
 import {HoldsDetails} from "../../../../models/Holds/HoldsDetails";
 import {BatchDetails} from "../../../../models/Batch/BatchDetails";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-add-batch',
@@ -23,7 +24,8 @@ export class AddBatchComponent {
         private batchService: BatchService,
         private itemService: ItemService,
         private router: Router,
-        private location: Location
+        private location: Location,
+        private snackBar: MatSnackBar
     ) {
     }
 
@@ -57,6 +59,13 @@ export class AddBatchComponent {
     }
 
     addBatch(date: string) {
+        if(date == ''){
+            this.snackBar.open(
+                `Please select a date`
+                ,"OK")
+            return;
+        }
+
         let newBatch = new BatchDetails(date, this.itemsInBatch);
         this.batchService.addBatch(newBatch).subscribe(b => {
                 console.log(b.id);
