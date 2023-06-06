@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    secure: false,
+    secure: true,
     apiUrl: 'https://vmm.dena2rat.xyz:8443'
 };
