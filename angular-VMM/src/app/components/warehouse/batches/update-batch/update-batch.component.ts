@@ -19,6 +19,7 @@ export class UpdateBatchComponent {
     hold: HoldsDetails = new HoldsDetails("", 10, 10);
     @Input() batch?: BatchDetails;
     oldDate: string = "";
+    batchName: string = "";
     constructor(
         private route: ActivatedRoute,
         private batchService: BatchService,
@@ -65,12 +66,13 @@ export class UpdateBatchComponent {
                 this.batch = b;
                 this.itemsInBatch = b.holds;
                 this.oldDate = b.date
+                this.batchName = b.name;
             });
     }
 
 
     updateBatch(oldDate: boolean, newDate: string) {
-        let updatedBatch = new BatchDetails(this.oldDate, this.itemsInBatch);
+        let updatedBatch = new BatchDetails(this.oldDate,this.batchName, this.itemsInBatch);
         updatedBatch.id = String(this.route.snapshot.paramMap.get('id'));
         if (!oldDate) updatedBatch.date = newDate;
         this.batchService.updateBatch(updatedBatch).subscribe();

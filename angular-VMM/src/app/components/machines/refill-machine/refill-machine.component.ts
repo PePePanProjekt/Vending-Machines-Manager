@@ -63,6 +63,7 @@ export class RefillMachineComponent {
                 this.allItems = items;
                 this.newSlot.itemId = items[0].id;
                 this.newSlot.itemName = items[0].name;
+                this.newSlot.slotNumber = this.freeSlotIds[0];
             }
         )
     }

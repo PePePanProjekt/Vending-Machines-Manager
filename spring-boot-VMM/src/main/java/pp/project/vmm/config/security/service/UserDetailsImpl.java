@@ -21,6 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private Boolean isEnabled;
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserDetailsImpl build(User user) {
@@ -34,6 +35,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getPhoneNumber(),
+                user.getEnabled(),
                 grantedAuthorities
         );
     }

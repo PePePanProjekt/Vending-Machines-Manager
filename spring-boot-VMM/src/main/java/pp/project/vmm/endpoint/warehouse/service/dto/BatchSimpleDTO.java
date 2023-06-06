@@ -16,6 +16,8 @@ public class BatchSimpleDTO {
 
     private Date date;
 
+    private String name;
+
     private Integer holdsAmount;
     
 }

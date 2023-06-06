@@ -25,12 +25,23 @@
         </div>
         <div class="form-group m-1">
             <label for="email">Email</label>
-            <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="email" required [(ngModel)]="employee.username"
+            <input type="email" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                   id="email" required [(ngModel)]="employee.username"
                    name="email" #email="ngModel" ngModel email>
             <div [hidden]="email.valid || email.pristine || !email.errors?.['pattern']"
                  class="alert alert-danger">
                 Please enter a valid email address
             </div>
+        </div>
+        <div class="form-group m-1">
+            <label for="password">Password</label>
+            <input id="password" type="password" pattern="^.{4,}$" class="form-control"
+                   required [(ngModel)]="employee.password"
+                   name="password "#password="ngModel"  ngModel password>
+        </div>
+        <div [hidden]="password.valid || password.pristine || !password.errors?.['pattern']"
+             class="alert alert-danger">
+            Password must have at least 4 characters
         </div>
         <div class="form-group m-1">
             <label for="phoneNumber">Phone Number</label>

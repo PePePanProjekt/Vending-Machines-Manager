@@ -118,21 +118,20 @@ public class MachineServiceImplementation implements MachineService {
 
     @Override
     public ResponseEntity<String> updateMachine(VendingMachineDetailsDTO detailsDTO) {
-
-        if(vendingMachineRepository.findById(detailsDTO.getId()).isEmpty()) {
-            return new ResponseEntity<>("Vending machine of given id does not exist", HttpStatus.NOT_FOUND);
+        VendingMachine vendingMachine = vendingMachineRepository.findById(detailsDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Vending machine of given id does not exist"));
+        List<Contains> containsList = vendingMachine.getContains();
+        for(Contains contains : containsList) {
+            if(contains.getItemAmount() > detailsDTO.getDispenserDepth()) {
+                return new ResponseEntity<>("Vending machine dispenser depth lower than currently loaded item amount", HttpStatus.BAD_REQUEST);
+            }
         }
-
-        VendingMachine vendingMachine = new VendingMachine(detailsDTO.getLocation(), detailsDTO.getName(), detailsDTO.getDispenserAmount(), detailsDTO.getDispenserDepth(), false);
-        vendingMachine.setId(detailsDTO.getId());
-        VendingMachine dbVendingMachine = vendingMachineRepository.save(vendingMachine);
-
-        if(dbVendingMachine.getId() == null) {
-            return new ResponseEntity<>("Could not update given vending machine", HttpStatus.BAD_REQUEST);
-        }
-        else {
-            return new ResponseEntity<>("Successfully updated vending machine", HttpStatus.OK);
-        }
+        vendingMachine.setLocation(detailsDTO.getLocation());
+        vendingMachine.setName(detailsDTO.getName());
+        vendingMachine.setDispenserAmount(detailsDTO.getDispenserAmount());
+        vendingMachine.setDispenserDepth(detailsDTO.getDispenserDepth());
+        vendingMachineRepository.save(vendingMachine);
+        return new ResponseEntity<>("Successfully updated vending machine information", HttpStatus.OK);
     }
 
     @Override

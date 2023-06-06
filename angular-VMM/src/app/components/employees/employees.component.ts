@@ -30,11 +30,11 @@ export class EmployeesComponent {
         });
     }
 
-    // deleteEmployee(id: string) {
-    //     this.owners = this.owners.filter(e => e.id !== id);
-    //     this.admins = this.admins.filter(e => e.id !== id);
-    //     this.workers = this.workers.filter(e => e.id !== id);
-    //
-    //     //this.employeeService.deleteEmployee(id).subscribe();
-    // }
+    deleteEmployee(id: string) {
+        this.owners = this.owners.filter(e => e.id !== id);
+        this.admins = this.admins.filter(e => e.id !== id);
+        this.workers = this.workers.filter(e => e.id !== id);
+
+        //this.employeeService.deleteEmployee(id).subscribe();
+    }
 }

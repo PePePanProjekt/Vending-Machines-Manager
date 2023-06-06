@@ -35,8 +35,13 @@ export class ItemsComponent {
     }
 
     deleteItem(item : ItemDetails){
-        this.items = this.items.filter( i => i!==item);
-        this.itemService.deleteItem(item.id).subscribe();
+        this.itemService.deleteItem(item.id).subscribe(details =>
+            {
+                if(details.id != null){
+                    this.items = this.items.filter( i => i!==item);
+                }
+            }
+        );
     }
 
 }

@@ -21,6 +21,8 @@ public class BatchDetailsDTO {
     @NonNull
     private Date date;
 
+    private String name;
+
     @NonNull
     private List<HoldsDetailsDTO> holds;
     

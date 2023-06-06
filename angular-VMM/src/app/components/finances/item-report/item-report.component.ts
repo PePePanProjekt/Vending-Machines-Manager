@@ -5,6 +5,7 @@ import {ItemService} from "../../../services/item.service";
 import {ItemDetails} from "../../../models/item/ItemDetails";
 import {SingleItemStats} from "../../../models/Finance/SingleItemStats";
 import {Location} from "@angular/common";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-item-report',
@@ -22,6 +23,7 @@ export class ItemReportComponent {
         private financeService: FinanceService,
         private itemService: ItemService,
         private location: Location,
+        private snackBar: MatSnackBar
     ) {
     }
 
@@ -49,6 +51,13 @@ export class ItemReportComponent {
     }
 
     changeDates(newSince: string, newTo: string) {
+        if(newSince == '' || newTo == ''){
+            this.snackBar.open(
+                `Please select a dates`
+                ,"OK")
+            return;
+        }
+
         this.sinceDate = new Date(newSince);
         this.toDate = new Date(newTo);
         this.getItemStats();

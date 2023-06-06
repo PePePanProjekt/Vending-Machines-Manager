@@ -122,6 +122,16 @@ public class AuthController {
         return ResponseEntity.ok("User updated successfully");
     }
 
+    @DeleteMapping("/users/{userId}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<?> deactivateUser(@PathVariable UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("user of given id does not exist"));
+        user.setEnabled(false);
+        userRepository.save(user);
+        return ResponseEntity.ok("Successfully deactivated user");
+    }
+
     private User generateUser(User user, RegisterRequest registerRequest) {
         user.setUsername(registerRequest.getUsername());
         user.setEnabled(true);
