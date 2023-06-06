@@ -14,14 +14,6 @@
                 <input id="name" [(ngModel)]="item.name" class="form-control"/>
             </div>
         </div>
-        <div class="row m-3">
-            <div class="col">
-                <label for="amount">Amount Available</label>
-            </div>
-            <div class="col">
-                <input id="amount"  [(ngModel)]="item.amountAvailable" class="form-control" />
-            </div>
-        </div>
         <button type="button" (click)="save()" class="btn btn-success m-1">Save</button>
         <button type="button" (click)="goBack()" class="btn btn-warning m-1">Cancel</button>
     </div>
