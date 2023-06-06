@@ -1,9 +1,6 @@
 package pp.project.vmm.endpoint.warehouse.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +117,12 @@ public class BatchServiceImplementation implements BatchService {
         List<HoldsDetailsDTO> holdsToKeep = detailsDTO.getHolds().stream().filter(x -> holdsIdList.contains(x.getId()) || x.getId() == null).toList();
 
         for(HoldsDetailsDTO holdsDetailsDTO : holdsToDelete) {
-            holdsRepository.deleteById(holdsDetailsDTO.getId());
+            Holds holds = holdsRepository.findById(holdsDetailsDTO.getId())
+                            .orElseThrow(() -> new RuntimeException("Holds object of given id does not exist"));
+            Item item = holds.getItem();
+            item.setAmountAvailable(item.getAmountAvailable() - holds.getItemAmount());
+            itemRepository.save(item);
+            holdsRepository.delete(holds);
         }
 
         List<Holds> holdsList = new ArrayList<>();
@@ -191,6 +193,18 @@ public class BatchServiceImplementation implements BatchService {
         Batch batch = batchOptional.get();
 
         List<Holds> holdsList = batch.getHolds();
+        Map<Item, Integer> itemAmounts = new HashMap<>();
+        for(Holds holds : holdsList) {
+            Item item = holds.getItem();
+            itemAmounts.merge(item, holds.getItemAmount(), Integer::sum);
+        }
+        if(!itemAmounts.isEmpty()) {
+            for(Map.Entry<Item , Integer> itemAmount : itemAmounts.entrySet()) {
+                if(itemAmount.getKey().getAmountAvailable() < itemAmount.getValue()) {
+                    return new ResponseEntity<>("Unable to delete batch if items it contains are already in use", HttpStatus.BAD_REQUEST);
+                }
+            }
+        }
         for(Holds holds : holdsList) {
             Item item = holds.getItem();
             item.setAmountAvailable(item.getAmountAvailable() - holds.getItemAmount());
