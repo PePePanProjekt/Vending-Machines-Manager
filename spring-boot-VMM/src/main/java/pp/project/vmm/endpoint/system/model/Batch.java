@@ -28,10 +28,19 @@ public class Batch {
     @NonNull
     private Date date;
 
+    @Column(name="name")
+    private String name;
+
     @Column(name = "archived")
     @NonNull
     private Boolean archived;
 
     @OneToMany(mappedBy="batch")
     private List<Holds> holds;
+
+    public Batch(Date date, String name, boolean archived) {
+        this.date = date;
+        this.name = name;
+        this.archived = archived;
+    }
 }
