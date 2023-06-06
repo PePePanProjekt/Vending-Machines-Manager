@@ -129,7 +129,13 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("user of given id does not exist"));
         user.setEnabled(false);
         userRepository.save(user);
-        return ResponseEntity.ok("Successfully deactivated user");
+        return ResponseEntity.ok(new UserInfo(
+                user.getId(),
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneNumber()
+        ));
     }
 
     private User generateUser(User user, RegisterRequest registerRequest) {
