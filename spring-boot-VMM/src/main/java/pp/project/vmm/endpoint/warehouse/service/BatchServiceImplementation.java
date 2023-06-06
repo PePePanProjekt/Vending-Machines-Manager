@@ -116,12 +116,28 @@ public class BatchServiceImplementation implements BatchService {
                 .toList();
         List<HoldsDetailsDTO> holdsToKeep = detailsDTO.getHolds().stream().filter(x -> holdsIdList.contains(x.getId()) || x.getId() == null).toList();
 
+        Map<Item, Integer> itemAmounts = new HashMap<>();
         for(HoldsDetailsDTO holdsDetailsDTO : holdsToDelete) {
             Holds holds = holdsRepository.findById(holdsDetailsDTO.getId())
                             .orElseThrow(() -> new RuntimeException("Holds object of given id does not exist"));
             Item item = holds.getItem();
-            item.setAmountAvailable(item.getAmountAvailable() - holds.getItemAmount());
-            itemRepository.save(item);
+            itemAmounts.merge(item, item.getAmountAvailable(), Integer::sum);
+        }
+        List<Item> itemsToReturn = new ArrayList<>();
+        if(!itemAmounts.isEmpty()) {
+            for(Map.Entry<Item, Integer> itemAmount : itemAmounts.entrySet()) {
+                if(itemAmount.getKey().getAmountAvailable() < itemAmount.getValue()) {
+                    return new ResponseEntity<>("Unable to delete hold if item it contains is already in use", HttpStatus.BAD_REQUEST);
+                }
+                Item item = itemAmount.getKey();
+                item.setAmountAvailable(item.getAmountAvailable() - itemAmount.getValue());
+                itemsToReturn.add(item);
+            }
+        }
+        itemRepository.saveAll(itemsToReturn);
+        for(HoldsDetailsDTO holdsDetailsDTO : holdsToDelete) {
+            Holds holds = holdsRepository.findById(holdsDetailsDTO.getId())
+                            .orElseThrow(() -> new RuntimeException("Holds item of given id does not exist"));
             holdsRepository.delete(holds);
         }
 
