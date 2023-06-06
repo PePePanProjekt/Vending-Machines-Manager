@@ -5,7 +5,7 @@
     <div class="my-3">
         <h2>Pick machine</h2>
         <select class="form-select" id="Item" (change)="machineChange()" [(ngModel)]="selectedMachineId">
-            <option *ngFor="let machine of allMachines" [value]="machine.id">{{machine.name}}</option>
+            <option *ngFor="let machine of allMachines" [value]="machine.id">{{machine.location}} | {{machine.name}}</option>
         </select>
     </div>
     <div class="my-3">

@@ -10,7 +10,7 @@ import {RegisterRequest} from "../../../models/Employee/RegisterRequest";
     styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent {
-    roles = ['Owner', 'Admin', 'Worker'];
+    roles = ['Owner', 'Admin', 'Maintenance'];
     newEmployee: Employee = new Employee('', '', '', '', '', '',false, []);
 
     ngOnInit() {

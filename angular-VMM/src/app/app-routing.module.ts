@@ -22,12 +22,15 @@ import {FinancesComponent} from "./components/finances/finances.component";
 import {SaleApiComponent} from "./components/sale-api/sale-api.component";
 import {ItemReportComponent} from "./components/finances/item-report/item-report.component";
 import {MachineReportComponent} from "./components/finances/machine-report/machine-report.component";
+import {SelfInfoComponent} from "./components/self-info/self-info.component";
 
 const routes: Routes = [
     {path:'',                               component:LoginComponent},
     {path:'login',                          component: LoginComponent},
 
     {path:'sale-api',                       component:SaleApiComponent,         canActivate:[AuthGuard], data: {role: ['ROLE_OWNER', 'ROLE_ADMIN']}},
+
+    {path:'self-info',                      component:SelfInfoComponent,        canActivate: [AuthGuard],  data: {role: ['ROLE_OWNER', 'ROLE_ADMIN', 'ROLE_MAINTENANCE']}},
 
     {path:'finances',                       component:FinancesComponent,        canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},
     {path:'finances/item',                  component:ItemReportComponent,      canActivate: [AuthGuard], data: {role: 'ROLE_OWNER'}},

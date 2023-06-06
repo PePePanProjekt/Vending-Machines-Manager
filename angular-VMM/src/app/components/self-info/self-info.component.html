@@ -1,0 +1,50 @@
+<app-navbar-owner/>
+<div class="container">
+    <h1>Info about me</h1>
+    <div *ngIf="user;else no_user">
+
+        <div class="row m-3">
+            <div class="col">
+                <label for="firstName">First Name</label>
+            </div>
+            <div class="col">
+                <p id="firstName">{{user.firstName}}</p>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="col">
+                <label for="lastName">Last Name</label>
+            </div>
+            <div class="col">
+                <p id="lastName">{{user.lastName}}</p>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="col">
+                <label for="email">Email</label>
+            </div>
+            <div class="col">
+                <p id="email">{{user.username}}</p>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="col">
+                <label for="phoneNumber">Phone number</label>
+            </div>
+            <div class="col">
+                <p id="phoneNumber">{{user.phoneNumber}}</p>
+            </div>
+        </div>
+
+
+    </div>
+    <ng-template #no_user>
+        Error fetching data
+    </ng-template>
+
+    <button type="button" (click)="goBack()" class="btn btn-primary m-1">go back</button>
+</div>
+

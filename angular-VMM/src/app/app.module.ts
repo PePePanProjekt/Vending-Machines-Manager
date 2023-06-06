@@ -42,6 +42,7 @@ import { FinancesComponent } from './components/finances/finances.component';
 import { SaleApiComponent } from './components/sale-api/sale-api.component';
 import { ItemReportComponent } from './components/finances/item-report/item-report.component';
 import { MachineReportComponent } from './components/finances/machine-report/machine-report.component';
+import { SelfInfoComponent } from './components/self-info/self-info.component';
 
 @NgModule({
     declarations: [
@@ -70,6 +71,7 @@ import { MachineReportComponent } from './components/finances/machine-report/mac
         SaleApiComponent,
         ItemReportComponent,
         MachineReportComponent,
+        SelfInfoComponent,
     ],
     imports: [
         BrowserModule,
