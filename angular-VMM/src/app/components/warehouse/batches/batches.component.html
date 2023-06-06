@@ -16,7 +16,7 @@
     <table class="table table-striped text-center">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">Name</th>
             <th scope="col">Date</th>
             <th scope="col">Number of items</th>
             <th scope="col">Actions</th>
@@ -24,7 +24,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let batch of batches">
-            <td>{{batch.id}}</td>
+            <td>{{batch.name}}</td>
             <td>{{formatDateString(batch.date)}}</td>
             <td>{{batch.holdsAmount}}</td>
             <td class="">

@@ -19,6 +19,7 @@ export class AddBatchComponent {
     allItems: ItemSimple[] = [];
     itemsInBatch: HoldsDetails[] = [];
     hold: HoldsDetails = new HoldsDetails("", 10, 10);
+    batchName: string = '';
 
     constructor(
         private batchService: BatchService,
@@ -65,8 +66,8 @@ export class AddBatchComponent {
                 ,"OK")
             return;
         }
-
-        let newBatch = new BatchDetails(date, this.itemsInBatch);
+        console.log(this.batchName)
+        let newBatch = new BatchDetails(date,this.batchName, this.itemsInBatch);
         this.batchService.addBatch(newBatch).subscribe(b => {
                 console.log(b.id);
             }

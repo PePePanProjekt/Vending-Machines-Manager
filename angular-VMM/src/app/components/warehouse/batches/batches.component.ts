@@ -26,6 +26,13 @@ export class BatchesComponent {
     private getBatches(){
         this.batchService.getBatches().subscribe(batches => {
             this.batches = batches;
+            console.log(this.batches[0].date);
+            this.batches.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+
+                return dateB.getTime() - dateA.getTime();
+            });
         })
     }
 

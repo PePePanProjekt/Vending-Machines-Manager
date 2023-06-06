@@ -5,12 +5,20 @@
 
     <div>
 
-        <div class="row m-3">
+        <div class="row my-3">
             <div class="col">
                 <label for="Date">Date</label>
             </div>
             <div class="col">
                 <input id="Date" #date type="datetime-local" class="form-control">
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col">
+                <label for="Name">Batch Name</label>
+            </div>
+            <div>
+                <input id="Name" #name type="text" class="form-control" [(ngModel)]="batchName">
             </div>
         </div>
         <h4>Add item to batch</h4>
