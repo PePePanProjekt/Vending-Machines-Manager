@@ -74,7 +74,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/api/auth/self").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
                                 .requestMatchers("api/auth/users/**").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
                                 .requestMatchers("api/auth/users").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
-                                .requestMatchers("/api/warehouse/**").hasAnyRole("OWNER", "ADMIN")
+                                .requestMatchers("/api/warehouse/**").hasAnyRole("OWNER", "ADMIN", "MAINTENANCE")
                                 .requestMatchers("/api/auth/create").hasAnyRole("OWNER", "ADMIN")
                                 .requestMatchers("/api/finance/**").hasRole("OWNER")
                                 .requestMatchers("/api/auth/signin").permitAll()
